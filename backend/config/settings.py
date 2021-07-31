@@ -26,6 +26,11 @@ ROOT_URLCONF = 'config.urls'
 
 CUSTOM_APPS = [
     'users',
+    'action_trackings',
+    'inquiries',
+    'places',
+    'reports',
+    'reviews',
 ]
 
 INSTALLED_APPS = [
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'silk',
     'nplusone.ext.django',
+    'taggit',
 ] + CUSTOM_APPS
 
 MIDDLEWARE = [
@@ -124,7 +130,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),
-    os.path.join(BASE_DIR, 'node_modules'),
 ]
 
 STATICFILES_FINDERS = (
