@@ -23,6 +23,7 @@ django-robots==4.0
 django-sass-processor==1.0.1
 django-silk==4.1.0
 django-sql-explorer==2.3
+django-taggit==1.5.1
 django-unicorn==0.31.0
 google-api-python-client==1.4.1
 gprof2dot==2021.2.21
