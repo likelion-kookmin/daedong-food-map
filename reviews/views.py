@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from config.views import BaseView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -36,3 +36,17 @@ class ReviewRetrieveView(BaseView, RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+
+class ReviewCreateView(BaseView, CreateAPIView):
+    """# ReviewCreateView"""
+
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.current_user)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
