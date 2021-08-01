@@ -30,6 +30,7 @@ urlpatterns = [
     path('users/', include('users.urls', 'users')),
     path('places/', include('places.urls', 'places')),
     path('reports/', include('reports.urls', 'reports')),
+    path('inquiries/', include('inquiries.urls', 'inquiries')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
