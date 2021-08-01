@@ -20,3 +20,11 @@ class PlaceListView(BaseView, ListAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+class PlaceRetrieveView(BaseView, RetrieveAPIView):
+    queryset = Place.objects.published().all()
+    serializer_class = PlaceSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
