@@ -1,20 +1,10 @@
-import os
 from django.core.exceptions import ValidationError
 
-from django.db.models import fields
-from django.forms.widgets import CheckboxInput
 from users.models import User, UserManager
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.core.mail import send_mail
-
-from .tokens import user_activation_token_generator
 
 
 class BaseCreationForm(forms.ModelForm):
@@ -129,26 +119,6 @@ class UserCreationForm(BaseCreationForm):
 
         if commit:
             user.save()
-
-            subject = _(f'Welcome To {current_site.name}! Confirm Your Email')
-            message = render_to_string(
-                'mailers/activation.html',
-                {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': user_activation_token_generator.make_token(user),
-                }
-            )
-
-            send_mail(
-                subject,
-                message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[user.email],
-                fail_silently=False,
-                html_message=message,
-            )
 
 
 class UserAuthenticationForm(AuthenticationForm):
