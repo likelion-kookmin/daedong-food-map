@@ -29,6 +29,7 @@ django-sass-processor==1.0.1
 django-silk==4.1.0
 django-sql-explorer==2.3
 django-taggit==1.5.1
+django-taggit-serializer==0.1.7
 django-unicorn==0.31.0
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.2

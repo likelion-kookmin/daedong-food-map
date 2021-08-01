@@ -1,9 +1,27 @@
+from config.models import BaseModelManager
 from django.db import models
 from config.models import BaseModel
 from taggit.managers import TaggableManager
 
 
+class PlaceQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-created_at")
+
+    def in_review(self):
+        return self.filter(status='r')
+
+    def published(self):
+        return self.filter(status='p')
+
+
 class Place(BaseModel):
+
+    STATUS_CHOICES = (
+        ('r', 'in_review'),
+        ('p', 'published'),
+    )
+
     name = models.CharField(
         verbose_name='장소명',
         max_length=300,
@@ -36,6 +54,16 @@ class Place(BaseModel):
         blank=True,
     )
     tags = TaggableManager()
+
+    status = models.CharField(
+        verbose_name='장소 상태',
+        max_length=1,
+        default='r',
+        null=False,
+        choices=STATUS_CHOICES
+    )
+
+    objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
     def __str__(self) -> str:
         return self.name
