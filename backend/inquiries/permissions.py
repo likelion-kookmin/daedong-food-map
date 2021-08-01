@@ -1,4 +1,4 @@
-"""# reports permissions"""
+"""# inquiries permissions"""
 from rest_framework import permissions
 
 
