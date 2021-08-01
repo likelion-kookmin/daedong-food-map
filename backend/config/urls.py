@@ -33,8 +33,6 @@ urlpatterns = [
     path('inquiries/', include('inquiries.urls', 'inquiries')),
     path('reviews/', include('reviews.urls', 'reviews')),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('jet/', include('jet.urls', 'jet')),
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('explorer/', include('explorer.urls')),
     path("unicorn/", include("django_unicorn.urls")),
     path('silk/', include('silk.urls', 'silk')),
