@@ -1,11 +1,11 @@
 """# reports serializers"""
-from rest_framework.serializers import ModelSerializer
 
 from .models import Report
 from places.serializers import PlaceSerializer
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 
-class ReportSerializer(ModelSerializer):
+class ReportSerializer(WritableNestedModelSerializer):
     """## ReportSerializer
     - Report Model serializer입니다.
     """

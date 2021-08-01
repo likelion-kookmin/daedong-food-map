@@ -1,13 +1,4 @@
-from django.shortcuts import render
-
-
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView)
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from config.views import BaseView
 
 from .models import Place
