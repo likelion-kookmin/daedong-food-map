@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.contrib.messages import constants as messages
 
-
+SITE_ID = 1
 # django basic settings
 PROJECT_NAME = os.environ.get('PROJECT_NAME')
 
