@@ -1,12 +1,14 @@
 """# reviews serializers"""
 
 from rest_framework import fields
+from places.serializers import PlaceSerializer
 from .models import Review
 from rest_framework.serializers import ModelSerializer
 
 
 class ReviewSerializer(ModelSerializer):
     """## ReviewSerializer"""
+    place = PlaceSerializer()
 
     class Meta:
         """### ReviewSerializer.Meta"""
