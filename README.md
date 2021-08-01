@@ -1,6 +1,5 @@
-# docker_o_template
+# daedong-food-map backend
 
-creator: koa
 
 ## how to set development environment
 
