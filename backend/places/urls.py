@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import PlaceListView, PlaceRetrieveView
 
-app_name = 'questions'
+app_name = 'places'
 
 
 urlpatterns = [
