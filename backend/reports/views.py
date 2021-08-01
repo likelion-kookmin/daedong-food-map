@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from config.views import BaseView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +6,7 @@ from rest_framework.authentication import SessionAuthentication
 
 from .models import Report
 from .serializers import ReportSerializer
+from .permissions import IsReportEditableOrDestroyable
 
 
 class ReportListView(BaseView, ListAPIView):
@@ -57,3 +58,35 @@ class ReportCreateView(BaseView, CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+class ReportUpdateView(BaseView, UpdateAPIView):
+    """# ReportUpdateView
+    - authorization
+        - Header에 Authorization: "Bearer {ACCESS_TOKEN}"을 같이 넣어야 합니다.
+    - format
+    ```
+        {
+            "title": "이걸 제보합니다.",
+            "content": "이건 제보 내용",
+            "place": {
+                "tags": ["태그1", "태그2", "태그3"],
+                "name": "XX 장소",
+                "address": "서울 XX역",
+                "longitude": 123.123412312,
+                "latitiude": 12.12312323
+            }
+        }
+    ```
+    """
+
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+    permission_classes = [IsAuthenticated, IsReportEditableOrDestroyable]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
