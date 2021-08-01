@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from config.views import BaseView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +6,7 @@ from rest_framework.authentication import SessionAuthentication
 
 from .models import Review
 from .serializers import ReviewSerializer
+from .permissions import IsReviewEditableOrDestroyable
 
 
 class ReviewListView(BaseView, ListAPIView):
@@ -50,3 +51,20 @@ class ReviewCreateView(BaseView, CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+class ReviewUpdateView(BaseView, UpdateAPIView):
+    """# ReviewUpdateView
+    - 가급적이면 patch를 사용해주세요.
+    """
+
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated, IsReviewEditableOrDestroyable]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
