@@ -19,7 +19,6 @@ class ReportListView(BaseView, ListAPIView):
 
     def get_queryset(self):
         user_id = self.request.query_params.get('user_id')
-        print(user_id)
         if user_id:
             return Report.objects.filter(user__id=user_id)
         else:
