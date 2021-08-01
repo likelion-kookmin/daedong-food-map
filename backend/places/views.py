@@ -15,7 +15,7 @@ from .serializers import PlaceSerializer
 
 
 class PlaceListView(BaseView, ListAPIView):
-    queryset = Place.objects.all()
+    queryset = Place.objects.published().all()
     serializer_class = PlaceSerializer
 
     def get(self, request, *args, **kwargs):
