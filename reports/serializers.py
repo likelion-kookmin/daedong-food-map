@@ -2,12 +2,14 @@
 from rest_framework.serializers import ModelSerializer
 
 from .models import Report
+from places.serializers import PlaceSerializer
 
 
 class ReportSerializer(ModelSerializer):
     """## ReportSerializer
     - Report Model serializer입니다.
     """
+    place = PlaceSerializer()
 
     class Meta:
         """### ReportSerializer.Meta"""
