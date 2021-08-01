@@ -1,3 +1,4 @@
+from datetime import timedelta
 import os
 import logging
 from pathlib import Path
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'sass_processor',
     'extra_views',
     'django_unicorn',
@@ -50,6 +52,17 @@ INSTALLED_APPS = [
     'silk',
     'nplusone.ext.django',
     'taggit',
+    # django-rest-auth
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    # django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # documentation
+    'drf_yasg',
 ] + CUSTOM_APPS
 
 MIDDLEWARE = [
@@ -235,4 +248,29 @@ LOGGING = {
             'level': 'WARN',
         },
     },
+}
+
+# REST_FRAMEWORK settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
+}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+REST_USE_JWT = True
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
