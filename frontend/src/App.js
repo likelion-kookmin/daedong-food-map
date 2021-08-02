@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'styles.css';
 
-import Header from 'components/Header/header';
+import HeaderContainer from 'containers/headerContainer';
 import Footer from 'components/Footer/footer';
 import { Home } from 'pages';
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <HeaderContainer />
       <Router>
         <Route exact path="/" component={Home} />
       </Router>
