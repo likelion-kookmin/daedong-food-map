@@ -32,7 +32,7 @@ class ReportListView(BaseView, ListAPIView):
 
 class ReportRetrieveView(BaseView, RetrieveAPIView):
     """# ReportRetrieveView
-    - Place 객체를 제보한 유저를 return 한다.
+    - Report 객체를 제보한 유저를 return 한다.
     """
 
     permission_classes = [IsAuthenticated]
