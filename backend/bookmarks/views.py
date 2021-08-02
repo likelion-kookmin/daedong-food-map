@@ -1,6 +1,5 @@
 """bookmarks views"""
 from config.views import BaseView
-from django.contrib.auth.models import User
 from django.db.models import query
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,

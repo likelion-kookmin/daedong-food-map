@@ -1,12 +1,14 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from config.views import BaseView
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Report
-from .serializers import ReportSerializer
 from .permissions import IsReportEditableOrDestroyable
+from .serializers import ReportSerializer
 
 
 class ReportListView(BaseView, ListAPIView):
@@ -28,6 +30,20 @@ class ReportListView(BaseView, ListAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+class ReportRetrieveView(BaseView, RetrieveAPIView):
+    """# ReportRetrieveView
+    - Place 객체를 제보한 유저를 return 한다.
+    """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = ReportSerializer
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
+
+    def get_queryset(self):
+        return Report.objects.filter(user=self.current_user)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
 class ReportCreateView(BaseView, CreateAPIView):
     """# ReportCreateView
