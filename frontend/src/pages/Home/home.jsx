@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
+import Map from '../../components/Map/map.js';
 
 function Home() {
   return (
     <Fragment>
-      <img src="images/LogoTitle.png" style={{ width: '500px' }} alt="Logo" />
-      <p>Hello World!</p>
+      <Map />
     </Fragment>
   );
 }

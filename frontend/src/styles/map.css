@@ -1,0 +1,9 @@
+#map {
+  max-width: 1364px;
+  height: 70vh;
+  position: relative;
+  transform: translate3d(-50%, 0, 0);
+  margin-top: 5rem;
+  left: 50%;
+  background-color: black;
+}
