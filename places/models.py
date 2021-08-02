@@ -1,7 +1,9 @@
-from config.models import BaseModelManager
 from django.db import models
-from config.models import BaseModel
+from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
+
+from config.models import BaseModel, BaseModelManager
+from file_managers.models import Image
 
 
 class PlaceQuerySet(models.QuerySet):
@@ -53,7 +55,9 @@ class Place(BaseModel):
         default=0,
         blank=True,
     )
-    tags = TaggableManager()
+    tags = TaggableManager(
+        blank=True,
+    )
 
     status = models.CharField(
         verbose_name='장소 상태',
@@ -62,6 +66,8 @@ class Place(BaseModel):
         null=False,
         choices=STATUS_CHOICES
     )
+
+    images = models.ManyToManyField(Image, verbose_name="images")
 
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
