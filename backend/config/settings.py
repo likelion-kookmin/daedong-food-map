@@ -1,6 +1,6 @@
-from datetime import timedelta
-import os
 import logging
+import os
+from datetime import timedelta
 from pathlib import Path
 
 from django.contrib.messages import constants as messages
@@ -32,6 +32,7 @@ CUSTOM_APPS = [
     'places',
     'reports',
     'reviews',
+    'file_managers',
     'bookmarks',
 ]
 
@@ -54,11 +55,12 @@ INSTALLED_APPS = [
     # django-taggit
     'taggit',
     'taggit_serializer',
-    # django-rest-auth
+    # django-rest-framework
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'generic_relations',
     # django-allauth
     'allauth',
     'allauth.account',
