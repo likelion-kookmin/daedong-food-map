@@ -35,7 +35,6 @@
     "semi": ["error"],
     "semi-spacing": ["error"],
     "no-extra-semi": ["error"],
-    "indent": ["error", 2],
     "react/boolean-prop-naming": [
       "error",
       { "propTypeNames": ["bool", "mutuallyExclusiveTrueProps"] }
@@ -52,7 +51,7 @@
     "react/prefer-stateless-function": ["error"],
     "react/jsx-filename-extension": [
       1,
-      { "extensions": [".js", ".jsx", ".ts"] }
+      { "extensions": [".js", ".jsx"] }
     ],
     "react/self-closing-comp": [
       "error",

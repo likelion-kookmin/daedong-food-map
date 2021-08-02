@@ -88,7 +88,12 @@ class Place(BaseModel):
         choices=STATUS_CHOICES
     )
 
-    images = models.ManyToManyField(Image, verbose_name="images")
+    images = models.ManyToManyField(
+        Image,
+        verbose_name="images",
+        blank=True,
+        null=True,
+    )
 
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
