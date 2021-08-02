@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginButton from './loginButton';
 import styled from 'styled-components';
-import { shadow, media } from 'lib/styleUtil';
+import { shadow, media } from 'utils/styleUtil';
 
 const Positioner = styled.div`
   display: flex;

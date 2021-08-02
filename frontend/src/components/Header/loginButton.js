@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { shadow } from 'lib/styleUtil';
+import { shadow } from 'utils/styleUtil';
 const LoginBtn = styled.button`
   font-family: 'NS-B';
   color: black;
