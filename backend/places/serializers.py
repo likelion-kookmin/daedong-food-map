@@ -1,10 +1,10 @@
 """# places serializers"""
-from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-
-from .models import Place
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
+
+from file_managers.serializers import ImageSerializer
+from .models import Place
 
 
 class PlaceSerializer(TaggitSerializer, ModelSerializer):
@@ -12,6 +12,7 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
     - Place Model serializer입니다.
     """
     tags = TagListSerializerField()
+    images = ImageSerializer(many=True)
 
     class Meta:
         """### PlaceSerializer.Meta"""
@@ -24,4 +25,8 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
             'created_at',
             'updated_at',
             'deleted_at',
+        ]
+        optional_fields = [
+            'tags',
+            'images',
         ]

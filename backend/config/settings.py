@@ -33,6 +33,8 @@ CUSTOM_APPS = [
     'places',
     'reports',
     'reviews',
+    'file_managers',
+    'bookmarks',
 ]
 
 INSTALLED_APPS = [
@@ -54,7 +56,7 @@ INSTALLED_APPS = [
     # django-taggit
     'taggit',
     'taggit_serializer',
-    # django-rest-auth
+    # django-rest-framework
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'dj_rest_auth',
