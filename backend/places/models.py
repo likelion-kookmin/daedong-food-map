@@ -1,24 +1,44 @@
+"""# places models"""
+from config.models import BaseModel, BaseModelManager
 from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 
-from config.models import BaseModel, BaseModelManager
-from file_managers.models import Image
+LONGITUDE_DIFF = 0.2
+LATITUDE_DIFF = 0.2
 
 
 class PlaceQuerySet(models.QuerySet):
-    def recent(self):
-        return self.order_by("-created_at")
+    """## PlaceQuerySet"""
 
     def in_review(self):
+        """### in_review
+        - 현재 관리자가 검토중인 장소를 도출하는 쿼리셋입니다.
+        """
         return self.filter(status='r')
 
     def published(self):
+        """### published
+        - 현재 공개된 장소를 도출하는 쿼리셋입니다.
+        """
         return self.filter(status='p')
+
+    def nearby(self, longitude, latitude):
+        """# nearby
+        - 주어진 좌표 주변에 있는 장소를 도출하는 쿼리셋입니다.
+        """
+        if not longitude or not latitude:
+            return self
+
+        return self.filter(
+            longitude__gte=longitude-LONGITUDE_DIFF,
+            longitude__lte=longitude+LONGITUDE_DIFF,
+            latitude__gte=latitude-LATITUDE_DIFF,
+            latitude__lte=latitude+LATITUDE_DIFF,
+        )
 
 
 class Place(BaseModel):
-
+    """## Place"""
     STATUS_CHOICES = (
         ('r', 'in_review'),
         ('p', 'published'),
@@ -72,8 +92,11 @@ class Place(BaseModel):
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.name)
 
     @property
     def average_score(self):
+        """### average_score
+        - 평균 점수를 도출하는 함수입니다.
+        """
         return 0 if self.review_count == 0 else self.total_score // self.review_count

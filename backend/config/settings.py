@@ -1,3 +1,4 @@
+"""# config settings"""
 import logging
 import os
 from datetime import timedelta
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    'generic_relations',
+    'django_filters',
     # django-allauth
     'allauth',
     'allauth.account',
@@ -254,6 +255,9 @@ LOGGING = {
 
 # REST_FRAMEWORK settings
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
