@@ -1,14 +1,14 @@
-from django.contrib import admin
-from django.conf import settings
-from django.shortcuts import render
-from django.views.static import serve
-from django.urls import path, include, re_path
-from django.conf.urls.static import static
+"""config urls"""
 import debug_toolbar
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.shortcuts import render
+from django.urls import include, path, re_path
+from django.views.static import serve
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-
 
 openapi_info = openapi.Info(
     title="대동먹지도 API",
@@ -32,6 +32,7 @@ urlpatterns = [
     path('reports/', include('reports.urls', 'reports')),
     path('inquiries/', include('inquiries.urls', 'inquiries')),
     path('reviews/', include('reviews.urls', 'reviews')),
+    path('bookmarks/', include('bookmarks.urls', 'bookmarks')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('explorer/', include('explorer.urls')),
     path("unicorn/", include("django_unicorn.urls")),
