@@ -1,6 +1,7 @@
 """# places models"""
 from config.models import BaseModel, BaseModelManager
 from django.db import models
+from file_managers.models import Image
 from taggit.managers import TaggableManager
 
 LONGITUDE_DIFF = 0.2
