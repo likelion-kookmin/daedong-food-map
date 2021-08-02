@@ -18,10 +18,11 @@ class PlaceListView(BaseView, ListAPIView):
     ordering_fields = ['name', 'address', 'created_at', 'updated_at']
 
     def get_queryset(self):
-        longitude = float(self.request.query_params.get('longitude'))
-        latitude = float(self.request.query_params.get('latitude'))
+        longitude = self.request.query_params.get('longitude')
+        latitude = self.request.query_params.get('latitude')
 
         if longitude and latitude:
+            longitude, latitude = map(float, (longitude, latitude))
             return Place.objects.published().nearby(longitude, latitude)\
 
         return Place.objects.published().all()
