@@ -32,6 +32,7 @@ CUSTOM_APPS = [
     'places',
     'reports',
     'reviews',
+    'bookmarks',
 ]
 
 INSTALLED_APPS = [
