@@ -58,15 +58,17 @@ class BookmarkCreateView(BaseView, CreateAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-# class BookmarkDestroyView(BaseView, DestroyAPIView):
-#     """# BookmarkDestroyView
-#     - 북마크를 해제한다.
-#     """
+class BookmarkDestroyView(BaseView, DestroyAPIView):
+    """# BookmarkDestroyView
+    - 북마크를 해제한다.
+    """
 
-#     queryset = Bookmark.objects.all()
-#     serializer_class = BookmarkSerializer
-#     permission_classes = [IsAuthenticated, IsBookmarkEditableOrDestroyable]
-#     authentication_classes = [JWTAuthentication, SessionAuthentication]
+    serializer_class = BookmarkSerializer
+    permission_classes = [IsAuthenticated, IsBookmarkEditableOrDestroyable]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
 
-#     def delete(self, request, *args, **kwargs):
-#         return self.destroy(request, *args, **kwargs)
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.current_user)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
