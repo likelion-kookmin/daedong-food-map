@@ -75,7 +75,9 @@ class Place(BaseModel):
         default=0,
         blank=True,
     )
-    tags = TaggableManager()
+    tags = TaggableManager(
+        blank=True,
+    )
 
     status = models.CharField(
         verbose_name='장소 상태',
@@ -84,6 +86,8 @@ class Place(BaseModel):
         null=False,
         choices=STATUS_CHOICES
     )
+
+    images = models.ManyToManyField(Image, verbose_name="images")
 
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
