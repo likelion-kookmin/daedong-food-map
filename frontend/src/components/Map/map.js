@@ -46,13 +46,12 @@ const Map = () => {
       // 마커 이미지의 이미지 크기 입니다.
       const smallImageSize = new kakao.maps.Size(25, 25);
       const bigImageSize = new kakao.maps.Size(35, 35);
-      const infos = [];
+      const overlays = [];
       const markers = [];
       const images = [];
       positions.forEach((position, idx) => {
         // 마커 이미지를 생성합니다.
         const smallMarkerImage = new kakao.maps.MarkerImage(position.imageSrc, smallImageSize);
-
         const bigMarkerImage = new kakao.maps.MarkerImage(position.imageSrc, bigImageSize);
 
         for (let j = 0; j < position.latlng.length; j++) {
@@ -65,30 +64,64 @@ const Map = () => {
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록
           });
 
-          const iwContent = `<div style="padding:5px;">${position.title}</div><button class='close btn'>x</button>`;
+          const content =
+            '<div class="overlaybox">' +
+            '    <div class="boxtitle">금주 영화순위</div>' +
+            '    <div class="first">' +
+            '        <div class="triangle text">1</div>' +
+            '        <div class="movietitle text">드래곤 길들이기2</div>' +
+            '    </div>' +
+            '    <ul>' +
+            '        <li class="up">' +
+            '            <span class="number">2</span>' +
+            '            <span class="title">명량</span>' +
+            '            <span class="arrow up"></span>' +
+            '            <span class="count">2</span>' +
+            '        </li>' +
+            '        <li>' +
+            '            <span class="number">3</span>' +
+            '            <span class="title">해적(바다로 간 산적)</span>' +
+            '            <span class="arrow up"></span>' +
+            '            <span class="count">6</span>' +
+            '        </li>' +
+            '        <li>' +
+            '            <span class="number">4</span>' +
+            '            <span class="title">해무</span>' +
+            '            <span class="arrow up"></span>' +
+            '            <span class="count">3</span>' +
+            '        </li>' +
+            '        <li>' +
+            '            <span class="number">5</span>' +
+            '            <span class="title">안녕, 헤이즐</span>' +
+            '            <span class="arrow down"></span>' +
+            '            <span class="count">1</span>' +
+            '        </li>' +
+            '    </ul>' +
+            '</div>';
 
-          const info = new kakao.maps.InfoWindow({
-            content: iwContent,
+          const customOverlay = new kakao.maps.CustomOverlay({
+            position: position.latlng[j],
+            content: content,
           });
 
-          infos.push(info);
+          overlays.push(customOverlay);
           markers.push(marker);
           images.push(smallMarkerImage);
 
-          // info 열기
+          // customOverlay 열기
           const openInfo = () => {
-            infos.forEach((each) => each.close()); //모든 인포 닫기
-            info.open(map, marker);
+            overlays.forEach((each) => each.setMap(null)); //모든 인포 닫기
+            customOverlay.setMap(map);
           };
 
           const closeInfo = () => {
-            infos.forEach((each) => each.close());
+            overlays.forEach((each) => each.setMap(null));
             markers.forEach((marker, idx) => marker.setImage(images[idx]));
           };
           // 마커 클릭했을 때 이벤트
           kakao.maps.event.addListener(marker, 'click', () => {
             openInfo();
-            document.querySelector('.close').addEventListener('click', closeInfo);
+            // document.querySelector('.close').addEventListener('click', closeInfo);
             markers.forEach((marker, idx) => marker.setImage(images[idx]));
             marker.setImage(bigMarkerImage);
             map.panTo(position.latlng[j]);
