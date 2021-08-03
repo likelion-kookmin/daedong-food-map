@@ -8,7 +8,20 @@ const Map = () => {
   const [isLoading, setLoading] = useState(true);
   const [latitude, setLatitude] = useState(33.450701);
   const [longitude, setLongitude] = useState(126.570667);
-
+  const [posit, setPosit] = useState([]);
+  setPosit((posit) => [posit, 'title']);
+  const positions = [
+    {
+      title: '떡볶이',
+      latlng: [new kakao.maps.LatLng(latitude, longitude), new kakao.maps.LatLng(latitude + 0.0005, longitude + 0.0005), new kakao.maps.LatLng(latitude + 0.001, longitude + 0.001)],
+      imageSrc: '/icons/떡볶이.png',
+    },
+    {
+      title: '붕어빵',
+      latlng: [new kakao.maps.LatLng(latitude - 0.0005, longitude - 0.0005), new kakao.maps.LatLng(latitude - 0.0008, longitude - 0.0008), new kakao.maps.LatLng(latitude - 0.001, longitude - 0.001)],
+      imageSrc: '/icons/붕어빵.png',
+    },
+  ];
   if (isLoading === true)
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
@@ -17,6 +30,7 @@ const Map = () => {
     });
 
   useEffect(() => {
+    console.log({ posit });
     if (isLoading === false) {
       const mapContainer = document.getElementById('map');
       const mapOption = {
@@ -24,24 +38,6 @@ const Map = () => {
         level: 3,
       };
       const map = new kakao.maps.Map(mapContainer, mapOption);
-
-      // 마커를 표시할 위치와 title 객체 배열입니다.
-      const positions = [
-        {
-          title: '떡볶이',
-          latlng: [new kakao.maps.LatLng(latitude, longitude), new kakao.maps.LatLng(latitude + 0.0005, longitude + 0.0005), new kakao.maps.LatLng(latitude + 0.001, longitude + 0.001)],
-          imageSrc: '/icons/떡볶이.png',
-        },
-        {
-          title: '붕어빵',
-          latlng: [
-            new kakao.maps.LatLng(latitude - 0.0005, longitude - 0.0005),
-            new kakao.maps.LatLng(latitude - 0.0008, longitude - 0.0008),
-            new kakao.maps.LatLng(latitude - 0.001, longitude - 0.001),
-          ],
-          imageSrc: '/icons/붕어빵.png',
-        },
-      ];
 
       // 마커 이미지의 이미지 크기 입니다.
       const smallImageSize = new kakao.maps.Size(25, 25);
