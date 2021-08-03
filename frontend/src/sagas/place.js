@@ -21,11 +21,11 @@ function* placeList(action) {
   }
 }
 
-function* watchGetPlaceList() {
+function* watchPlaceList() {
   yield takeLatest(LOAD_PLACES_REQUEST, placeList);
 }
 }
 
 export default function* placeSaga() {
-  yield all([fork(watchGetPlaceList)]);
+  yield all([fork(watchPlaceList)]);
 }
