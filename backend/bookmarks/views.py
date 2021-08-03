@@ -5,6 +5,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -21,12 +22,14 @@ class BookmarkListView(BaseView, ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = BookmarkSerializer
     authentication_classes = [JWTAuthentication, SessionAuthentication]
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.current_user)
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
 
 class BookmarkRetrieveView(BaseView, RetrieveAPIView):
     """# BookmarkRetrieveView
@@ -43,6 +46,7 @@ class BookmarkRetrieveView(BaseView, RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
+
 class BookmarkCreateView(BaseView, CreateAPIView):
     """# BookmarkCreateView
     - 북마크를 생성한다.
@@ -56,6 +60,7 @@ class BookmarkCreateView(BaseView, CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
 
 class BookmarkDestroyView(BaseView, DestroyAPIView):
     """# BookmarkDestroyView
