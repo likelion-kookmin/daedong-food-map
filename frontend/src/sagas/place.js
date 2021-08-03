@@ -5,7 +5,7 @@ import { LOAD_PLACES_REQUEST, LOAD_PLACES_SUCCESS, LOAD_PLACES_FAILURE } from '.
 
 const placeListAPI = (data) => axios.get('/places/', data);
 
-function* getPlaceList(action) {
+function* placeList(action) {
   try {
     const result = yield call(placeListAPI, action.data);
     yield put({
@@ -22,7 +22,8 @@ function* getPlaceList(action) {
 }
 
 function* watchGetPlaceList() {
-  yield takeLatest(LOAD_PLACES_REQUEST, getPlaceList);
+  yield takeLatest(LOAD_PLACES_REQUEST, placeList);
+}
 }
 
 export default function* placeSaga() {
