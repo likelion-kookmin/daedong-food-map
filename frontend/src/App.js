@@ -5,6 +5,7 @@ import 'styles/styles.css';
 import HeaderContainer from 'containers/headerContainer';
 import Footer from 'components/Footer/footer';
 import { Home } from 'pages';
+import wrapper from 'store/configureStore';
 
 function App() {
   return (
@@ -18,4 +19,4 @@ function App() {
   );
 }
 
-export default App;
+export default wrapper.withRedux(App);
