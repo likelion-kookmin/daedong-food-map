@@ -92,7 +92,6 @@ class Place(BaseModel):
         Image,
         verbose_name="images",
         blank=True,
-        null=True,
     )
 
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
