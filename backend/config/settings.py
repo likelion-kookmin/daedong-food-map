@@ -234,6 +234,7 @@ CORS_ALLOWED_ORIGINS = [
     f"http://localhost:{PORT}",
     f"http://127.0.0.1:{PORT}",
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 # N+1 Query auto detector
 NPLUSONE_LOGGER = logging.getLogger("nplusone")
