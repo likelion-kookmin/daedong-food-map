@@ -230,9 +230,10 @@ EXPLORER_SCHEMA_INCLUDE_VIEWS = True
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    f'http://localhost:{PORT}',
-    f'http://127.0.0.1:{PORT}',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 # N+1 Query auto detector
 NPLUSONE_LOGGER = logging.getLogger('nplusone')
