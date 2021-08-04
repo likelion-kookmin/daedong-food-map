@@ -7,6 +7,16 @@
 
 import { css } from 'styled-components';
 
+import { createMedia } from '@artsy/fresnel';
+
+export const { MediaContextProvider, Media } = createMedia({
+  breakpoints: {
+    mobile: 0,
+    tablet: 768,
+    desktop: 1024,
+  },
+});
+
 // 미디어 쿼리 분기점 지정
 export const sizes = {
   wide: '1200px',
