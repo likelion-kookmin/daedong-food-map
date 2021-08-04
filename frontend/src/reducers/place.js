@@ -1,4 +1,4 @@
-import produce from 'utils/produce.util';
+import produceUtil from 'utils/produce.util';
 
 export const initialState = {
   mainPlaces: [],
@@ -19,7 +19,7 @@ export const LOAD_PLACE_SUCCESS = 'LOAD_PLACE_SUCCESS';
 export const LOAD_PLACE_FAILURE = 'LOAD_PLACE_FAILURE';
 
 const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+  produceUtil(state, (draft) => {
     switch (action.type) {
       case LOAD_PLACES_REQUEST:
         draft.loadPlacesLoading = true;

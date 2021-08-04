@@ -1,4 +1,4 @@
-import produce from 'utils/produce.util';
+import produceUtil from 'utils/produce.util';
 
 export const initialState = {
   inquiries: [],
@@ -12,7 +12,7 @@ export const LOAD_INQUIRIES_SUCCESS = 'LOAD_INQUIRIES_SUCCESS';
 export const LOAD_INQUIRIES_FAILURE = 'LOAD_INQUIRIES_FAILURE';
 
 const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+  produceUtil(state, (draft) => {
     switch (action.type) {
       case LOAD_INQUIRIES_REQUEST:
         draft.loadInquiriesLoading = true;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signinRequestAction } from 'reducers/authentication';
 import useInput from '../hooks/useInput';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
-
+import { Link } from 'react-router-dom';
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { signinLoading, signinError } = useSelector((state) => state.authentication);
@@ -18,7 +18,7 @@ const LoginForm = () => {
 
   const onSubmitForm = useCallback(() => {
     dispatch(signinRequestAction({ email, password }));
-  }, [email, password]);
+  }, [dispatch, email, password]);
 
   return (
     <Grid textAlign="center" style={{ height: '50vh' }} verticalAlign="middle" onSubmit={onSubmitForm}>
@@ -37,7 +37,8 @@ const LoginForm = () => {
           </Segment>
         </Form>
         <Message>
-          New to us? <a href="#"> Sign Up</a>
+          New to us?
+          <Link to="/register">Sign Up</Link>
         </Message>
       </Grid.Column>
     </Grid>
