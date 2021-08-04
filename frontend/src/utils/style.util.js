@@ -9,6 +9,8 @@ import { css } from 'styled-components';
 
 import { createMedia } from '@artsy/fresnel';
 
+export const maxWindowWidth = '1200px';
+
 export const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
     mobile: 0,

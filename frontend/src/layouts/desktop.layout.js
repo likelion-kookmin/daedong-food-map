@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Media } from 'utils/style.util';
 import { Button, Container, Menu, Image } from 'semantic-ui-react';
+import { maxWindowWidth } from '../utils/style.util';
 
-const DesktopLayout = ({ children }) => {
+const DesktopLayout = (props) => {
   return (
     <Media greaterThan="mobile" inverted>
-      <Menu size="large">
-        <Container>
+      <Menu>
+        <Container style={{ width: maxWindowWidth }}>
           <Menu.Item>
             <Image size="tiny" verticalAlign="middle" src="images/LogoTitle.png" />
           </Menu.Item>
@@ -19,7 +20,7 @@ const DesktopLayout = ({ children }) => {
           </Menu.Item>
         </Container>
       </Menu>
-      {children}
+      <Container style={{ width: maxWindowWidth, padding: '2rem' }}>{props.children}</Container>
     </Media>
   );
 };

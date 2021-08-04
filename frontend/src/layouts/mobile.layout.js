@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Image, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
-import { Media } from 'utils/style.util';
+import { Container, Image, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { maxWindowWidth, Media } from 'utils/style.util';
 
 const MobileLayout = (props) => {
   const [sidebarOpened, setSidebarOpened] = useState(false);
@@ -30,7 +30,7 @@ const MobileLayout = (props) => {
               </Menu.Item>
             </Menu>
           </Segment>
-          {props.children}
+          <Container style={{ width: maxWindowWidth, padding: '1rem' }}>{props.children}</Container>
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     </Media>
