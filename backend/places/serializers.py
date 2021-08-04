@@ -25,6 +25,7 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         fields = '__all__'
         read_only_fields = [
             'user',
+            'view_count',
             'status',
             'total_score',
             'review_count',
