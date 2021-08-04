@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import authentication from './authentication';
 import place from './place';
 import inquiry from './inquiry';
+import report from './report';
 
 // (이전상태, 액션) => 다음상태
 const rootReducer = (state, action) => {
@@ -15,6 +16,7 @@ const rootReducer = (state, action) => {
         authentication,
         inquiry,
         place,
+        report,
       });
       return combinedReducer(state, action);
     }
