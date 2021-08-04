@@ -28,7 +28,7 @@
       { "max": 1, "maxEOF": 0, "maxBOF": 0 }
     ],
     "no-trailing-spaces": ["error"],
-    "no-unused-vars": ["error"],
+    "no-unused-vars": ["warn"],
     "no-whitespace-before-property": ["error"],
     "prefer-const": ["error"],
     "require-await": ["error"],
