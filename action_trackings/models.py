@@ -13,6 +13,8 @@ class Action(models.TextChoices):
 
     ADD_REPORT = '제보 등록', _('add_report')
     ADD_REVIEW = '리뷰 생성', _('add_review')
+    ADD_INQUIRY = '신고 생성', _('add_inquiry')
+
 
 class ActionPointRule(BaseModel):
     """# ActionPointRule
