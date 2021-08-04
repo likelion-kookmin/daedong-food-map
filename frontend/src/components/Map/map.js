@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import { useSelector } from 'react-redux';
 import '../../styles/map.css';
-import Loading from '../Loading/loading.js';
 
 const { kakao } = window;
 
 const Map = () => {
-  const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.place.loadPlacesLoading);
+  const places = useSelector((state) => state.place.mainPlaces);
   const [latitude, setLatitude] = useState(33.450701);
   const [longitude, setLongitude] = useState(126.570667);
-  const places = useSelector((state) => state.place.mainPlaces);
 
   useEffect(() => {
-    dispatch({
-      type: LOAD_PLACES_REQUEST,
-    });
+    // dispatch({
+    //   type: LOAD_PLACES_REQUEST,
+    // });
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude);
@@ -25,16 +22,15 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
-    if (isLoading === false) {
-      const mapContainer = document.getElementById('map');
+    if (isLoading === false && places.length) {
+      console.log(latitude, longitude);
+      const mapContainer = document.getElementById('mapOverlay');
       const mapOption = {
         center: new kakao.maps.LatLng(latitude, longitude),
         level: 3,
       };
       const map = new kakao.maps.Map(mapContainer, mapOption);
-      console.log(longitude, latitude);
-      console.log(map);
-      console.log(places);
+
       // 마커 이미지의 이미지 크기 입니다.
       const smallImageSize = new kakao.maps.Size(25, 25);
       const bigImageSize = new kakao.maps.Size(35, 35);
@@ -126,8 +122,12 @@ const Map = () => {
         kakao.maps.event.addListener(map, 'click', closeInfo);
       });
     }
-  }, [longitude, isLoading]);
+  }, [isLoading]);
 
-  return <section className="container">{isLoading ? <Loading /> : <div id="map"></div>}</section>;
+  return (
+    <section className="map">
+      <div id="mapOverlay"></div>
+    </section>
+  );
 };
 export default Map;

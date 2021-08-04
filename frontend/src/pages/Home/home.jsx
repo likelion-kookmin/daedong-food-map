@@ -1,31 +1,32 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import LoginForm from 'components/LoginForm';
 import Map from '../../components/Map/map.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import Search from '../../components/Search/search.js';
+import Loading from '../../components/Loading/loading.js';
 
-function Home() {
-  // const dispatch = useDispatch();
-  // const places = useSelector((state) => state.place.mainPlaces);
-  // console.log(places);
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: LOAD_PLACES_REQUEST,
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: LOAD_PLACE_REQUEST,
-  //     id: 1,
-  //   });
-  // });
-
+const Home = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.place.loadPlacesLoading);
+  useEffect(() => {
+    dispatch({
+      type: LOAD_PLACES_REQUEST,
+    });
+  }, []);
   return (
-    <Fragment>
-      <Map />
-      <LoginForm />
-    </Fragment>
+    <div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <Search />
+          <Map />
+          <LoginForm />
+        </Fragment>
+      )}
+    </div>
   );
-}
+};
 
 export default Home;
