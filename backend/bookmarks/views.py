@@ -18,11 +18,10 @@ class BookmarkListView(BaseView, ListAPIView):
     """# BookmarkListView
     - 현재 유저가 북마크(create) 목록(place)이 반환된다.
     """
-
+    queryset = Bookmark.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = BookmarkSerializer
     authentication_classes = [JWTAuthentication, SessionAuthentication]
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.current_user)

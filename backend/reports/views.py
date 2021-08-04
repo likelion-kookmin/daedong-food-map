@@ -20,7 +20,7 @@ class ReportListView(BaseView, ListAPIView):
         - 없는 경우, 전체 제보 목록이 반환된다.
     """
     serializer_class = ReportSerializer
-    pagination_class = PageNumberPagination
+    queryset = Report.objects.all()
 
     def get_queryset(self):
         user_id = self.request.query_params.get('user_id')

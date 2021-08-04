@@ -12,14 +12,13 @@ from .serializers import PlaceSerializer
 
 class PlaceListView(BaseView, ListAPIView):
     """## PlaceListView"""
-    queryset = Place.objects.published().all()
+    queryset = Place.objects.published().order_by('-created_at').all()
     serializer_class = PlaceSerializer
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'address', 'tags__name']
     ordering_fields = ['name', 'address', 'created_at', 'updated_at']
     permission_classes = [AllowAny]
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         longitude = self.request.query_params.get('longitude')
