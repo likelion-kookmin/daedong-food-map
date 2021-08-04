@@ -21,13 +21,7 @@ function Home() {
     });
   });
 
-  return (
-    <Fragment>
-      <img src="images/LogoTitle.png" style={{ width: '500px' }} alt="Logo" />
-      <p>Hello World!</p>
-      <LoginForm />
-    </Fragment>
-  );
+  return <Fragment>메인화면</Fragment>;
 }
 
 export default Home;
