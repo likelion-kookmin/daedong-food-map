@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Image, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { maxWindowWidth, Media } from 'utils/style.util';
 
 const MobileLayout = (props) => {
@@ -12,19 +13,25 @@ const MobileLayout = (props) => {
     <Media as={Sidebar.Pushable} at="mobile">
       <Sidebar.Pushable>
         <Sidebar as={Menu} animation="overlay" onHide={handleSidebarHide} vertical direction="right" visible={sidebarOpened}>
-          <Menu.Item as="a" active>
-            Home
-          </Menu.Item>
-          <Menu.Item as="a">Log in</Menu.Item>
-          <Menu.Item as="a">Register</Menu.Item>
+          <Link to="/">
+            <Menu.Item active>Home</Menu.Item>
+          </Link>
+          <Link to="/login">
+            <Menu.Item>Log in</Menu.Item>
+          </Link>
+          <Link to="/register">
+            <Menu.Item as="a">Register</Menu.Item>
+          </Link>
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment textAlign="center" vertical padded>
-            <Menu secondary size="large" fixed="true">
-              <Menu.Item>
-                <Image size="tiny" verticalAlign="middle" src="images/LogoTitle.png" />
-              </Menu.Item>
+            <Menu secondary size="large" fixed="top">
+              <Link to="/">
+                <Menu.Item>
+                  <Image size="tiny" verticalAlign="middle" src="images/LogoTitle.png" />
+                </Menu.Item>
+              </Link>
               <Menu.Item onClick={handleToggle} position="right">
                 <Icon name="sidebar" />
               </Menu.Item>
