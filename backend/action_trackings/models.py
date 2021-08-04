@@ -61,21 +61,6 @@ class ActionTracking(BaseModel):
         default=1,
     )
 
-    # def __str__(self):
-    #     return "{0}님이 {1} 행동을 통해 {2}점을 얻었습니다.{3}/{4}".format(
-    #         self.user.username,
-    #         self.action_point_rule.name,
-    #         self.action_point_rule.point,
-    #         self.created_at,
-    #         self.updated_at,
-    #     )
-
-    @property
-    def viewed_at(self):
-        """### viewed_at
-            - created_at을 반환합니다.
-        """
-        return self.created_at
 
     @property
     def point(self):
@@ -110,12 +95,3 @@ class ActionTracking(BaseModel):
                 action_tracking_obj.save()
         else:
             cls.objects.create(user=user, action_point_rule=rule)
-
-
-
-
-
-
-
-
-
