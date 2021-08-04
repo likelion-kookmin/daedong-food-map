@@ -16,7 +16,7 @@ class InquiryListView(BaseView, ListAPIView):
     - 현재 유저가 신고한 목록이 반환된다.
     """
     serializer_class = InquirySerializer
-    pagination_class = PageNumberPagination
+    queryset = Inquiry.objects.all()
 
     def get_queryset(self):
         return Inquiry.objects.filter(user=self.current_user)

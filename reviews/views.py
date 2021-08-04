@@ -20,8 +20,8 @@ class ReviewListView(BaseView, ListAPIView):
         - 없는 경우, 전체 리뷰 목록이 반환된다.
     """
 
+    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         place_id = self.request.query_params.get('place_id')

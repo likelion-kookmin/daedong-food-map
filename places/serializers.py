@@ -40,4 +40,3 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         user = Report.objects.filter(place=obj).first().user
         user_serializers = UserSerializer(user)
         return user_serializers.data
-
