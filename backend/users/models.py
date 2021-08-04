@@ -1,8 +1,6 @@
+from django.contrib.auth.models import (AbstractBaseUser, AbstractUser,
+                                        BaseUserManager, PermissionsMixin)
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser, PermissionsMixin
-)
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -72,6 +70,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(
         verbose_name=_('updated_at'),
         auto_now=True,
+    )
+
+    report_count = models.IntegerField(
+        verbose_name='제보 횟수',
+        default=0,
+        blank=True,
+    )
+
+    review_count = models.IntegerField(
+        verbose_name='리뷰 작성 횟수',
+        default=0,
+        blank=True,
+    )
+
+    inquiry_count = models.IntegerField(
+        verbose_name='신고 횟수',
+        default=0,
+        blank=True,
     )
 
     objects = UserManager()
