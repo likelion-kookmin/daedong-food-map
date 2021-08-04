@@ -1,7 +1,9 @@
 import React from 'react';
 import LoginButton from './loginButton';
 import styled from 'styled-components';
-import { shadow, media } from 'utils/style.util';
+import { media } from 'utils/style.util';
+
+import { Button, Segment, Icon } from 'semantic-ui-react';
 
 const Positioner = styled.div`
   display: flex;
@@ -10,7 +12,7 @@ const Positioner = styled.div`
   top: 0px;
   width: 100%;
   z-index: 2;
-  ${shadow(1)}
+  border-bottom: 1px solid #ededed;
 `;
 
 export const Background = styled.div`
@@ -30,7 +32,7 @@ export const HeaderContents = styled.div`
   padding-left: 1rem;
 
   ${media.wide`
-         width: 992px;
+         width: 1300px;
      `}
 
   ${media.tablet`
@@ -42,30 +44,37 @@ const Logo = styled.img`
   width: auto;
   height: 40px;
   background-color: transparent;
-  position: fixed;
-  left: 5%;
-  top: 5px;
-  transform: translateX(-50%);
 `;
 
 const Spacer = styled.div`
   flex-grow: 1;
 `;
 
-function Header() {
+const Header = () => {
   return (
     <Positioner>
       <Background>
         <HeaderContents>
-          <a href="/">
-            <Logo src="images/LogoTitle.png" />
+          <a href='/'>
+            <Logo src='images/LogoTitle.png' />
           </a>
           <Spacer />
-          <LoginButton text="LOGIN" />
+          <Button
+            basic
+            color='gray'
+            content='Log in'
+            icon='sign-in'
+          />
+          <Button
+            basic
+            color='pink'
+            content='Register'
+            icon='signup'
+          />
         </HeaderContents>
       </Background>
     </Positioner>
   );
-}
+};
 
 export default Header;
