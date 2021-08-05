@@ -15,14 +15,13 @@ const Home = () => {
     });
   }, []);
   return (
-    <div>
+    <div className="container" style={{ height: '1vh' }}>
       {isLoading ? (
         <Loading />
       ) : (
         <Fragment>
           <Search />
           <Map />
-          <LoginForm />
         </Fragment>
       )}
     </div>

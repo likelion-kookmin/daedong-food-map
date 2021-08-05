@@ -22,7 +22,6 @@ const Map = () => {
   }, []);
 
   const displayMap = (locPosition) => {
-    console.log(locPosition);
     const mapContainer = document.getElementById('mapOverlay');
     const mapOption = {
       center: locPosition,
@@ -37,7 +36,8 @@ const Map = () => {
     const markers = [];
     const images = [];
 
-    places.forEach((place, idx) => {
+    places.results.forEach((place, idx) => {
+      console.log(map);
       // 마커 이미지를 생성합니다.
       const position = new kakao.maps.LatLng(place.latitude, place.longitude);
       const smallMarkerImage = new kakao.maps.MarkerImage(`/icons/${place.name}.png`, smallImageSize);
