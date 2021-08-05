@@ -1,0 +1,7 @@
+.search {
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  left: 50%;
+  top: 15%;
+  z-index: 1;
+}

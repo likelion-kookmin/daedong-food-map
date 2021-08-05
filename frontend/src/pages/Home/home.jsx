@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import LoginForm from 'components/LoginForm';
 import Map from '../../components/Map/map.js';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,19 +8,19 @@ import Loading from '../../components/Loading/loading.js';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.place.loadPlacesLoading);
+  const { loadPlacesLoading } = useSelector((state) => state.place);
   useEffect(() => {
     dispatch({
       type: LOAD_PLACES_REQUEST,
     });
   }, []);
+
   return (
-    <div className="container" style={{ height: '1vh' }}>
-      {isLoading ? (
+    <div>
+      {loadPlacesLoading ? (
         <Loading />
       ) : (
         <Fragment>
-          <Search />
           <Map />
         </Fragment>
       )}
