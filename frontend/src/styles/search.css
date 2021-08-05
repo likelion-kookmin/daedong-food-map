@@ -39,8 +39,9 @@
 }
 
 .search button i {
+  color: white;
   position: relative;
   transform: translate3d(-50%, -50%, 0);
   top: 25%;
-  left: 25%;
+  left: 20%;
 }

@@ -36,7 +36,7 @@ const Search = () => {
           <i class="fas fa-search"></i>
           <span>
             <button type="submit">
-              <i class="fas fa-crosshairs"></i>
+              <i class="fas fa-map-marker-alt"></i>
             </button>
           </span>
         </form>
