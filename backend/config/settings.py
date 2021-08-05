@@ -4,6 +4,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import django_heroku
 from django.contrib.messages import constants as messages
 
 SITE_ID = 1
@@ -284,3 +285,5 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 }
+
+django_heroku.settings(locals())
