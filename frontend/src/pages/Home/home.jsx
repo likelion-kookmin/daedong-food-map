@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoginForm from 'components/LoginForm';
 import { LOAD_PLACES_REQUEST, LOAD_PLACE_REQUEST } from 'reducers/place';
 
 function Home() {
@@ -12,22 +11,16 @@ function Home() {
     dispatch({
       type: LOAD_PLACES_REQUEST,
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch({
       type: LOAD_PLACE_REQUEST,
       id: 1,
     });
-  });
+  }, [dispatch]);
 
-  return (
-    <Fragment>
-      <img src="images/LogoTitle.png" style={{ width: '500px' }} alt="Logo" />
-      <p>Hello World!</p>
-      <LoginForm />
-    </Fragment>
-  );
+  return <Fragment>메인화면</Fragment>;
 }
 
 export default Home;

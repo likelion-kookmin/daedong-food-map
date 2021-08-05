@@ -1,6 +1,4 @@
 @import 'reset-css/reset.css';
 @import 'font.css';
+@import 'semantic-ui-css/semantic.min.css';
 
-body {
-  margin-top: 5vh;
-}

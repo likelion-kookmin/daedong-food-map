@@ -1,4 +1,4 @@
-import produce from '../utils/produce.util';
+import produceUtil from '../utils/produce.util';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -19,7 +19,7 @@ export const signinRequestAction = (data) => ({
 });
 
 const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+  produceUtil(state, (draft) => {
     switch (action.type) {
       case SIGN_IN_REQUEST:
         draft.signinLoading = true;
