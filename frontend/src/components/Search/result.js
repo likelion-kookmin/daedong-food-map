@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import '../../styles/result.css';
+import 'styles/result.css';
 
 const Result = () => {
   const places = useSelector((state) => state.place.mainPlaces);

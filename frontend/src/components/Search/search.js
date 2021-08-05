@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
-import '../../styles/search.css';
+import 'styles/search.css';
 
 const Search = () => {
   const [value, setValue] = useState('');

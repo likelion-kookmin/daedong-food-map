@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import '../../styles/map.css';
+import 'styles/map.css';
 
 const { kakao } = window;
 
