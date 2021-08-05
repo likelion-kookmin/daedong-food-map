@@ -63,6 +63,23 @@ DEFAULT_FORM_MAIL="DUMMY_EMAIL_NAME"
 
 ## How to deploy
 ```
-git switch main
-git subtree push --prefix backend origin heroku
+> git switch main
+> git subtree push --prefix backend origin heroku
+```
+
+## How to change env value
+```
+> yarn global add heroku-config
+> heroku plugins:install heroku-config
+> heroku config:push --file=.env.production --app daedong-food-map-api
+```
+
+## how to show production logs
+```
+> heroku logs --tail --app daedong-food-map-api
+```
+
+## production shell
+```
+> heroku run bash -a daedong-food-map-api
 ```
