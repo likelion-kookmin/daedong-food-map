@@ -8,17 +8,17 @@ from django.contrib.messages import constants as messages
 
 SITE_ID = 1
 # django basic settings
-PROJECT_NAME = os.environ.get('PROJECT_NAME')
+PROJECT_NAME = os. getenv('PROJECT_NAME')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = os.environ.get('DEBUG') == 'TRUE'
-USE_DOCKER = os.environ.get('USE_DOCKER') == 'TRUE'
-PORT = os.environ.get('PORT')
+SECRET_KEY = os. getenv('SECRET_KEY')
+DEBUG = os. getenv('DEBUG') == 'TRUE'
+USE_DOCKER = os. getenv('USE_DOCKER') == 'TRUE'
+PORT = os. getenv('PORT')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Deploy settings
-DEPLOY_URL = os.environ.get('DEPLOY_URL')
+DEPLOY_URL = os. getenv('DEPLOY_URL')
 ALLOWED_HOSTS = ['*', '127.0.0.1', DEPLOY_URL]
 
 # user model settings
@@ -107,11 +107,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get('POSTGRES_NAME'),
-        "USER": os.environ.get('POSTGRES_USER'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+        "NAME": os. getenv('POSTGRES_NAME'),
+        "USER": os. getenv('POSTGRES_USER'),
+        "PASSWORD": os. getenv('POSTGRES_PASSWORD'),
         "HOST": "db",
-        "PORT": os.environ.get('POSTGRES_PORT'),
+        "PORT": os. getenv('POSTGRES_PORT'),
     }
 } if USE_DOCKER else {
     'default': {
@@ -159,16 +159,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST = os. getenv('EMAIL_HOST')
 EMAIL_PORT = 587
-EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
+EMAIL_ADDRESS = os. getenv('EMAIL_ADDRESS')
 EMAIL_HOST_USER = EMAIL_ADDRESS
 MAIL_USERNAME = EMAIL_ADDRESS
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_PASSWORD = os. getenv('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 SERVER_EMAIL = EMAIL_ADDRESS
-DEFAULT_FORM_MAIL = os.environ.get('DEFAULT_FORM_MAIL')
+DEFAULT_FORM_MAIL = os. getenv('DEFAULT_FORM_MAIL')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # sass settings
