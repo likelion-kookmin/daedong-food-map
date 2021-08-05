@@ -3,10 +3,14 @@ import axios from 'axios';
 
 import { LOAD_PLACES_REQUEST, LOAD_PLACES_SUCCESS, LOAD_PLACES_FAILURE, LOAD_PLACE_SUCCESS, LOAD_PLACE_FAILURE, LOAD_PLACE_REQUEST } from '../reducers/place';
 
-const placeListAPI = (data) => axios.get('/places/', data);
+const placeListAPI = (data) => {
+  console.log(data);
+  return axios.get('/places/?search=');
+};
 
 function* placeList(action) {
   try {
+    console.log(1, action);
     const result = yield call(placeListAPI, action.data);
     yield put({
       type: LOAD_PLACES_SUCCESS,

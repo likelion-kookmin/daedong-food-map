@@ -94,6 +94,12 @@ class Place(BaseModel):
         blank=True,
     )
 
+    view_count = models.IntegerField(
+        verbose_name='장소의 조회수',
+        default=0,
+        blank=True,
+    )
+
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
     def __str__(self) -> str:

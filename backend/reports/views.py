@@ -3,6 +3,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -19,6 +20,7 @@ class ReportListView(BaseView, ListAPIView):
         - 없는 경우, 전체 제보 목록이 반환된다.
     """
     serializer_class = ReportSerializer
+    queryset = Report.objects.all()
 
     def get_queryset(self):
         user_id = self.request.query_params.get('user_id')
@@ -29,6 +31,7 @@ class ReportListView(BaseView, ListAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
 
 class ReportRetrieveView(BaseView, RetrieveAPIView):
     """# ReportRetrieveView
@@ -44,6 +47,7 @@ class ReportRetrieveView(BaseView, RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
 
 class ReportCreateView(BaseView, CreateAPIView):
     """# ReportCreateView
