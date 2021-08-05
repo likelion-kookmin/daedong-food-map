@@ -60,3 +60,9 @@ DEFAULT_FORM_MAIL="DUMMY_EMAIL_NAME"
 
 ### coverage html report
 > coverage html
+
+## How to deploy
+```
+git switch main
+git subtree push --prefix backend origin heroku
+```
