@@ -66,3 +66,10 @@ DEFAULT_FORM_MAIL="DUMMY_EMAIL_NAME"
 git switch main
 git subtree push --prefix backend origin heroku
 ```
+
+## How to change env value
+```
+yarn global add heroku-config
+heroku plugins:install heroku-config
+heroku config:push --file=.env.production --app daedong-food-map-api
+```
