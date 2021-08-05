@@ -1,0 +1,71 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:import/warnings",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "quotes": [1, "single"],
+    "array-bracket-newline": ["error"],
+    "arrow-spacing": ["error"],
+    "brace-style": ["error"],
+    "comma-spacing": ["error"],
+    "func-call-spacing": ["error"],
+    "function-paren-newline": ["error"],
+    "key-spacing": ["error"],
+    "keyword-spacing": ["error"],
+    "no-multi-spaces": ["error"],
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 1, "maxEOF": 0, "maxBOF": 0 }
+    ],
+    "no-trailing-spaces": ["error"],
+    "no-unused-vars": ["warn"],
+    "no-whitespace-before-property": ["error"],
+    "prefer-const": ["error"],
+    "require-await": ["error"],
+    "semi": ["error"],
+    "semi-spacing": ["error"],
+    "no-extra-semi": ["error"],
+    "react/boolean-prop-naming": [
+      "error",
+      { "propTypeNames": ["bool", "mutuallyExclusiveTrueProps"] }
+    ],
+    "react/no-danger": ["error"],
+    "react/no-did-mount-set-state": ["error"],
+    "react/no-did-update-set-state": ["error"],
+    "react/no-will-update-set-state": ["error"],
+    "react/no-multi-comp": ["error"],
+    "react/no-this-in-sfc": ["error"],
+    "react/no-unused-prop-types": ["error"],
+    "react/no-unused-state": ["error"],
+    "react/prefer-es6-class": ["error"],
+    "react/prefer-stateless-function": ["error"],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx"] }
+    ],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": false
+      }
+    ],
+    "react/style-prop-object": [
+      "error",
+      {
+        "allow": ["string"]
+      }
+    ],
+    "react/void-dom-elements-no-children": ["error"],
+    "react/sort-prop-types": ["error"],
+    "react/react-in-jsx-scope": ["off"]
+  }
+}
