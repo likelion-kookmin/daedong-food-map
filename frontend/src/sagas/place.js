@@ -4,8 +4,8 @@ import axios from 'axios';
 import { LOAD_PLACES_REQUEST, LOAD_PLACES_SUCCESS, LOAD_PLACES_FAILURE, LOAD_PLACE_SUCCESS, LOAD_PLACE_FAILURE, LOAD_PLACE_REQUEST } from '../reducers/place';
 
 const placeListAPI = (data) => {
-  console.log(data);
-  return axios.get('/places/?search=');
+  if (data) return axios.get(`/places/?search=${data.value}`);
+  else return axios.get('/places/');
 };
 
 function* placeList(action) {
