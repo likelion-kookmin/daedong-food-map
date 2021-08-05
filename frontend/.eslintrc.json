@@ -21,10 +21,7 @@
     "key-spacing": ["error"],
     "keyword-spacing": ["error"],
     "no-multi-spaces": ["error"],
-    "no-multiple-empty-lines": [
-      "error",
-      { "max": 1, "maxEOF": 0, "maxBOF": 0 }
-    ],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
     "no-trailing-spaces": ["error"],
     "no-unused-vars": ["warn"],
     "no-whitespace-before-property": ["error"],
@@ -47,10 +44,7 @@
     "react/no-unused-state": ["error"],
     "react/prefer-es6-class": ["error"],
     "react/prefer-stateless-function": ["error"],
-    "react/jsx-filename-extension": [
-      1,
-      { "extensions": [".js", ".jsx"] }
-    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/self-closing-comp": [
       "error",
       {

@@ -12,7 +12,14 @@ const MobileLayout = (props) => {
   return (
     <Media as={Sidebar.Pushable} at="mobile">
       <Sidebar.Pushable>
-        <Sidebar as={Menu} animation="overlay" onHide={handleSidebarHide} vertical direction="right" visible={sidebarOpened}>
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          onHide={handleSidebarHide}
+          vertical
+          direction="right"
+          visible={sidebarOpened}
+        >
           <Link to="/">
             <Menu.Item active>Home</Menu.Item>
           </Link>
