@@ -75,7 +75,7 @@ function PlaceCard(props) {
   return (
     <Container>
       <Number circular size="large">
-        1
+        {props.data.id}
       </Number>
       <Section style={{ alignItems: 'baseline' }}>
         <Name>{props.data.name}</Name>
