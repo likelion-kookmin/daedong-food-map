@@ -1,22 +1,26 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from config.views import BaseView
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Review
-from .serializers import ReviewSerializer
 from .permissions import IsReviewEditableOrDestroyable
+from .serializers import ReviewSerializer
 
 
 class ReviewListView(BaseView, ListAPIView):
-    """# ReviewListView  
+    """# ReviewListView
     - query params:
       - place_id
         - place_id가 있는 경우, 해당 장소의 리뷰 목록이 반환된다.
         - 없는 경우, 전체 리뷰 목록이 반환된다.
     """
 
+    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
     def get_queryset(self):

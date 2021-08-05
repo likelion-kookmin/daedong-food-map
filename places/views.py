@@ -3,6 +3,7 @@ from config.views import BaseView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
 from .models import Place
@@ -11,7 +12,7 @@ from .serializers import PlaceSerializer
 
 class PlaceListView(BaseView, ListAPIView):
     """## PlaceListView"""
-    queryset = Place.objects.published().all()
+    queryset = Place.objects.published().order_by('-created_at').all()
     serializer_class = PlaceSerializer
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]

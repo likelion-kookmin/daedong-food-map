@@ -1,13 +1,14 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from config.views import BaseView
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, UpdateAPIView)
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Inquiry
-from .serializers import InquirySerializer
 from .permissions import IsInquiryEditableOrDestroyable
-
+from .serializers import InquirySerializer
 
 
 class InquiryListView(BaseView, ListAPIView):
@@ -15,6 +16,7 @@ class InquiryListView(BaseView, ListAPIView):
     - 현재 유저가 신고한 목록이 반환된다.
     """
     serializer_class = InquirySerializer
+    queryset = Inquiry.objects.all()
 
     def get_queryset(self):
         return Inquiry.objects.filter(user=self.current_user)
@@ -22,19 +24,21 @@ class InquiryListView(BaseView, ListAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+
 class InquiryCreateView(BaseView, CreateAPIView):
     """# InquiryCreateView
-    - 제보(place)를 신고한다 
+    - 제보(place)를 신고한다
     """
     serializer_class = InquirySerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.current_user) 
-    
+        serializer.save(user=self.current_user)
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
 
 class InquiryUpdateView(BaseView, UpdateAPIView):
     """# InquiryUpdateView
@@ -50,7 +54,6 @@ class InquiryUpdateView(BaseView, UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
-
 
 
 class InquiryDestroyView(BaseView, DestroyAPIView):
