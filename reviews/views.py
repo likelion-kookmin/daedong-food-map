@@ -83,4 +83,6 @@ class ReviewDestroyView(BaseView, DestroyAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def delete(self, request, *args, **kwargs):
+        self.current_user.review_count -= 1
+        self.current_user.save()
         return self.destroy(request, *args, **kwargs)
