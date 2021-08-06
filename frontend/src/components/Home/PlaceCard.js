@@ -89,7 +89,7 @@ function PlaceCard(props) {
             return <Tag>{tag}</Tag>;
           })}
         </Section>
-        <Text style={{ paddingTop: '0.5rem' }}>1.57km</Text>
+        <Text style={{ paddingTop: '0.5rem' }}>{props.data.distance}</Text>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>{imglist}</Section>
     </Container>

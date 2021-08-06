@@ -28,6 +28,7 @@ function Home() {
     score: '4.12',
     reviews: '57',
     tags: ['붕어빵', '국화빵', '호떡'],
+    distance: '1.24km',
     pics: [
       'https://newsimg.hankookilbo.com/cms/articlerelease/2020/12/22/d5b17b0b-690b-4b02-990f-2e0ad40d70da.jpg',
       'https://i.ytimg.com/vi/khp4qDp3qB8/maxresdefault.jpg',
