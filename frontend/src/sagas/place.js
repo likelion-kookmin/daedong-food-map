@@ -1,7 +1,14 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { LOAD_PLACES_REQUEST, LOAD_PLACES_SUCCESS, LOAD_PLACES_FAILURE, LOAD_PLACE_SUCCESS, LOAD_PLACE_FAILURE, LOAD_PLACE_REQUEST } from '../reducers/place';
+import {
+  LOAD_PLACES_REQUEST,
+  LOAD_PLACES_SUCCESS,
+  LOAD_PLACES_FAILURE,
+  LOAD_PLACE_SUCCESS,
+  LOAD_PLACE_FAILURE,
+  LOAD_PLACE_REQUEST,
+} from '../reducers/place';
 
 const placeListAPI = (data) => axios.get('/places/', data);
 
