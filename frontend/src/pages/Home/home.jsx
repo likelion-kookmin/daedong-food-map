@@ -1,27 +1,20 @@
 import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_PLACES_REQUEST, LOAD_PLACE_REQUEST } from 'reducers/place';
+import Map from 'components/Map/map.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import Search from 'components/Search/search.js';
+import Loading from 'components/Loading/loading.js';
 import PlaceCard from 'components/Home/PlaceCard';
 import { Grid } from 'semantic-ui-react';
 
-function Home() {
+const Home = () => {
   const dispatch = useDispatch();
-  const places = useSelector((state) => state.place.mainPlaces);
-  console.log(places);
-
+  const isLoading = useSelector((state) => state.place.loadPlacesLoading);
   useEffect(() => {
     dispatch({
       type: LOAD_PLACES_REQUEST,
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_PLACE_REQUEST,
-      id: 1,
-    });
-  }, [dispatch]);
-
   const testprops = {
     id: 1,
     name: '황금붕어빵',
@@ -38,6 +31,14 @@ function Home() {
 
   return (
     <Fragment>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <Search />
+          <Map />
+        </Fragment>
+      )}
       <Grid stackable columns={2} paded>
         <Grid.Column>
           <PlaceCard data={testprops} />
@@ -51,6 +52,6 @@ function Home() {
       </Grid>
     </Fragment>
   );
-}
+};
 
 export default Home;

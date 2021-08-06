@@ -10,10 +10,14 @@ import {
   LOAD_PLACE_REQUEST,
 } from '../reducers/place';
 
-const placeListAPI = (data) => axios.get('/places/', data);
+const placeListAPI = (data) => {
+  console.log(data);
+  return axios.get('/places/?search=');
+};
 
 function* placeList(action) {
   try {
+    console.log(1, action);
     const result = yield call(placeListAPI, action.data);
     yield put({
       type: LOAD_PLACES_SUCCESS,
