@@ -21,15 +21,40 @@ const LoginForm = () => {
   }, [dispatch, email, password]);
 
   return (
-    <Grid textAlign="center" style={{ height: '50vh' }} verticalAlign="middle" onSubmit={onSubmitForm}>
+    <Grid
+      textAlign="center"
+      style={{ height: '50vh' }}
+      verticalAlign="middle"
+      onSubmit={onSubmitForm}
+    >
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="pink" textAlign="center">
           <Image src="images/Logo.png" /> Log-in to your account
         </Header>
         <Form size="large">
           <Segment stacked>
-            <Form.Input fluid icon="user" iconPosition="left" placeholder="E-mail address" name="email" type="email" value={email} onChange={onChangeEmail} required />
-            <Form.Input fluid icon="lock" iconPosition="left" placeholder="Password" type="password" name="password" value={password} onChange={onChangePassword} required />
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="E-mail address"
+              name="email"
+              type="email"
+              value={email}
+              onChange={onChangeEmail}
+              required
+            />
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChangePassword}
+              required
+            />
 
             <Button color="pink" fluid size="large" disabled={signinLoading}>
               Login

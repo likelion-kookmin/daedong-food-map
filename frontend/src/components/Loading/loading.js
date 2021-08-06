@@ -1,11 +1,12 @@
 import React from 'react';
-import '../../styles/loading.css';
+import 'styles/loading.css';
 
 const Loading = () => {
   return (
-    <div className="lds-ripple">
-      <div></div>
-      <div></div>
+    <div class="ui segment">
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading</div>
+      </div>
     </div>
   );
 };

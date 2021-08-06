@@ -43,7 +43,10 @@ const Map = () => {
     places.results.forEach((place, idx) => {
       // 마커 이미지를 생성합니다.
       const position = new kakao.maps.LatLng(place.latitude, place.longitude);
-      const smallMarkerImage = new kakao.maps.MarkerImage(`/icons/${place.name}.png`, smallImageSize);
+      const smallMarkerImage = new kakao.maps.MarkerImage(
+        `/icons/${place.name}.png`,
+        smallImageSize,
+      );
       const bigMarkerImage = new kakao.maps.MarkerImage(`/icons/${place.name}.png`, bigImageSize);
 
       // 마커를 생성합니다.

@@ -23,7 +23,7 @@ export const { MediaContextProvider, Media } = createMedia({
 export const sizes = {
   wide: '1200px',
   desktop: '992px',
-  tablet: '768px',
+  tablet: '767px',
   phone: '376px',
 };
 

@@ -18,6 +18,7 @@ class UserSerializer(WritableNestedModelSerializer):
             'email',
             'nickname',
             'report_count',
+            'review_count',
             'first_name',
             'last_name',
             'created_at',
