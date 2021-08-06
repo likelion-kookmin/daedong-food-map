@@ -1,0 +1,47 @@
+.search {
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  left: 50%;
+  top: 15%;
+  z-index: 1;
+  border-bottom: 1px solid balck;
+  border-radius: 3px;
+}
+
+.search .container form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.search .input_search {
+  font-size: small;
+  padding-left: 1rem;
+  border: 0;
+  width: 300px;
+  height: 33px;
+  border-radius: 3px;
+}
+
+.search .fa-search {
+  position: absolute;
+  right: 40px;
+  top: 9px;
+}
+
+.search button {
+  background-color: rgb(236, 67, 87);
+  border: 0;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.search button i {
+  color: white;
+  position: relative;
+  transform: translate3d(-50%, -50%, 0);
+  top: 25%;
+  left: 20%;
+}

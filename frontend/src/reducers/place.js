@@ -3,7 +3,7 @@ import produceUtil from 'utils/produce.util';
 export const initialState = {
   mainPlaces: [],
   singlePlace: null,
-  loadPlacesLoading: false,
+  loadPlacesLoading: true,
   loadPlacesDone: false,
   loadPlacesError: null,
   loadPlaceLoading: false,
