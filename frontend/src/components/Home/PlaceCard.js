@@ -62,7 +62,9 @@ const Img = styled.img`
 function PlaceCard(props) {
   const imglist = props.data.pics.map((img, index) => (
     <ImgContainer>
-      {index === 0 ? (
+      {props.data.pics.length === 1 ? (
+        <Img src={img} style={{ borderRadius: '10px' }} />
+      ) : index === 0 ? (
         <Img src={img} style={{ borderRadius: '10px 0 0 10px' }} />
       ) : index === props.data.pics.length - 1 ? (
         <Img src={img} style={{ borderRadius: '0 10px 10px 0', padding: '0' }} />
