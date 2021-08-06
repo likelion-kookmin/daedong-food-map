@@ -11,8 +11,8 @@ import {
 } from '../reducers/place';
 
 const placeListAPI = (data) => {
-  console.log(data);
-  return axios.get('/places/?search=');
+  if (data) return axios.get(`/places/?search=${data.value}`);
+  else return axios.get('/places/');
 };
 
 function* placeList(action) {

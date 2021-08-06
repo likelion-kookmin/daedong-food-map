@@ -11,7 +11,7 @@ const Search = () => {
       if (value !== '') {
         await dispatch({
           type: LOAD_PLACES_REQUEST,
-          data: value,
+          data: { value },
         });
       }
     } catch (error) {

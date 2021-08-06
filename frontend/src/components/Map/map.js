@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import 'styles/map.css';
+import Search from '../../components/Search/search.js';
+import Loading from '../../components/Loading/loading.js';
+import '../../styles/map.css';
 
 const { kakao } = window;
 
 const Map = () => {
   const places = useSelector((state) => state.place.mainPlaces);
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition((position) => {
@@ -22,6 +25,7 @@ const Map = () => {
   }, []);
 
   const displayMap = (locPosition) => {
+    setLoading(false);
     const mapContainer = document.getElementById('mapOverlay');
     const mapOption = {
       center: locPosition,
@@ -37,10 +41,12 @@ const Map = () => {
     const images = [];
 
     places.results.forEach((place, idx) => {
-      console.log(map);
       // 마커 이미지를 생성합니다.
       const position = new kakao.maps.LatLng(place.latitude, place.longitude);
-      const smallMarkerImage = new kakao.maps.MarkerImage(`/icons/${place.name}.png`, smallImageSize);
+      const smallMarkerImage = new kakao.maps.MarkerImage(
+        `/icons/${place.name}.png`,
+        smallImageSize,
+      );
       const bigMarkerImage = new kakao.maps.MarkerImage(`/icons/${place.name}.png`, bigImageSize);
 
       // 마커를 생성합니다.
@@ -124,7 +130,14 @@ const Map = () => {
 
   return (
     <section className="map">
-      <div id="mapOverlay"></div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <Search />
+          <div id="mapOverlay"></div>
+        </Fragment>
+      )}
     </section>
   );
 };

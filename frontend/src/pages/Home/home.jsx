@@ -9,12 +9,13 @@ import { Grid } from 'semantic-ui-react';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.place.loadPlacesLoading);
+  const { loadPlacesLoading } = useSelector((state) => state.place);
   useEffect(() => {
     dispatch({
       type: LOAD_PLACES_REQUEST,
     });
   }, [dispatch]);
+
   const testprops = {
     id: 1,
     name: '황금붕어빵',
@@ -31,11 +32,10 @@ const Home = () => {
 
   return (
     <Fragment>
-      {isLoading ? (
+      {loadPlacesLoading ? (
         <Loading />
       ) : (
         <Fragment>
-          <Search />
           <Map />
         </Fragment>
       )}
