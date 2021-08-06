@@ -1,8 +1,16 @@
 import React, { Fragment, useEffect } from 'react';
+<<<<<<< HEAD
 import Map from '../../components/Map/map.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
 import Loading from '../../components/Loading/loading.js';
+=======
+import Map from 'components/Map/map.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import Search from 'components/Search/search.js';
+import Loading from 'components/Loading/loading.js';
+>>>>>>> 1384b9d43c116099668784686da868885914369e
 import PlaceCard from 'components/Home/PlaceCard';
 import { Grid } from 'semantic-ui-react';
 
@@ -13,19 +21,8 @@ const Home = () => {
     dispatch({
       type: LOAD_PLACES_REQUEST,
     });
-  }, []);
+  }, [dispatch]);
 
-  // return (
-  //   <div>
-  //     {loadPlacesLoading ? (
-  //       <Loading />
-  //     ) : (
-  //       <Fragment>
-  //         <Map />
-  //       </Fragment>
-  //     )}
-  //   </div>
-  // );
   const testprops = {
     id: 1,
     name: '황금붕어빵',
@@ -42,6 +39,13 @@ const Home = () => {
 
   return (
     <Fragment>
+      {loadPlacesLoading ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <Map />
+        </Fragment>
+      )}
       <Grid stackable columns={2} paded>
         <Grid.Column>
           <PlaceCard data={testprops} />

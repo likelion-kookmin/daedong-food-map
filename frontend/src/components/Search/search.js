@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
-import '../../styles/search.css';
+import 'styles/search.css';
 
 const Search = () => {
   const [value, setValue] = useState('');
@@ -32,13 +32,14 @@ const Search = () => {
     <section className="search">
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <input className="input_search" type="text" value={value} onChange={handleChange} placeholder="먹고 싶은 음식을 찾아보세요!" />
-          <i class="fas fa-search"></i>
-          <span>
-            <button type="submit">
-              <i class="fas fa-map-marker-alt"></i>
-            </button>
-          </span>
+          <input
+            className="input_search"
+            type="text"
+            value={value}
+            onChange={handleChange}
+            placeholder="먹고 싶은 음식을 찾아보세요!"
+          />
+          <button type="submit"></button>
         </form>
       </div>
     </section>
