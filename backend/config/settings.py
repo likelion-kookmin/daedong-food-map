@@ -115,12 +115,10 @@ DATABASES = {
         "HOST": "db",
         "PORT": os. getenv('POSTGRES_PORT'),
     }
-    if USE_DOCKER
-    else {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+} if USE_DOCKER else {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
