@@ -42,4 +42,7 @@ class PlaceRetrieveView(BaseView, RetrieveAPIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.view_count += 1
+        obj.save()
         return self.retrieve(request, *args, **kwargs)
