@@ -4,22 +4,25 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import dj_database_url
+import django_heroku
 from django.contrib.messages import constants as messages
 
 SITE_ID = 1
 # django basic settings
-PROJECT_NAME = os.environ.get("PROJECT_NAME")
+PROJECT_NAME = os.getenv('PROJECT_NAME')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG") == "TRUE"
-USE_DOCKER = os.environ.get("USE_DOCKER") == "TRUE"
-PORT = os.environ.get("PORT")
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'TRUE'
+USE_DOCKER = os.getenv('USE_DOCKER') == 'TRUE'
+USE_HEROKU = os.getenv('USE_HEROKU') == 'TRUE'
+PORT = os.getenv('PORT')
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Deploy settings
-DEPLOY_URL = os.environ.get("DEPLOY_URL")
-ALLOWED_HOSTS = ["*", "127.0.0.1", DEPLOY_URL]
+DEPLOY_URL = os.getenv('DEPLOY_URL')
+ALLOWED_HOSTS = ['*', '127.0.0.1', DEPLOY_URL]
 
 # user model settings
 AUTH_USER_MODEL = "users.User"
@@ -102,16 +105,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = (
-    {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_NAME"),
-            "USER": os.environ.get("POSTGRES_USER"),
-            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-            "HOST": "db",
-            "PORT": os.environ.get("POSTGRES_PORT"),
-        }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os. getenv('POSTGRES_NAME'),
+        "USER": os. getenv('POSTGRES_USER'),
+        "PASSWORD": os. getenv('POSTGRES_PASSWORD'),
+        "HOST": "db",
+        "PORT": os. getenv('POSTGRES_PORT'),
     }
     if USE_DOCKER
     else {
@@ -120,8 +122,11 @@ DATABASES = (
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-)
+}
 
+if USE_HEROKU:
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -161,16 +166,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = 587
-EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 EMAIL_HOST_USER = EMAIL_ADDRESS
 MAIL_USERNAME = EMAIL_ADDRESS
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 SERVER_EMAIL = EMAIL_ADDRESS
-DEFAULT_FORM_MAIL = os.environ.get("DEFAULT_FORM_MAIL")
+DEFAULT_FORM_MAIL = os.getenv('DEFAULT_FORM_MAIL')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # sass settings
@@ -281,3 +286,5 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+
+django_heroku.settings(locals())
