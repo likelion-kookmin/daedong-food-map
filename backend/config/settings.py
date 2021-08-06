@@ -4,6 +4,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import dj_database_url
 import django_heroku
 from django.contrib.messages import constants as messages
 
@@ -15,6 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os. getenv('SECRET_KEY')
 DEBUG = os. getenv('DEBUG') == 'TRUE'
 USE_DOCKER = os. getenv('USE_DOCKER') == 'TRUE'
+USE_HEROKU = os.getenv('USE_HEROKU') == 'TRUE'
 PORT = os. getenv('PORT')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -121,6 +123,9 @@ DATABASES = {
     }
 }
 
+if USE_HEROKU:
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
