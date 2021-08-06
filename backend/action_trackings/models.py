@@ -12,7 +12,13 @@ class Action(models.TextChoices):
     """
 
     ADD_REPORT = '제보 등록', _('add_report')
+    DESTROY_REPORT = '제보 삭제', _('destroy_report')
     ADD_REVIEW = '리뷰 생성', _('add_review')
+    DESTROY_REVIEW = '리뷰 삭제', _('destroy_review')
+    ADD_INQUIRY = '신고 생성', _('add_inquiry')
+    DELETE_INQUIRY = '신고 삭제', _('destroy_inquiry')
+    ADD_VIEWCOUNT = 'place 조회', _('add_viewcount')
+
 
 class ActionPointRule(BaseModel):
     """# ActionPointRule

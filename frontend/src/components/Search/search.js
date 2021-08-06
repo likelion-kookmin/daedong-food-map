@@ -13,7 +13,6 @@ const Search = () => {
           type: LOAD_PLACES_REQUEST,
           data: value,
         });
-        console.log(value);
       }
     } catch (error) {
       console.error(error);
@@ -33,7 +32,13 @@ const Search = () => {
     <section className="search">
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <input className="input_search" type="text" value={value} onChange={handleChange} placeholder="먹고 싶은 음식을 찾아보세요!" />
+          <input
+            className="input_search"
+            type="text"
+            value={value}
+            onChange={handleChange}
+            placeholder="먹고 싶은 음식을 찾아보세요!"
+          />
           <button type="submit"></button>
         </form>
       </div>
