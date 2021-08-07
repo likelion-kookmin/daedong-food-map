@@ -1,48 +1,88 @@
 import React, { useState } from 'react';
-import { Container, Image, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { Container, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { maxWindowWidth } from 'utils/style.util';
+import styled from 'styled-components';
+
+const Logo = styled.img`
+  height: 30px;
+  vertical-align: middle;
+`;
 
 const MobileLayout = (props) => {
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
+  const { user } = useSelector((state) => state.authentication);
 
   return (
     <Sidebar.Pushable>
-      <Sidebar
-        as={Menu}
-        animation="overlay"
-        onHide={handleSidebarHide}
-        vertical
-        direction="right"
-        visible={sidebarOpened}
-      >
-        <Link to="/">
-          <Menu.Item active>Home</Menu.Item>
-        </Link>
-        <Link to="/login">
-          <Menu.Item>Log in</Menu.Item>
-        </Link>
-        <Link to="/register">
-          <Menu.Item as="a">Register</Menu.Item>
-        </Link>
-      </Sidebar>
+      {user ? (
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          onHide={handleSidebarHide}
+          vertical
+          direction="right"
+          visible={sidebarOpened}
+          style={{ fontFamily: 'NS-B' }}
+        >
+          <div>
+            <Menu.Item as="a" style={{ paddingBottom: '10px' }}>
+              <Menu.Header>내 정보</Menu.Header>
+              <Menu.Menu>
+                <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
+                  제보목록
+                </Menu.Item>
+                <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
+                  신고목록
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+          </div>
+          <Link>
+            <Menu.Item as="a">제보하기</Menu.Item>
+          </Link>
+          <Link to="/logout">
+            <Menu.Item as="a">로그아웃</Menu.Item>
+          </Link>
+        </Sidebar>
+      ) : (
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          onHide={handleSidebarHide}
+          vertical
+          direction="right"
+          visible={sidebarOpened}
+          style={{ fontFamily: 'NS-B' }}
+        >
+          <Link to="/login">
+            <Menu.Item as="a">로그인</Menu.Item>
+          </Link>
+          <Link to="/register">
+            <Menu.Item as="a">회원가입</Menu.Item>
+          </Link>
+        </Sidebar>
+      )}
 
       <Sidebar.Pusher dimmed={sidebarOpened}>
         <Segment textAlign="center" vertical padded>
           <Menu secondary size="large" fixed="top">
-            <Link to="/">
-              <Menu.Item>
-                <Image size="tiny" verticalAlign="middle" src="images/LogoTitle.png" />
-              </Menu.Item>
-            </Link>
+            <Menu.Item>
+              <Link to="/">
+                <Logo src="images/LogoTitle.png" />
+              </Link>
+            </Menu.Item>
             <Menu.Item onClick={handleToggle} position="right">
-              <Icon name="sidebar" />
+              <Icon name="sidebar" style={{ margin: 0 }} />
             </Menu.Item>
           </Menu>
         </Segment>
-        <Container style={{ width: maxWindowWidth, padding: '1rem' }}>{props.children}</Container>
+        <Container style={{ width: maxWindowWidth, minHeight: '600px', padding: '1rem' }}>
+          {props.children}
+        </Container>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
   );
