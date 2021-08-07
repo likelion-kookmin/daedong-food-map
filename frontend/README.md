@@ -35,6 +35,7 @@ yarn global add serve
 serve -s build
 ```
 
+
 ```
 yarn global add netlify
 > netlify deploy
