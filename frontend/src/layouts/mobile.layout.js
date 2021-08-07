@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { maxWindowWidth } from 'utils/style.util';
 import styled from 'styled-components';
 
@@ -10,11 +10,15 @@ const Logo = styled.img`
   vertical-align: middle;
 `;
 
-const MobileLayout = (props) => {
+function MobileLayout(props) {
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
   const { user } = useSelector((state) => state.authentication);
+
+  props.history.listen((location, action) => {
+    setSidebarOpened(false);
+  });
 
   return (
     <Sidebar.Pushable>
@@ -86,6 +90,6 @@ const MobileLayout = (props) => {
       </Sidebar.Pusher>
     </Sidebar.Pushable>
   );
-};
+}
 
-export default MobileLayout;
+export default withRouter(MobileLayout);
