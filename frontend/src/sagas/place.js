@@ -14,16 +14,14 @@ import {
 const placeListAPI = (data) => {
   let queryString = `/places/?page_size=${PAGE_SIZE}`;
 
-  if (data) {
-    queryString += `&search=${data.value}`;
-  }
+  data && data.value && (queryString += `&search=${data.value}`);
+  data && data.page && (queryString += `&page=${data.page}`);
 
   return axios.get(queryString);
 };
 
 function* placeList(action) {
   try {
-    console.log(1, action);
     const result = yield call(placeListAPI, action.data);
     yield put({
       type: LOAD_PLACES_SUCCESS,

@@ -1,3 +1,13 @@
 @import 'reset-css/reset.css';
 @import 'font.css';
 @import 'semantic-ui-css/semantic.min.css';
+
+.ui.secondary.menu .active.item {
+  font-weight: 900;
+  background: none;
+  color: #0475F4;
+}
+
+.ui.pagination.menu .item {
+  min-width: 0;
+}
