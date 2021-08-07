@@ -33,7 +33,7 @@ function* placeList(action) {
     console.error(err);
     yield put({
       type: LOAD_PLACES_FAILURE,
-      error: err.reponse.data,
+      error: err,
     });
   }
 }
@@ -51,7 +51,7 @@ function* placeDetail(action) {
     console.error(err);
     yield put({
       type: LOAD_PLACE_FAILURE,
-      error: err.reponse.data,
+      error: err,
     });
   }
 }

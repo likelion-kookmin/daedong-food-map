@@ -14,10 +14,10 @@ function* reportList(action) {
       data: result.data,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     yield put({
       type: LOAD_REPORTS_FAILURE,
-      error: err.respose.data,
+      error: err,
     });
   }
 }
