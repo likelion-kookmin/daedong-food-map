@@ -55,7 +55,7 @@ const DesktopLayout = (props) => {
   const { user } = useSelector((state) => state.authentication);
   const logout = () => {
     localStorage.removeItem('user');
-    window.location.reload();
+    window.location.href = '/';
   };
   return (
     <div>
@@ -96,7 +96,7 @@ const DesktopLayout = (props) => {
                     <DropText>신고목록</DropText>
                   </Dropdown.Item>
                 </Link>
-                <Link to="/">
+                <Link>
                   <Dropdown.Item as="a" onClick={logout}>
                     <DropText>로그아웃</DropText>
                   </Dropdown.Item>

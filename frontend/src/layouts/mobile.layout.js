@@ -22,7 +22,7 @@ function MobileLayout(props) {
 
   const logout = () => {
     localStorage.removeItem('user');
-    window.location.reload();
+    window.location.href = '/';
   };
 
   return (
@@ -53,7 +53,7 @@ function MobileLayout(props) {
           <Link>
             <Menu.Item as="a">제보하기</Menu.Item>
           </Link>
-          <Link to="/">
+          <Link>
             <Menu.Item as="a" onClick={logout}>
               로그아웃
             </Menu.Item>
