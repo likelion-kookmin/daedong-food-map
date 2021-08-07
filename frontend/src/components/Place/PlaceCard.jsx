@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon, Label } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   width: 100%;
@@ -76,6 +77,8 @@ const Img = styled.img`
 `;
 
 function PlaceCard(props) {
+  const { loadPlacesLoading } = useSelector((state) => state.place);
+
   const imglist =
     props.data.images && props.data.images.length
       ? props.data.images.map((img, index) => (
@@ -88,8 +91,9 @@ function PlaceCard(props) {
             <Img src="/images/LogoTitle.png" />
           </ImgContainer>,
         ];
+
   return (
-    <Container>
+    <Container className={loadPlacesLoading ? 'loading' : ''}>
       <Number circular size="large">
         {props.data.id}
       </Number>

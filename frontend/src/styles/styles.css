@@ -11,3 +11,18 @@
 .ui.pagination.menu .item {
   min-width: 0;
 }
+
+.loading * {
+  background-color: #d8dde1!important;
+  color: transparent!important;
+  border: transparent!important;
+  border-radius: 0!important;
+}
+.loading img {
+  opacity: 0!important;
+  visibility: hidden!important;
+}
+
+.loading .ui.circular.label {
+  display: none!important;
+}
