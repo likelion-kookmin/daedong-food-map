@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import PlaceCard from 'components/Place/PlaceCard';
 import { Grid } from 'semantic-ui-react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
-import Loading from 'components/Loading/loading.js';
+import PlacePagination from 'components/Place/Pagination';
 
 const PlaceList = () => {
   const dispatch = useDispatch();
   const mainPlaces = useSelector((state) => state.place.mainPlaces);
-  const { loadPlacesLoading } = useSelector((state) => state.place);
+  const { currentPage, totalPages } = useSelector((state) => state.place);
   useEffect(() => {
     dispatch({
       type: LOAD_PLACES_REQUEST,
@@ -18,17 +18,16 @@ const PlaceList = () => {
   }, [dispatch]);
 
   return (
-    <Grid stackable columns={2} paded="true">
-      {loadPlacesLoading ? (
-        <Loading />
-      ) : (
-        mainPlaces.map((place) => (
+    <Fragment>
+      <Grid stackable columns={2} paded="true">
+        {mainPlaces.map((place) => (
           <Grid.Column>
             <PlaceCard data={place} />
           </Grid.Column>
-        ))
-      )}
-    </Grid>
+        ))}
+      </Grid>
+      <PlacePagination currentPage={currentPage} totalPages={totalPages} />
+    </Fragment>
   );
 };
 
