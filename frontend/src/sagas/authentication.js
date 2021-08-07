@@ -1,5 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
+import camelize from 'camelize';
 
 import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from '../reducers/authentication';
 
@@ -10,13 +11,13 @@ function* signin(action) {
     const result = yield call(signinAPI, action.data);
     yield put({
       type: SIGN_IN_SUCCESS,
-      data: result.data,
+      data: camelize(result.data),
     });
   } catch (err) {
-    console.error(err);
+    console.log(err);
     yield put({
       type: SIGN_IN_FAILURE,
-      error: err,
+      error: camelize(err.response.data),
     });
   }
 }
