@@ -19,7 +19,7 @@ const LoginForm = () => {
         setEmailError(email);
       }
       if (nonFieldErrors) {
-        setNonFieldError('등록되어 있지 않는 이메일이거나, 비밀번호가 올바르지 않습니다.');
+        setNonFieldError('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
       }
     }
   }, [signinError]);
