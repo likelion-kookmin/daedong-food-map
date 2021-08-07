@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signinRequestAction } from 'reducers/authentication';
 import useInput from '../hooks/useInput';
-import { Button, Form, Grid, Header, Image, Message, Input } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Input } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 const LoginForm = () => {
   const dispatch = useDispatch();
