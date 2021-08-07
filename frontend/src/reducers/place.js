@@ -13,7 +13,7 @@ export const initialState = {
   loadPlaceError: null,
 };
 
-export const PAGE_SIZE = 8;
+export const PAGE_SIZE = 1;
 export const LOAD_PLACES_REQUEST = 'LOAD_PLACES_REQUEST';
 export const LOAD_PLACES_SUCCESS = 'LOAD_PLACES_SUCCESS';
 export const LOAD_PLACES_FAILURE = 'LOAD_PLACES_FAILURE';
