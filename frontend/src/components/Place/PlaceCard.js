@@ -88,7 +88,6 @@ function PlaceCard(props) {
             <Img src="/images/LogoTitle.png" />
           </ImgContainer>,
         ];
-  console.log(imglist);
   return (
     <Container>
       <Number circular size="large">
