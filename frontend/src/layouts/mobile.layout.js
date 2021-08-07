@@ -20,6 +20,11 @@ function MobileLayout(props) {
     setSidebarOpened(false);
   });
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+
   return (
     <Sidebar.Pushable>
       {user ? (
@@ -48,8 +53,10 @@ function MobileLayout(props) {
           <Link>
             <Menu.Item as="a">제보하기</Menu.Item>
           </Link>
-          <Link to="/logout">
-            <Menu.Item as="a">로그아웃</Menu.Item>
+          <Link to="/">
+            <Menu.Item as="a" onClick={logout}>
+              로그아웃
+            </Menu.Item>
           </Link>
         </Sidebar>
       ) : (
