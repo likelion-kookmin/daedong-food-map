@@ -1,5 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import {
   LOAD_PLACES_REQUEST,
@@ -11,18 +12,19 @@ import {
   PAGE_SIZE,
 } from '../reducers/place';
 
-const placeListAPI = (data) => {
-  let queryString = `/places/?page_size=${PAGE_SIZE}`;
-
-  data && data.value && (queryString += `&search=${data.value}`);
-  data && data.page && (queryString += `&page=${data.page}`);
-
-  return axios.get(queryString);
-};
-
 function* placeList(action) {
+  // const { map } = useSelector((state) => state.map);
   try {
-    const result = yield call(placeListAPI, action.data);
+    const data = action.data;
+    let queryString = `/places/?page_size=${PAGE_SIZE}`;
+    const longitude = localStorage.getItem('longitude');
+    const latitude = localStorage.getItem('latitude');
+
+    data && data.value && (queryString += `&search=${data.value}`);
+    data && data.page && (queryString += `&page=${data.page}`);
+    longitude && (queryString += `&longitude=${longitude}`);
+    latitude && (queryString += `&latitude=${latitude}`);
+    const result = yield call(axios.get, queryString);
     yield put({
       type: LOAD_PLACES_SUCCESS,
       data: result.data,

@@ -1,15 +1,24 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import Search from '../../components/Search/search.js';
-import Loading from '../../components/Loading/loading.js';
-import '../../styles/map.css';
+import React, { useState, useEffect, Fragment, useRef, forwardRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Search from 'components/Search/search.js';
+import Loading from 'components/Loading/loading.js';
+import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import { debounce } from 'lodash';
+import 'styles/map.css';
 
 const { kakao } = window;
 
 const Map = () => {
   const places = useSelector((state) => state.place.mainPlaces);
-  const [isLoading, setLoading] = useState(true);
+  const { loadPlacesLoading } = useSelector((state) => state.place);
+  const [loadMapLoading, setLoading] = useState(true);
+  const map = useRef(null);
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    if (loadPlacesLoading) {
+      return;
+    }
     if (!kakao) {
       console.error('카카오 Map API가 연결되지 않았습니다.');
       return;
@@ -26,7 +35,7 @@ const Map = () => {
       const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
       displayMap(locPosition);
     }
-  }, []);
+  }, [loadPlacesLoading]);
 
   const displayMap = (locPosition) => {
     setLoading(false);
@@ -35,8 +44,10 @@ const Map = () => {
       center: locPosition,
       level: 3,
     };
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-    map.setCenter(locPosition);
+    map.current = new kakao.maps.Map(mapContainer, mapOption);
+    map.current.setCenter(locPosition);
+    localStorage.setItem('longitude', map.current.getCenter().getLng());
+    localStorage.setItem('latitude', map.current.getCenter().getLat());
     // 마커 이미지의 이미지 크기 입니다.
     const smallImageSize = new kakao.maps.Size(25, 25);
     const bigImageSize = new kakao.maps.Size(35, 35);
@@ -55,7 +66,7 @@ const Map = () => {
 
       // 마커를 생성합니다.
       const marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도
+        map: map.current, // 마커를 표시할 지도
         position: position, // 마커를 표시할 위치
         title: place.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨
         image: smallMarkerImage, // 마커 이미지
@@ -111,7 +122,7 @@ const Map = () => {
       // customOverlay 열기
       const openInfo = () => {
         overlays.forEach((each) => each.setMap(null)); //모든 인포 닫기
-        customOverlay.setMap(map);
+        customOverlay.setMap(map.current);
       };
 
       const closeInfo = () => {
@@ -125,16 +136,28 @@ const Map = () => {
         // document.querySelector('.close').addEventListener('click', closeInfo);
         markers.forEach((marker, idx) => marker.setImage(images[idx]));
         marker.setImage(bigMarkerImage);
-        map.panTo(position);
+        map.current.panTo(position);
       });
 
-      kakao.maps.event.addListener(map, 'click', closeInfo);
+      kakao.maps.event.addListener(map.current, 'click', closeInfo);
+      kakao.maps.event.addListener(
+        map.current,
+        'center_changed',
+        debounce(() => {
+          console.log(2);
+          localStorage.setItem('longitude', map.current.getCenter().getLng());
+          localStorage.setItem('latitude', map.current.getCenter().getLat());
+          dispatch({
+            type: LOAD_PLACES_REQUEST,
+          });
+        }, 1000),
+      );
     });
   };
 
   return (
     <section className="map">
-      {isLoading ? (
+      {loadMapLoading ? (
         <Loading />
       ) : (
         <Fragment>
@@ -145,4 +168,4 @@ const Map = () => {
     </section>
   );
 };
-export default Map;
+export default forwardRef(Map);
