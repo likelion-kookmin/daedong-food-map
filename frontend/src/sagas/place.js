@@ -8,12 +8,22 @@ import {
   LOAD_PLACE_SUCCESS,
   LOAD_PLACE_FAILURE,
   LOAD_PLACE_REQUEST,
+  PAGE_SIZE,
 } from '../reducers/place';
 
-const placeListAPI = (data) => axios.get('/places/', data);
+const placeListAPI = (data) => {
+  let queryString = `/places/?page_size=${PAGE_SIZE}`;
+
+  if (data) {
+    queryString += `&search=${data.value}`;
+  }
+
+  return axios.get(queryString);
+};
 
 function* placeList(action) {
   try {
+    console.log(1, action);
     const result = yield call(placeListAPI, action.data);
     yield put({
       type: LOAD_PLACES_SUCCESS,

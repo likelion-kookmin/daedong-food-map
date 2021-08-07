@@ -38,6 +38,9 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         """### get_user
             - 현재 제보의 user 값을 가져온다
         """
-        user = Report.objects.filter(place=obj).first().user
-        user_serializers = UserSerializer(user)
-        return user_serializers.data
+        report = Report.objects.filter(place=obj).first()
+        if report and report.user:
+            return UserSerializer(report.user).data
+
+        return None
+
