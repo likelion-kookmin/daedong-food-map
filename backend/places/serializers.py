@@ -1,4 +1,6 @@
 """# places serializers"""
+from math import atan2, cos, pi, sin, sqrt
+
 from file_managers.serializers import ImageSerializer
 from reports.models import Report
 from rest_framework import serializers
@@ -11,6 +13,20 @@ from users.serializers import UserSerializer
 from .models import Place
 
 
+def deg2rad(deg):
+    return deg * (pi / 180)
+
+
+def getDistanceFromLatitudeAndLongitudeInMeter(latitude1, longitude1, latitude2, longitude2):
+    R = 6371
+    dLat = deg2rad(latitude2 - latitude1)
+    dLon = deg2rad(longitude2 - longitude1)
+    a = sin(dLat/2) * sin(dLat/2) + cos(deg2rad(latitude1)) * \
+        cos(deg2rad(latitude2)) * sin(dLon/2) * sin(dLon/2)
+    distance = R * (2 * atan2(sqrt(a), sqrt(1-a))) * 1000
+    return distance  # meter
+
+
 class PlaceSerializer(TaggitSerializer, ModelSerializer):
     """## PlaceSerializer
     - Place Model serializer입니다.
@@ -18,6 +34,8 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
     tags = TagListSerializerField(required=False)
     images = ImageSerializer(many=True, required=False)
     user = serializers.SerializerMethodField()
+    distance = serializers.SerializerMethodField()
+    average_score = serializers.ReadOnlyField()
 
     class Meta:
         """### PlaceSerializer.Meta"""
@@ -25,6 +43,7 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         fields = '__all__'
         read_only_fields = [
             'user',
+            'distance',
             'view_count',
             'status',
             'total_score',
@@ -44,3 +63,14 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
 
         return None
 
+    def get_distance(self, obj):
+        if not (self.context["latitude"] and self.context["longitude"]):
+            return 0
+        user_latitude = float(self.context["latitude"])
+        user_longitude = float(self.context["longitude"])
+        return round(getDistanceFromLatitudeAndLongitudeInMeter(
+            user_latitude,
+            user_longitude,
+            obj.latitude,
+            obj.longitude
+        ), 5)
