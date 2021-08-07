@@ -26,9 +26,15 @@ class PlaceListView(BaseView, ListAPIView):
 
         if longitude and latitude:
             longitude, latitude = map(float, (longitude, latitude))
-            return Place.objects.published().nearby(longitude, latitude)\
+            return Place.objects.published().nearby(longitude, latitude)
 
         return Place.objects.published().all()
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["longitude"] = self.request.query_params.get('longitude')
+        context["latitude"] = self.request.query_params.get('latitude')
+        return context
 
     def get(self, request, *args, **kwargs):
 
