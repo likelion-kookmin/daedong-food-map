@@ -1,9 +1,9 @@
 import React from 'react';
 import { maxWindowWidth } from 'utils/style.util';
-import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { lighten, darken } from 'polished';
 
 const Logo = styled.img`
@@ -53,7 +53,10 @@ const ContainerStyle = {
 
 const DesktopLayout = (props) => {
   const { user } = useSelector((state) => state.authentication);
-
+  const logout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
   return (
     <div>
       <Menu>
@@ -63,7 +66,7 @@ const DesktopLayout = (props) => {
               <Logo src="images/LogoTitle.png" />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
-            <Link to="/login">
+            <Link>
               <SecondaryBtn>
                 <Icon name="mail" style={{ marginRight: '0.5rem' }} />
                 제보하기
@@ -93,8 +96,8 @@ const DesktopLayout = (props) => {
                     <DropText>신고목록</DropText>
                   </Dropdown.Item>
                 </Link>
-                <Link to="/logout">
-                  <Dropdown.Item as="a">
+                <Link to="/">
+                  <Dropdown.Item as="a" onClick={logout}>
                     <DropText>로그아웃</DropText>
                   </Dropdown.Item>
                 </Link>
