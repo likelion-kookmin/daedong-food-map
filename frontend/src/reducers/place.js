@@ -2,6 +2,8 @@ import produceUtil from 'utils/produce.util';
 
 export const initialState = {
   mainPlaces: [],
+  totalPages: 1,
+  currentPage: 1,
   singlePlace: null,
   loadPlacesLoading: true,
   loadPlacesDone: false,
@@ -11,6 +13,7 @@ export const initialState = {
   loadPlaceError: null,
 };
 
+export const PAGE_SIZE = 8;
 export const LOAD_PLACES_REQUEST = 'LOAD_PLACES_REQUEST';
 export const LOAD_PLACES_SUCCESS = 'LOAD_PLACES_SUCCESS';
 export const LOAD_PLACES_FAILURE = 'LOAD_PLACES_FAILURE';
@@ -29,7 +32,9 @@ const reducer = (state = initialState, action) =>
       case LOAD_PLACES_SUCCESS: // TODO: 이후 Search 기능을 활용한 부분도 고려해야함.
         draft.loadPlacesLoading = false;
         draft.loadPlacesDone = true;
-        draft.mainPlaces = action.data;
+        draft.totalPages = action.data?.total_pages || 1;
+        draft.currentPage = action.data?.current_page || 1;
+        draft.mainPlaces = action.data?.results || [];
         break;
       case LOAD_PLACES_FAILURE:
         draft.loadPlacesLoading = false;

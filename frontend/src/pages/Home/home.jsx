@@ -38,7 +38,7 @@ const Home = () => {
           <Map />
         </Fragment>
       )}
-      <Grid stackable columns={2} paded>
+      <Grid stackable columns={2} paded="true">
         <Grid.Column>
           <PlaceCard data={testprops} />
         </Grid.Column>

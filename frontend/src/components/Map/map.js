@@ -10,6 +10,10 @@ const Map = () => {
   const places = useSelector((state) => state.place.mainPlaces);
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
+    if (!kakao) {
+      console.error('카카오 Map API가 연결되지 않았습니다.');
+      return;
+    }
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
@@ -40,7 +44,7 @@ const Map = () => {
     const markers = [];
     const images = [];
 
-    places.results.forEach((place, idx) => {
+    places.forEach((place, idx) => {
       // 마커 이미지를 생성합니다.
       const position = new kakao.maps.LatLng(place.latitude, place.longitude);
       const smallMarkerImage = new kakao.maps.MarkerImage(

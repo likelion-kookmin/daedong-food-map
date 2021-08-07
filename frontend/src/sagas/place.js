@@ -8,11 +8,17 @@ import {
   LOAD_PLACE_SUCCESS,
   LOAD_PLACE_FAILURE,
   LOAD_PLACE_REQUEST,
+  PAGE_SIZE,
 } from '../reducers/place';
 
 const placeListAPI = (data) => {
-  if (data) return axios.get(`/places/?search=${data.value}`);
-  else return axios.get('/places/');
+  let queryString = `/places/?page_size=${PAGE_SIZE}`;
+
+  if (data) {
+    queryString += `&search=${data.value}`;
+  }
+
+  return axios.get(queryString);
 };
 
 function* placeList(action) {
