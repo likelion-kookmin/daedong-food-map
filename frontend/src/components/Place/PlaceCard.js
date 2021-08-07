@@ -97,7 +97,7 @@ function PlaceCard(props) {
       <Section style={{ alignItems: 'baseline' }}>
         <Name>{props.data.name}</Name>
         <Icon name="star" style={{ color: '#F25C69', marginLeft: '0.8rem' }} />
-        <Text>{props.data.score}</Text>
+        <Text>{props.data.average_score}</Text>
         <Reviews>리뷰 {props.data.review_count}개</Reviews>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>
