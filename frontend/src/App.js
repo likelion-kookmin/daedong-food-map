@@ -13,7 +13,6 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Signin} />
         <Route exact path="/register" component={Signup} />
-        <Route exact path="/logout" /> {/* 로그아웃 */}
         <Route exact path="/reports" /> {/* 유저 제보목록 페이지 */}
         <Route exact path="/inquiries" /> {/* 유저 신고목록 페이지 */}
       </ResponsiveLayout>
