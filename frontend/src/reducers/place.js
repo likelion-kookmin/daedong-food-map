@@ -29,7 +29,7 @@ const reducer = (state = initialState, action) =>
       case LOAD_PLACES_SUCCESS: // TODO: 이후 Search 기능을 활용한 부분도 고려해야함.
         draft.loadPlacesLoading = false;
         draft.loadPlacesDone = true;
-        draft.mainPlaces = action.data;
+        draft.mainPlaces = action.data?.results || [];
         break;
       case LOAD_PLACES_FAILURE:
         draft.loadPlacesLoading = false;
