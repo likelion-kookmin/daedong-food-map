@@ -16,7 +16,7 @@ function* signin(action) {
     console.error(err);
     yield put({
       type: SIGN_IN_FAILURE,
-      error: err.reponse.data,
+      error: err,
     });
   }
 }
