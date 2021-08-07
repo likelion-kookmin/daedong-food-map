@@ -14,7 +14,6 @@ function* signin(action) {
       data: camelize(result.data),
     });
   } catch (err) {
-    console.log(err);
     yield put({
       type: SIGN_IN_FAILURE,
       error: camelize(err.response.data),
