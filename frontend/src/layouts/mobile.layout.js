@@ -79,7 +79,7 @@ function MobileLayout(props) {
       )}
 
       <Sidebar.Pusher dimmed={sidebarOpened}>
-        <Segment textAlign="center" vertical padded>
+        <Segment textAlign="center" vertical padded style={{ borderBottom: 'none' }}>
           <Menu secondary size="large" fixed="top">
             <Menu.Item>
               <Link to="/">
