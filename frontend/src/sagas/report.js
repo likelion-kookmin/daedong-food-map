@@ -2,7 +2,14 @@ import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import authHeader from './auth-header';
 import axios from 'axios';
 
-import { LOAD_REPORTS_REQUEST, LOAD_REPORTS_SUCCESS, LOAD_REPORTS_FAILURE, ADD_REPORT_REQUEST, ADD_REPORT_SUCCESS, ADD_REPORT_FAILURE } from 'reducers/report';
+import {
+  LOAD_REPORTS_REQUEST,
+  LOAD_REPORTS_SUCCESS,
+  LOAD_REPORTS_FAILURE,
+  ADD_REPORT_REQUEST,
+  ADD_REPORT_SUCCESS,
+  ADD_REPORT_FAILURE,
+} from 'reducers/report';
 
 const reportListAPI = (data) => axios.get('/reports/', { headers: authHeader() }, data);
 
