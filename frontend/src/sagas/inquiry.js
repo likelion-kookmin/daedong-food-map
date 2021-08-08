@@ -2,7 +2,11 @@ import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import authHeader from './auth-header';
 import axios from 'axios';
 
-import { LOAD_INQUIRIES_REQUEST, LOAD_INQUIRIES_SUCCESS, LOAD_INQUIRIES_FAILURE } from 'reducers/inquiry';
+import {
+  LOAD_INQUIRIES_REQUEST,
+  LOAD_INQUIRIES_SUCCESS,
+  LOAD_INQUIRIES_FAILURE,
+} from 'reducers/inquiry';
 
 const inquiryListAPI = (data) => axios.get('/inquiries/', { headers: authHeader() }, data);
 
@@ -14,10 +18,10 @@ function* inquiryList(action) {
       data: result.data,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     yield put({
       type: LOAD_INQUIRIES_FAILURE,
-      error: err.respose.data,
+      error: err,
     });
   }
 }

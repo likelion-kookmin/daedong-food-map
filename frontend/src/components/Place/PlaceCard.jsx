@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Icon, Label } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   width: 100%;
@@ -49,6 +51,21 @@ const ImgContainer = styled.div`
   position: relative;
   flex-grow: 1;
   padding-bottom: 30%;
+  &: last-child {
+    img {
+      border-radius: 0 10px 10px 0;
+    }
+  }
+  &: first-child {
+    img {
+      border-radius: 10px 0 0 10px;
+    }
+  }
+  &: only-child {
+    img {
+      border-radius: 10px;
+    }
+  }
 `;
 
 const Img = styled.img`
@@ -57,33 +74,37 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
   padding-right: 0.3rem;
+  border-radius: 0;
 `;
 
 function PlaceCard(props) {
-  const imglist = props.data.pics.map((img, index) => (
-    <ImgContainer>
-      {props.data.pics.length === 1 ? (
-        <Img src={img} style={{ borderRadius: '10px' }} />
-      ) : index === 0 ? (
-        <Img src={img} style={{ borderRadius: '10px 0 0 10px' }} />
-      ) : index === props.data.pics.length - 1 ? (
-        <Img src={img} style={{ borderRadius: '0 10px 10px 0', padding: '0' }} />
-      ) : (
-        <Img src={img} />
-      )}
-    </ImgContainer>
-  ));
+  const { loadPlacesLoading } = useSelector((state) => state.place);
+
+  const imglist =
+    props.data.images && props.data.images.length
+      ? props.data.images.map((img, index) => (
+          <ImgContainer>
+            <Img src={img.image} />
+          </ImgContainer>
+        ))
+      : [
+          <ImgContainer>
+            <Img src="/images/LogoTitle.png" />
+          </ImgContainer>,
+        ];
 
   return (
-    <Container>
+    <Container className={loadPlacesLoading ? 'loading' : ''}>
       <Number circular size="large">
         {props.data.id}
       </Number>
       <Section style={{ alignItems: 'baseline' }}>
-        <Name>{props.data.name}</Name>
+        <Link to={`/places/${[props.data.id]}`}>
+          <Name>{props.data.name}</Name>
+        </Link>
         <Icon name="star" style={{ color: '#F25C69', marginLeft: '0.8rem' }} />
-        <Text>{props.data.score}</Text>
-        <Reviews>리뷰 {props.data.reviews}개</Reviews>
+        <Text>{props.data.averageScore}</Text>
+        <Reviews>리뷰 {props.data.reviewCount}개</Reviews>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>
         <Section style={{ margin: '0' }}>

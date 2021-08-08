@@ -2,3 +2,27 @@
 @import 'font.css';
 @import 'semantic-ui-css/semantic.min.css';
 
+.ui.secondary.menu .active.item {
+  font-weight: 900;
+  background: none;
+  color: #0475F4;
+}
+
+.ui.pagination.menu .item {
+  min-width: 0;
+}
+
+.loading * {
+  background-color: #d8dde1!important;
+  color: transparent!important;
+  border: transparent!important;
+  border-radius: 0!important;
+}
+.loading img {
+  opacity: 0!important;
+  visibility: hidden!important;
+}
+
+.loading .ui.circular.label {
+  display: none!important;
+}

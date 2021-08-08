@@ -1,23 +1,5 @@
-/**********************************`
- `* Name : styleUtil.js`
- `* Author : Kim Minjeong(minjj0905)`
- `* Introduction : 화면 사이즈에 따른 media 쿼리를 통한 자동 리사이징, 그림자 효과 간편화를 위한 유틸`
- `*`
- `********************************** */
-
 import { css } from 'styled-components';
-
-import { createMedia } from '@artsy/fresnel';
-
 export const maxWindowWidth = '1200px';
-
-export const { MediaContextProvider, Media } = createMedia({
-  breakpoints: {
-    mobile: 0,
-    tablet: 768,
-    desktop: 1024,
-  },
-});
 
 // 미디어 쿼리 분기점 지정
 export const sizes = {

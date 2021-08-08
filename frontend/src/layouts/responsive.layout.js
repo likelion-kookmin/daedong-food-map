@@ -1,17 +1,19 @@
-import { MediaContextProvider } from 'utils/style.util';
+import useWindowDimensions from 'utils/window.util';
 import DesktopLayout from './desktop.layout';
 import MobileLayout from './mobile.layout';
-import PropTypes from 'prop-types';
+import Footer from 'components/Footer/footer';
 
-const ResponsiveLayout = ({ children }) => (
-  <MediaContextProvider>
-    <DesktopLayout>{children}</DesktopLayout>
-    <MobileLayout>{children}</MobileLayout>
-  </MediaContextProvider>
-);
-
-ResponsiveLayout.propTypes = {
-  children: PropTypes.node,
-};
-
+function ResponsiveLayout({ children }) {
+  const { width } = useWindowDimensions();
+  return (
+    <div>
+      {width > 768 ? (
+        <DesktopLayout>{children}</DesktopLayout>
+      ) : (
+        <MobileLayout>{children}</MobileLayout>
+      )}
+      <Footer />
+    </div>
+  );
+}
 export default ResponsiveLayout;

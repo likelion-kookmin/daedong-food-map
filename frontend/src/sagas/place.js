@@ -1,5 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
+import camelize from 'camelize';
 
 import {
   LOAD_PLACES_REQUEST,
@@ -8,22 +9,30 @@ import {
   LOAD_PLACE_SUCCESS,
   LOAD_PLACE_FAILURE,
   LOAD_PLACE_REQUEST,
+  PAGE_SIZE,
 } from '../reducers/place';
 
-const placeListAPI = (data) => axios.get('/places/', data);
+const placeListAPI = (data) => {
+  let queryString = `/places/?page_size=${PAGE_SIZE}`;
+
+  data && data.value && (queryString += `&search=${data.value}`);
+  data && data.page && (queryString += `&page=${data.page}`);
+
+  return axios.get(queryString);
+};
 
 function* placeList(action) {
   try {
     const result = yield call(placeListAPI, action.data);
     yield put({
       type: LOAD_PLACES_SUCCESS,
-      data: result.data,
+      data: camelize(result.data),
     });
   } catch (err) {
     console.error(err);
     yield put({
       type: LOAD_PLACES_FAILURE,
-      error: err.reponse.data,
+      error: err,
     });
   }
 }
@@ -35,13 +44,13 @@ function* placeDetail(action) {
     const result = yield call(placeDetailAPI, action.id);
     yield put({
       type: LOAD_PLACE_SUCCESS,
-      data: result.data,
+      data: camelize(result.data),
     });
   } catch (err) {
     console.error(err);
     yield put({
       type: LOAD_PLACE_FAILURE,
-      error: err.reponse.data,
+      error: err,
     });
   }
 }
