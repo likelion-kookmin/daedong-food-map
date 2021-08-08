@@ -42,7 +42,7 @@ const LoginForm = () => {
         <Header as="h2" textAlign="center" style={{ color: '#f25c69' }}>
           <Image src="images/Logo.png" />
           <br />
-          Log-in to your account
+          대동먹지도 로그인
         </Header>
         <Form size="large" style={{ textAlign: 'left' }}>
           <Form.Field
