@@ -6,9 +6,15 @@ import {
   LOAD_BOOKMARKS_REQUEST,
   LOAD_BOOKMARKS_SUCCESS,
   LOAD_BOOKMARKS_FAILURE,
+  ADD_BOOKMARK_REQUEST,
+  ADD_BOOKMARK_SUCCESS,
+  ADD_BOOKMARK_FAILURE,
 } from 'reducers/bookmark';
 
 const bookmarkListAPI = (data) => axios.get('/bookmarks/', { headers: authHeader() }, data);
+
+const bookmarkNewAPI = (data) =>
+  axios.post('/bookmarks/new/', { headers: authHeader() }, { place_id: data.id });
 
 function* bookmarkList(action) {
   try {
@@ -26,10 +32,30 @@ function* bookmarkList(action) {
   }
 }
 
-function* watchInquiryList() {
+function* bookmarkNew(action) {
+  try {
+    const result = yield call(bookmarkNewAPI, action.data);
+    yield put({
+      type: ADD_BOOKMARK_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_BOOKMARK_FAILURE,
+      error: err,
+    });
+  }
+}
+
+function* watchBookmarkList() {
   yield takeLatest(LOAD_BOOKMARKS_REQUEST, bookmarkList);
 }
 
+function* watchBookmarkNew() {
+  yield takeLatest(ADD_BOOKMARK_REQUEST, bookmarkNew);
+}
+
 export default function* bookmarkSaga() {
-  yield all([fork(watchInquiryList)]);
+  yield all([fork(watchBookmarkList), fork(watchBookmarkNew)]);
 }
