@@ -125,7 +125,9 @@ const DesktopLayout = (props) => {
           </Container>
         )}
       </Menu>
-      <Container style={{ width: maxWindowWidth, padding: '2rem' }}>{props.children}</Container>
+      <Container style={{ width: maxWindowWidth, padding: '2rem', minHeight: window.outerHeight }}>
+        {props.children}
+      </Container>
     </div>
   );
 };

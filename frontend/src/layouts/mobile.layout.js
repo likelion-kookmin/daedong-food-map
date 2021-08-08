@@ -91,7 +91,9 @@ function MobileLayout(props) {
             </Menu.Item>
           </Menu>
         </Segment>
-        <Container style={{ width: maxWindowWidth, minHeight: '600px', padding: '1rem' }}>
+        <Container
+          style={{ width: maxWindowWidth, padding: '1rem', minHeight: window.outerHeight }}
+        >
           {props.children}
         </Container>
       </Sidebar.Pusher>
