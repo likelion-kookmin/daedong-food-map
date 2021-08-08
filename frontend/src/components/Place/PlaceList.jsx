@@ -19,7 +19,7 @@ const PlaceList = () => {
 
   return (
     <Fragment>
-      <Grid stackable columns={2} paded="true">
+      <Grid stackable columns={2} padded="true">
         {mainPlaces.map((place) => (
           <Grid.Column>
             <PlaceCard data={place} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Icon, Label } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 
@@ -98,10 +99,12 @@ function PlaceCard(props) {
         {props.data.id}
       </Number>
       <Section style={{ alignItems: 'baseline' }}>
-        <Name>{props.data.name}</Name>
+        <Link to={`/places/${[props.data.id]}`}>
+          <Name>{props.data.name}</Name>
+        </Link>
         <Icon name="star" style={{ color: '#F25C69', marginLeft: '0.8rem' }} />
-        <Text>{props.data.average_score}</Text>
-        <Reviews>리뷰 {props.data.review_count}개</Reviews>
+        <Text>{props.data.averageScore}</Text>
+        <Reviews>리뷰 {props.data.reviewCount}개</Reviews>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>
         <Section style={{ margin: '0' }}>
