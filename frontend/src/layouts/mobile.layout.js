@@ -44,16 +44,16 @@ function MobileLayout(props) {
                 <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
                   제보목록
                 </Menu.Item>
-                <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
+                <Menu.Item href="/inquiries" style={{ fontSize: '1rem' }}>
                   신고목록
                 </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
           </div>
-          <Link>
+          <Link to="/reports">
             <Menu.Item as="a">제보하기</Menu.Item>
           </Link>
-          <Link>
+          <Link to="/inquiries">
             <Menu.Item as="a" onClick={logout}>
               로그아웃
             </Menu.Item>
