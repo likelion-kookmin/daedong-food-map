@@ -41,11 +41,14 @@ function MobileLayout(props) {
             <Menu.Item as="a" style={{ paddingBottom: '10px' }}>
               <Menu.Header>내 정보</Menu.Header>
               <Menu.Menu>
+                <Menu.Item href="/bookmarks" style={{ fontSize: '1rem' }}>
+                  북마크 목록
+                </Menu.Item>
                 <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
-                  제보목록
+                  제보 목록
                 </Menu.Item>
                 <Menu.Item href="/inquiries" style={{ fontSize: '1rem' }}>
-                  신고목록
+                  신고 목록
                 </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
