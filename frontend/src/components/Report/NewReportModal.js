@@ -75,7 +75,7 @@ const Tagcontainer = styled.div`
 const NewReportModal = (props) => {
   const [step, setStep] = useState(0);
   const [placename, onChangePlacename, setPlacename] = useInput('');
-  const [address, onChangeAddress, setAddress] = useInput('');
+  const [address, setAddress] = useState('');
   const [detailAddress, onChangeDetailAddress, setDetailAddress] = useInput('');
   const [inputTag, onChangeInputTag, setInputTag] = useInput('');
   const [contents, onChangeContents, setContents] = useInput('');
