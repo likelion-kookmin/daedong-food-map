@@ -204,9 +204,9 @@ const NewReportModal = (props) => {
                 }}
               >
                 <label>장소설명</label>
-                <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
+                {/* <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
                   100
-                </label>
+                </label> */}
               </div>
               <Form>
                 <Form.TextArea
