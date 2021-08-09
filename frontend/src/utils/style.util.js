@@ -5,7 +5,7 @@ export const maxWindowWidth = '1200px';
 export const sizes = {
   wide: '1200px',
   desktop: '992px',
-  tablet: '767px',
+  tablet: '768px',
   phone: '376px',
 };
 

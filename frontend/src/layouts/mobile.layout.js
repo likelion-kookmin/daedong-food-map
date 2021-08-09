@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Container, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { maxWindowWidth } from 'utils/style.util';
 import styled from 'styled-components';
 
+import NewReport from 'components/Report/NewReportModal';
+
 const Logo = styled.img`
   height: 30px;
   vertical-align: middle;
 `;
 
-function MobileLayout(props) {
+const MobileLayout = (props) => {
   const [sidebarOpened, setSidebarOpened] = useState(false);
+  const [newReportOpened, setNewReportOpened] = useState(false);
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
   const { user } = useSelector((state) => state.authentication);
@@ -25,83 +28,97 @@ function MobileLayout(props) {
     window.location.href = '/';
   };
 
-  return (
-    <Sidebar.Pushable>
-      {user ? (
-        <Sidebar
-          as={Menu}
-          animation="overlay"
-          onHide={handleSidebarHide}
-          vertical
-          direction="right"
-          visible={sidebarOpened}
-          style={{ fontFamily: 'NS-B' }}
-        >
-          <div>
-            <Menu.Item as="a" style={{ paddingBottom: '10px' }}>
-              <Menu.Header>내 정보</Menu.Header>
-              <Menu.Menu>
-                <Menu.Item href="/bookmarks" style={{ fontSize: '1rem' }}>
-                  북마크 목록
-                </Menu.Item>
-                <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
-                  제보 목록
-                </Menu.Item>
-                <Menu.Item href="/inquiries" style={{ fontSize: '1rem' }}>
-                  신고 목록
-                </Menu.Item>
-              </Menu.Menu>
-            </Menu.Item>
-          </div>
-          <Link to="/reports">
-            <Menu.Item as="a">제보하기</Menu.Item>
-          </Link>
-          <Link to="/inquiries">
-            <Menu.Item as="a" onClick={logout}>
-              로그아웃
-            </Menu.Item>
-          </Link>
-        </Sidebar>
-      ) : (
-        <Sidebar
-          as={Menu}
-          animation="overlay"
-          onHide={handleSidebarHide}
-          vertical
-          direction="right"
-          visible={sidebarOpened}
-          style={{ fontFamily: 'NS-B' }}
-        >
-          <Link to="/login">
-            <Menu.Item as="a">로그인</Menu.Item>
-          </Link>
-          <Link to="/register">
-            <Menu.Item as="a">회원가입</Menu.Item>
-          </Link>
-        </Sidebar>
-      )}
+  const openNewReportModal = () => {
+    setSidebarOpened(false);
+    setNewReportOpened(true);
+  };
 
-      <Sidebar.Pusher dimmed={sidebarOpened}>
-        <Segment textAlign="center" vertical padded style={{ borderBottom: 'none' }}>
-          <Menu secondary size="large" fixed="top">
-            <Menu.Item>
-              <Link to="/">
-                <Logo src="images/LogoTitle.png" />
-              </Link>
-            </Menu.Item>
-            <Menu.Item onClick={handleToggle} position="right">
-              <Icon name="sidebar" style={{ margin: 0 }} />
-            </Menu.Item>
-          </Menu>
-        </Segment>
-        <Container
-          style={{ width: maxWindowWidth, padding: '1rem', minHeight: window.outerHeight }}
-        >
-          {props.children}
-        </Container>
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
+  return (
+    <Fragment>
+      <NewReport setOpen={setNewReportOpened} open={newReportOpened} />
+      <Sidebar.Pushable>
+        {user ? (
+          <Sidebar
+            as={Menu}
+            animation="overlay"
+            onHide={handleSidebarHide}
+            vertical
+            direction="right"
+            visible={sidebarOpened}
+            style={{ fontFamily: 'NS-B' }}
+          >
+            <div>
+              <Menu.Item>
+                <Menu.Header>내 정보</Menu.Header>
+                <div>
+                  <Menu.Item href="/bookmarks" style={{ fontSize: '1rem' }}>
+                    북마크 목록
+                  </Menu.Item>
+                </div>
+                <div>
+                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
+                    제보목록
+                  </Menu.Item>
+                </div>
+                <div>
+                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
+                    신고목록
+                  </Menu.Item>
+                </div>
+              </Menu.Item>
+            </div>
+            <div>
+              <Menu.Item as="a" onClick={openNewReportModal}>
+                제보하기
+              </Menu.Item>
+            </div>
+            <Link>
+              <Menu.Item as="a" onClick={logout}>
+                로그아웃
+              </Menu.Item>
+            </Link>
+          </Sidebar>
+        ) : (
+          <Sidebar
+            as={Menu}
+            animation="overlay"
+            onHide={handleSidebarHide}
+            vertical
+            direction="right"
+            visible={sidebarOpened}
+            style={{ fontFamily: 'NS-B' }}
+          >
+            <Link to="/login">
+              <Menu.Item as="a">로그인</Menu.Item>
+            </Link>
+            <Link to="/register">
+              <Menu.Item as="a">회원가입</Menu.Item>
+            </Link>
+          </Sidebar>
+        )}
+
+        <Sidebar.Pusher dimmed={sidebarOpened}>
+          <Segment textAlign="center" vertical padded>
+            <Menu secondary size="large" fixed="top">
+              <Menu.Item>
+                <Link to="/">
+                  <Logo src="images/LogoTitle.png" />
+                </Link>
+              </Menu.Item>
+              <Menu.Item onClick={handleToggle} position="right">
+                <Icon name="sidebar" style={{ margin: 0 }} />
+              </Menu.Item>
+            </Menu>
+          </Segment>
+          <Container
+            style={{ width: maxWindowWidth, padding: '1rem', minHeight: window.outerHeight }}
+          >
+            {props.children}
+          </Container>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+    </Fragment>
   );
-}
+};
 
 export default withRouter(MobileLayout);
