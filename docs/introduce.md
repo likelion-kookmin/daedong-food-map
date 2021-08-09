@@ -26,9 +26,15 @@
 ### API 구조
 
 아래 API docs 사이트를 통해 쉽게 확인하실 수 있습니다.
+#### Swagger
 - [Swagger](https://daedong-food-map-api.herokuapp.com/swagger/)
+
+- ![Swagger Example](./swagger.jpg)
+
+#### Redoc
 - [Redoc](https://daedong-food-map-api.herokuapp.com/redoc/)
 
+- ![Redoc Example](./redoc.jpg)
 ### 프론트엔드 구조
 
 #### 폴더 구조
