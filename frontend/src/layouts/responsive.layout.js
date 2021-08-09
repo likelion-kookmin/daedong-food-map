@@ -1,6 +1,7 @@
 import useWindowDimensions from 'utils/window.util';
 import DesktopLayout from './desktop.layout';
 import MobileLayout from './mobile.layout';
+import Footer from 'components/Footer/footer';
 
 function ResponsiveLayout({ children }) {
   const { width } = useWindowDimensions();
@@ -11,6 +12,7 @@ function ResponsiveLayout({ children }) {
       ) : (
         <MobileLayout>{children}</MobileLayout>
       )}
+      <Footer />
     </div>
   );
 }

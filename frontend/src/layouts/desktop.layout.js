@@ -86,14 +86,19 @@ const DesktopLayout = (props) => {
                   color: '#ffffff',
                 }}
               >
+                <Link to="/bookmarks">
+                  <Dropdown.Item as="a">
+                    <DropText>북마크 목록</DropText>
+                  </Dropdown.Item>
+                </Link>
                 <Link to="/reports">
                   <Dropdown.Item as="a">
-                    <DropText>제보목록</DropText>
+                    <DropText>제보 목록</DropText>
                   </Dropdown.Item>
                 </Link>
                 <Link to="/inquiries">
                   <Dropdown.Item as="a">
-                    <DropText>신고목록</DropText>
+                    <DropText>신고 목록</DropText>
                   </Dropdown.Item>
                 </Link>
                 <Link>
@@ -125,7 +130,9 @@ const DesktopLayout = (props) => {
           </Container>
         )}
       </Menu>
-      <Container style={{ width: maxWindowWidth, padding: '2rem' }}>{props.children}</Container>
+      <Container style={{ width: maxWindowWidth, padding: '2rem', minHeight: window.outerHeight }}>
+        {props.children}
+      </Container>
     </div>
   );
 };
