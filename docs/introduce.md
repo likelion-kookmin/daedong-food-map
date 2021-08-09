@@ -49,17 +49,7 @@
 
 #### 디렉토리 구조
 
-
-<div style="display: flex;" >
-
-<div style="padding: 1rem;">
-
-
 ![front dir structure](./front_dir_structure.png)
-
-</div>
-
-<div style="padding: 1rem;">
 
 ||디렉토리명|역할|
 |-|-|-|
@@ -69,16 +59,10 @@
 |hooks| 공통적으로 사용되는 커스텀 훅을 모아두는 디렉토리입니다.|
 |layouts| 사이트의 레이아웃 컴포넌트를 모아두는 디렉토리입니다.|
 |pages| 사이트 상의 페이지를 나타내는 컴포넌트를 모아두는 디렉토리입니다.|
-|reducers| | |
-|sagas| | |
-|store| | |
-|styles| | |
-
-</div>
-
-</div>
-
-
+|reducers| 목적단위로 state들을 따로 분리하고, 이를 관리하는 reducer들을 모아두었습니다. |
+|sagas| redux-saga를 이용해 action들을 watch하고, 작업을 수행하는 목적단위로 파일들을 분리하여 모아두었습니다. |
+|store| react-redux 스토어를 정의하는 파일을 분리해두는 디렉토리입니다.|
+|styles| stylesheet를 모아두는 디렉토리입니다. |
 
 #### Redux & Redux-Saga
 
