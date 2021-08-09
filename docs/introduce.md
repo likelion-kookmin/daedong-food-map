@@ -17,6 +17,10 @@
 백엔드는 `Django` 로 개발되었으며, `django-rest-framework` 를 이용한 API 서버로 구성되어있습니다.
 
 ### 디비 스키마 구조
+#### 서비스 모델 스키마
+![서비스 모델 스키마](../backend/service_models.png)
+
+#### 전체 모델 스키마
 ![디비 스키마](../backend/models.png)
 
 ### API 구조
