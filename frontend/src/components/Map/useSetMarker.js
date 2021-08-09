@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_MARKER } from '../../reducers/map';
-import { Label } from 'semantic-ui-react';
 const { kakao } = window;
 
 var places = [];
@@ -11,7 +10,6 @@ var overlay_old = [];
 const useSetMarker = () => {
   const mainPlaces = useSelector((state) => state.place.mainPlaces);
   const { map, oldMarker, oldOverlay } = useSelector((state) => state.map);
-  console.log(map, oldMarker, oldOverlay);
   const dispatch = useDispatch();
   places = mainPlaces;
   kakaoMap = map;
@@ -19,11 +17,11 @@ const useSetMarker = () => {
   overlay_old = oldOverlay;
   const setMarker = () => {
     // Marker 초기화
-    marker_old.map((value) => {
+    marker_old.forEach((value) => {
       value.setMap(null);
     });
     // overlay 초기화
-    overlay_old.map((value) => {
+    overlay_old.forEach((value) => {
       value.setMap(null);
     });
 
@@ -31,7 +29,7 @@ const useSetMarker = () => {
     var overlay_new = [];
 
     // Marker 설정
-    places.map((value) => {
+    places.forEach((value) => {
       let avg_score = value.totalScore / value.reviewCount;
       if (!avg_score) avg_score = 0;
       const position = new kakao.maps.LatLng(value.latitude, value.longitude);
@@ -98,7 +96,6 @@ const useSetMarker = () => {
       overlay: overlay_new,
       marker: marker_new,
     });
-    console.log(overlay_new, places);
   };
   return { setMarker };
 };

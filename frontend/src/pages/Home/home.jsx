@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     getGeo();
-  }, [map]);
+  }, [getGeo, map]);
 
   return (
     <Fragment>

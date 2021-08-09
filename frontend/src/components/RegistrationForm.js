@@ -19,7 +19,6 @@ const RegistrationForm = () => {
   useEffect(() => {
     if (signupError) {
       const { nonFieldErrors, password1 } = signupError;
-      console.log(signupError);
       signupError.email && setEmailError(signupError.email);
       signupError.password1 && setPassword1Error(password1);
       signupError.nonFieldErrors && setNonFieldError(nonFieldErrors[0]);

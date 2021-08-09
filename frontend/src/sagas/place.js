@@ -1,7 +1,5 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { SET_PLACE_LIST } from 'reducers/map';
 import camelize from 'camelize';
 
 import {
@@ -15,7 +13,6 @@ import {
 } from '../reducers/place';
 
 function* placeList(action) {
-  // const { map } = useSelector((state) => state.map);
   try {
     const data = action.data;
     let queryString = `/places/?page_size=${PAGE_SIZE}`;

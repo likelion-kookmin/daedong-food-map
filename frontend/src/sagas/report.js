@@ -39,7 +39,6 @@ function* reportNew(action) {
       data: result.data,
     });
   } catch (err) {
-    console.log(err);
     yield put({
       type: ADD_REPORT_FAILURE,
       error: err.respose.data,

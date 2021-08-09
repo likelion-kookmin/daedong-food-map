@@ -136,7 +136,6 @@ const NewReportModal = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log(placename, tags, contents);
     closeModal();
   };
 

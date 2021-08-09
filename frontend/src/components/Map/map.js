@@ -143,7 +143,6 @@ const Map = () => {
         map.current,
         'center_changed',
         debounce(() => {
-          console.log(2);
           localStorage.setItem('longitude', map.current.getCenter().getLng());
           localStorage.setItem('latitude', map.current.getCenter().getLat());
           dispatch({
