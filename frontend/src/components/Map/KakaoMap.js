@@ -24,10 +24,9 @@ const KakaoMap = () => {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <div id="mapOverlay">
       <Search />
-      <div id="mapOverlay"></div>
-    </Fragment>
+    </div>
   );
 };
 

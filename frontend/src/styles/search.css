@@ -1,47 +1,62 @@
 .search {
-  position: absolute;
-  transform: translate3d(-50%, -50%, 0);
-  left: 50%;
-  top: 15%;
-  z-index: 1;
-  border-bottom: 1px solid balck;
-  border-radius: 3px;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  width: 62%;
+  top: 15px;
 }
 
 .search .container form {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .search .input_search {
-  font-size: small;
+  font-size: medium;
   padding-left: 1rem;
   border: 0;
-  width: 300px;
-  height: 33px;
-  border-radius: 3px;
-}
-
-.search .fa-search {
-  position: absolute;
-  right: 40px;
-  top: 9px;
+  width: 100%;
+  height: 45px;
+  border-radius: 6px;
 }
 
 .search button {
-  background-color: rgb(236, 67, 87);
+  position: relative;
+  background-color: #f25c69;
   border: 0;
   padding: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 3px;
+  width: 45px;
+  height: 45px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 .search button i {
   color: white;
-  position: relative;
+  position: absolute;
   transform: translate3d(-50%, -50%, 0);
-  top: 25%;
-  left: 20%;
+  left: 50%;
+  top: 50%;
+}
+
+.search .container {
+  border-radius: 6px;
+  background-color: white;
+  position: relative;
+  width: 100%;
+}
+
+.search .container .search {
+  color: grey;
+  position: absolute;
+  float: right;
+  transform: translate3d(0, -50%, 0);
+  top: 50%;
+  right: 0;
+}
+
+input:focus {
+  outline: none;
 }
