@@ -35,3 +35,4 @@ class BookmarkSerializer(ModelSerializer):
         write_only_fields = [
             'place_id',
         ]
+
