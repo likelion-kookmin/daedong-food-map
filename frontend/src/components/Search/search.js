@@ -32,14 +32,19 @@ const Search = () => {
     <section className="search">
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <input
-            className="input_search"
-            type="text"
-            value={value}
-            onChange={handleChange}
-            placeholder="먹고 싶은 음식을 찾아보세요!"
-          />
-          <button type="submit"></button>
+          <div className="container">
+            <input
+              className="input_search"
+              type="text"
+              value={value}
+              onChange={handleChange}
+              placeholder="먹고 싶은 음식을 찾아보세요!"
+            />
+            <i class="search large icon"></i>
+          </div>
+          <button type="submit">
+            <i class="fas fa-location fa-2x"></i>
+          </button>
         </form>
       </div>
     </section>
