@@ -76,12 +76,10 @@ const DesktopLayout = (props) => {
               <Logo src="images/LogoTitle.png" />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
-            <Link>
-              <SecondaryBtn onClick={openNewReportModal}>
-                <Icon name="mail" style={{ marginRight: '0.5rem' }} />
-                제보하기
-              </SecondaryBtn>
-            </Link>
+            <SecondaryBtn onClick={openNewReportModal}>
+              <Icon name="mail" style={{ marginRight: '0.5rem' }} />
+              제보하기
+            </SecondaryBtn>
             <Dropdown
               icon="user"
               simple
@@ -111,11 +109,9 @@ const DesktopLayout = (props) => {
                     <DropText>신고 목록</DropText>
                   </Dropdown.Item>
                 </Link>
-                <Link>
-                  <Dropdown.Item as="a" onClick={logout}>
-                    <DropText>로그아웃</DropText>
-                  </Dropdown.Item>
-                </Link>
+                <Dropdown.Item as="a" onClick={logout}>
+                  <DropText>로그아웃</DropText>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Container>

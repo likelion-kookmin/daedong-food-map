@@ -72,11 +72,9 @@ const MobileLayout = (props) => {
                 제보하기
               </Menu.Item>
             </div>
-            <Link>
-              <Menu.Item as="a" onClick={logout}>
-                로그아웃
-              </Menu.Item>
-            </Link>
+            <Menu.Item as="a" onClick={logout}>
+              로그아웃
+            </Menu.Item>
           </Sidebar>
         ) : (
           <Sidebar
