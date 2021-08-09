@@ -105,6 +105,12 @@ class Place(BaseModel):
         blank=True,
     )
 
+    bookmark_count = models.IntegerField(
+        verbose_name='장소가 북바크 당한 숫자',
+        default=0,
+        blank=True,
+    )
+
     objects = BaseModelManager.from_queryset(PlaceQuerySet)()
 
     def __str__(self) -> str:

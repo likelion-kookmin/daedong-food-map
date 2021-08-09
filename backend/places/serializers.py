@@ -49,6 +49,7 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
             'status',
             'total_score',
             'review_count',
+            'bookmark_count',
             'created_at',
             'updated_at',
             'deleted_at',
