@@ -1,10 +1,9 @@
-from django.core.exceptions import ValidationError
-
-from users.models import User, UserManager
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (AuthenticationForm,
+                                       ReadOnlyPasswordHashField)
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from users.models import User, UserManager
 
 
 class BaseCreationForm(forms.ModelForm):
@@ -49,6 +48,17 @@ class BaseCreationForm(forms.ModelForm):
             }
         )
     )
+    avatar = forms.ImageField(
+        label=_('Avatar'),
+        required=False,
+        error_messages = {'invalid':_("Image files only")},
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': _('Upload your avatar image file.'),
+            }
+        )
+    )
 
     class Meta:
         model = User
@@ -79,7 +89,7 @@ class BaseEditionForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'password', 'last_name',
-                  'first_name', 'is_active', 'is_superuser')
+                  'first_name', 'is_active', 'is_superuser', 'avatar')
 
     def clean_password(self):
         return self.initial['password']

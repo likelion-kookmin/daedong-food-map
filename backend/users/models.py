@@ -90,6 +90,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
+    avatar = models.ImageField(
+        verbose_name='아바타',
+        null=True,
+    )
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

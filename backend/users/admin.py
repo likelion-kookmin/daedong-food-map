@@ -1,9 +1,8 @@
-from users.models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import ugettext_lazy as _
-
 from users.forms import BaseCreationForm, BaseEditionForm
+from users.models import User
 
 
 @admin.register(User)
@@ -51,11 +50,14 @@ class UserAdmin(BaseUserAdmin):
         (_('Permissions'), {
             'fields': ('is_active', 'is_superuser',)
         }),
+        (_('Avatar'), {
+            'fields': ('avatar',)
+        }),
     ]
 
     add_fieldsets = (
         (None, {
             'classes': ['wide'],
-            'fields': ['email', 'nickname', 'password1', 'password2'],
+            'fields': ['email', 'nickname', 'password1', 'password2', 'avatar'],
         }),
     )
