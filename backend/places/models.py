@@ -56,6 +56,11 @@ class Place(BaseModel):
         null=False,
         blank=False,
     )
+    detail_address = models.TextField(
+        verbose_name='상세 주소',
+        null=False,
+        blank=False,
+    )
     longitude = models.FloatField(
         verbose_name='경도',
         null=True,
