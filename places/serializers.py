@@ -6,6 +6,8 @@ from file_managers.serializers import ImageSerializer
 from reports.models import Report
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from reviews.models import Review
+from reviews.serializers import ReviewSerializer
 from taggit_serializer.serializers import (TaggitSerializer,
                                            TagListSerializerField)
 from users.models import User
@@ -35,6 +37,7 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
     tags = TagListSerializerField(required=False)
     images = ImageSerializer(many=True, required=False)
     user = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
     distance = serializers.SerializerMethodField()
     average_score = serializers.ReadOnlyField()
 
@@ -45,6 +48,7 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
         read_only_fields = [
             'user',
             'distance',
+            'reviews',
             'view_count',
             'status',
             'total_score',
@@ -78,3 +82,6 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
             obj.latitude,
             obj.longitude
         ), 5)
+
+    def get_reviews(self, obj):
+        return ReviewSerializer(Review.objects.filter(place=obj), many=True).data or []
