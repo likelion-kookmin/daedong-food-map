@@ -21,6 +21,7 @@ const MobileLayout = (props) => {
 
   props.history.listen((location, action) => {
     setSidebarOpened(false);
+    window.scrollTo(0, 0);
   });
 
   const logout = () => {
@@ -109,7 +110,7 @@ const MobileLayout = (props) => {
             </Menu>
           </Segment>
           <Container
-            style={{ width: maxWindowWidth, padding: '1rem', minHeight: window.outerHeight }}
+            style={{ width: maxWindowWidth, padding: '2rem', minHeight: window.outerHeight }}
           >
             {props.children}
           </Container>

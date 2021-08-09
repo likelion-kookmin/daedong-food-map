@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { maxWindowWidth } from 'utils/style.util';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { lighten, darken } from 'polished';
@@ -61,6 +61,10 @@ const DesktopLayout = (props) => {
     localStorage.removeItem('user');
     window.location.href = '/';
   };
+
+  props.history.listen((location, action) => {
+    window.scrollTo(0, 0);
+  });
 
   const openNewReportModal = () => {
     setNewReportOpened(true);
@@ -143,4 +147,4 @@ const DesktopLayout = (props) => {
   );
 };
 
-export default DesktopLayout;
+export default withRouter(DesktopLayout);
