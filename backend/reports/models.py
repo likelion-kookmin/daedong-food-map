@@ -1,7 +1,7 @@
-from django.db import models
 from config.models import BaseModel
-from users.models import User
+from django.db import models
 from places.models import Place
+from users.models import User
 
 
 class Report(BaseModel):
@@ -24,5 +24,7 @@ class Report(BaseModel):
         max_length=300,
     )
     content = models.TextField(
-        verbose_name="제보 내용"
+        verbose_name="제보 내용",
+        null=True,
+        blank=True,
     )
