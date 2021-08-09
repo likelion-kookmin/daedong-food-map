@@ -145,7 +145,15 @@ const NewReportModal = (props) => {
       <ModalHeader>
         <BtnText onClick={() => closeModal()}>취소</BtnText>
         <ModalTitle>제보하기</ModalTitle>
-        <BtnText onClick={handleSubmit}>보내기</BtnText>
+        {step === 0 ? (
+          <BtnText style={{ color: '#0475F4' }} onClick={handleSubmit}>
+            보내기
+          </BtnText>
+        ) : (
+          <BtnText style={{ visibility: 'hidden' }} onClick={handleSubmit}>
+            보내기
+          </BtnText>
+        )}
       </ModalHeader>
       {step === 0 ? (
         <Modal.Content scrolling style={{ maxHeight: '50vh', fontFamily: 'NS-R' }}>
