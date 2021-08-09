@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { media } from 'utils/style.util';
 import useInput from 'hooks/useInput';
 import PostCode from './PostCode';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_REPORT_REQUEST } from 'reducers/report';
 
 const ReportModal = styled(Modal)`
   max-width: 35rem;
@@ -74,6 +76,9 @@ const Tagcontainer = styled.div`
 `;
 const NewReportModal = (props) => {
   const [step, setStep] = useState(0);
+  const dispatch = useDispatch();
+  const { addReportDone } = useSelector((state) => state.report);
+
   const [placename, onChangePlacename, setPlacename] = useInput('');
   const [address, setAddress] = useState('');
   const [detailAddress, onChangeDetailAddress, setDetailAddress] = useInput('');
@@ -135,7 +140,25 @@ const NewReportModal = (props) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await dispatch({
+      type: ADD_REPORT_REQUEST,
+      data: {
+        title: 'report',
+        content: contents,
+        place: {
+          name: placename,
+          tags: tags,
+          images: imgs.map((img) => {
+            return { image: img };
+          }),
+          address: address,
+          detail_address: detailAddress || '',
+          longitude: 0,
+          latitude: 0,
+        },
+      },
+    });
     closeModal();
   };
 

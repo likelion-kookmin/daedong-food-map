@@ -29,10 +29,11 @@ function* reportList(action) {
   }
 }
 
-const reportNewAPI = (data) => axios.post('/reports/new/', { headers: authHeader() }, data);
+const reportNewAPI = (data) => axios.post('/reports/new/', data, { headers: authHeader() });
 
 function* reportNew(action) {
   try {
+    console.log(action.data);
     const result = yield call(reportNewAPI, action.data);
     yield put({
       type: ADD_REPORT_SUCCESS,
@@ -41,7 +42,7 @@ function* reportNew(action) {
   } catch (err) {
     yield put({
       type: ADD_REPORT_FAILURE,
-      error: err.respose.data,
+      error: err.respose,
     });
   }
 }
