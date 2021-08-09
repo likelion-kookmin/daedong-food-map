@@ -21,7 +21,7 @@ const KakaoMap = () => {
       type: SET_MAP,
       map: map,
     });
-  }, [dispatch]);
+  }, [kakao]);
 
   return (
     <div id="mapOverlay">
