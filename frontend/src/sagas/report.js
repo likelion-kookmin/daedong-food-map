@@ -24,7 +24,7 @@ function* reportList(action) {
     console.error(err);
     yield put({
       type: LOAD_REPORTS_FAILURE,
-      error: err,
+      error: err.response.data,
     });
   }
 }
@@ -33,7 +33,6 @@ const reportNewAPI = (data) => axios.post('/reports/new/', data, { headers: auth
 
 function* reportNew(action) {
   try {
-    console.log(action.data);
     const result = yield call(reportNewAPI, action.data);
     yield put({
       type: ADD_REPORT_SUCCESS,
@@ -42,7 +41,7 @@ function* reportNew(action) {
   } catch (err) {
     yield put({
       type: ADD_REPORT_FAILURE,
-      error: err.respose,
+      error: err.response.data,
     });
   }
 }
