@@ -52,7 +52,12 @@ class Place(BaseModel):
         blank=False,
     )
     address = models.TextField(
-        verbose_name='주소',
+        verbose_name='주소1',
+        null=False,
+        blank=False,
+    )
+    detail_address = models.TextField(
+        verbose_name='주소2',
         null=False,
         blank=False,
     )
