@@ -23,7 +23,6 @@ class ReportListView(BaseView, ListAPIView):
     serializer_class = ReportSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
-    queryset = Report.objects.all()
 
     def get_queryset(self):
         return Report.objects.filter(user=self.current_user)
@@ -114,6 +113,7 @@ class ReportUpdateView(BaseView, UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
+
 
 class ReportDestroyView(BaseView, DestroyAPIView):
     """# ReportDestroyView"""
