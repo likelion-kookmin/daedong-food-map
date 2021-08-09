@@ -9,17 +9,17 @@ const ImgContainer = styled.div`
   position: relative;
   flex-grow: 1;
   padding-bottom: 30%;
-  &: last-child {
+  &:last-child {
     img {
       border-radius: 0 10px 10px 0;
     }
   }
-  &: first-child {
+  &:first-child {
     img {
       border-radius: 10px 0 0 10px;
     }
   }
-  &: only-child {
+  &:only-child {
     img {
       border-radius: 10px;
     }
@@ -33,7 +33,7 @@ const Text = styled.div`
 `;
 
 const Tag = styled(Label)`
-  font-family: 'NS-B';
+  font-family: 'NS-R';
 `;
 
 const Img = styled.img`

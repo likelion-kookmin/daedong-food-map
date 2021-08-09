@@ -37,7 +37,7 @@ const Reviews = styled(Text)`
 `;
 
 const Tag = styled(Label)`
-  font-family: 'NS-B';
+  font-family: 'NS-R';
 `;
 
 const Number = styled(Label)`

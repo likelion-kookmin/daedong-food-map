@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { maxWindowWidth } from 'utils/style.util';
 import styled from 'styled-components';
 
-import NewReport from 'components/Report/NewReport';
+import NewReport from 'components/Report/NewReportModal';
 
 const Logo = styled.img`
   height: 30px;
@@ -35,7 +35,7 @@ const MobileLayout = (props) => {
 
   return (
     <Fragment>
-      <NewReport onClose={setNewReportOpened} onOpen={setNewReportOpened} open={newReportOpened} />
+      <NewReport setOpen={setNewReportOpened} open={newReportOpened} />
       <Sidebar.Pushable>
         {user ? (
           <Sidebar
@@ -48,19 +48,23 @@ const MobileLayout = (props) => {
             style={{ fontFamily: 'NS-B' }}
           >
             <div>
-              <Menu.Item as="a" style={{ paddingBottom: '10px' }}>
+              <Menu.Item>
                 <Menu.Header>내 정보</Menu.Header>
-                <Menu.Item href="/bookmarks" style={{ fontSize: '1rem' }}>
-                  북마크 목록
-                </Menu.Item>
-                <Menu.Menu>
+                <div>
+                  <Menu.Item href="/bookmarks" style={{ fontSize: '1rem' }}>
+                    북마크 목록
+                  </Menu.Item>
+                </div>
+                <div>
                   <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
                     제보목록
                   </Menu.Item>
+                </div>
+                <div>
                   <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
                     신고목록
                   </Menu.Item>
-                </Menu.Menu>
+                </div>
               </Menu.Item>
             </div>
             <div>

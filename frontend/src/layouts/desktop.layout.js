@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { lighten, darken } from 'polished';
 
-import NewReport from 'components/Report/NewReport';
+import NewReport from 'components/Report/NewReportModal';
 
 const Logo = styled.img`
   width: 8rem;
@@ -68,7 +68,7 @@ const DesktopLayout = (props) => {
 
   return (
     <Fragment>
-      <NewReport onClose={setNewReportOpened} onOpen={setNewReportOpened} open={newReportOpened} />
+      <NewReport setOpen={setNewReportOpened} open={newReportOpened} />
       <Menu>
         {user ? (
           <Container style={ContainerStyle}>
