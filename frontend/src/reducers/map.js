@@ -2,13 +2,13 @@ import produceUtil from 'utils/produce.util';
 
 export const initialState = {
   map: null,
-  storeList: [],
+  placeList: [],
   oldMarker: [],
   oldOverlay: [],
 };
 
 export const SET_MAP = 'SET_MAP';
-export const SET_STORE_LIST = 'SET_STORE_LIST';
+export const SET_PLACE_LIST = 'SET_PLACE_LIST';
 export const ADD_MARKER = 'ADD_MARKER';
 
 const reducer = (state = initialState, action) =>
@@ -17,9 +17,12 @@ const reducer = (state = initialState, action) =>
       case SET_MAP:
         draft.map = action.map;
         break;
-      case SET_STORE_LIST:
+      case SET_PLACE_LIST:
+        draft.placeList = action.place;
         break;
       case ADD_MARKER:
+        draft.oldMarker = action.marker;
+        draft.oldOverlay = action.overlay;
         break;
       default:
         break;

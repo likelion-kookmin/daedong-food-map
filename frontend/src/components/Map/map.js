@@ -46,8 +46,7 @@ const Map = () => {
     };
     map.current = new kakao.maps.Map(mapContainer, mapOption);
     map.current.setCenter(locPosition);
-    localStorage.setItem('longitude', map.current.getCenter().getLng());
-    localStorage.setItem('latitude', map.current.getCenter().getLat());
+
     // 마커 이미지의 이미지 크기 입니다.
     const smallImageSize = new kakao.maps.Size(25, 25);
     const bigImageSize = new kakao.maps.Size(35, 35);

@@ -1,6 +1,7 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_PLACE_LIST } from 'reducers/map';
 
 import {
   LOAD_PLACES_REQUEST,

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { SET_MAP } from '../../reducers/map';
+import Search from 'components/Search/search.js';
 import 'styles/map.css';
 
 const { kakao } = window;
@@ -22,7 +23,12 @@ const KakaoMap = () => {
     });
   }, [dispatch]);
 
-  return <div id="mapOverlay"></div>;
+  return (
+    <Fragment>
+      <Search />
+      <div id="mapOverlay"></div>
+    </Fragment>
+  );
 };
 
 export default KakaoMap;
