@@ -5,6 +5,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      UpdateAPIView)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Report
@@ -106,11 +107,15 @@ class ReportUpdateView(BaseView, UpdateAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        obj = self.get_object()
+
+        if obj.place.status == 'p':
+            return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
+        else:
+            return self.update(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
-
 
 class ReportDestroyView(BaseView, DestroyAPIView):
     """# ReportDestroyView"""
