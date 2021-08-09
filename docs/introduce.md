@@ -50,18 +50,34 @@
 #### 디렉토리 구조
 
 
+<div style="display: flex;" >
+
+<div style="padding: 1rem;">
+
+
+![front dir structure](./front_dir_structure.png)
+
+</div>
+
+<div style="padding: 1rem;">
+
 ||디렉토리명|역할|
 |-|-|-|
-| components | 사이트에 사용되는 컴포넌트들을 목적단위로 분리해두는 디렉토리입니다.|![front dir structure](./front_dir_structure.png)|
-|config| Webpack, Jest 등을 활용하기 위한 설정을 모아두는 디렉토리입니다.| ^ |
-|fonts| 사이트에서 사용되는 폰트 파일들을 모아두는 디렉토리입니다.| ^ |
-|hooks| 공통적으로 사용되는 커스텀 훅을 모아두는 디렉토리입니다.| ^ |
-|layouts| 사이트의 레이아웃 컴포넌트를 모아두는 디렉토리입니다.| ^ |
-|pages| 사이트 상의 페이지를 나타내는 컴포넌트를 모아두는 디렉토리입니다.| ^ |
+| components | 사이트에 사용되는 컴포넌트들을 목적단위로 분리해두는 디렉토리입니다.|
+|config| Webpack, Jest 등을 활용하기 위한 설정을 모아두는 디렉토리입니다.|
+|fonts| 사이트에서 사용되는 폰트 파일들을 모아두는 디렉토리입니다.|
+|hooks| 공통적으로 사용되는 커스텀 훅을 모아두는 디렉토리입니다.|
+|layouts| 사이트의 레이아웃 컴포넌트를 모아두는 디렉토리입니다.|
+|pages| 사이트 상의 페이지를 나타내는 컴포넌트를 모아두는 디렉토리입니다.|
 |reducers| | |
 |sagas| | |
 |store| | |
 |styles| | |
+
+</div>
+
+</div>
+
 
 
 #### Redux & Redux-Saga
