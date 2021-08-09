@@ -96,7 +96,7 @@ function PlaceCard(props) {
   return (
     <Container className={loadPlacesLoading ? 'loading' : ''}>
       <Number circular size="large">
-        {props.data.id}
+        {props.index}
       </Number>
       <Section style={{ alignItems: 'baseline' }}>
         <Link to={`/places/${[props.data.id]}`}>
