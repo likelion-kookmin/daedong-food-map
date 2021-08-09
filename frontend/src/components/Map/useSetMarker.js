@@ -29,11 +29,12 @@ const useSetMarker = () => {
     var overlay_new = [];
 
     // Marker 설정
-    places.forEach((value) => {
+    places.forEach((value, idx) => {
       let avg_score = value.totalScore / value.reviewCount;
       if (!avg_score) avg_score = 0;
+
       const position = new kakao.maps.LatLng(value.latitude, value.longitude);
-      var imageSrc = '/icons/붕어빵.png';
+      var imageSrc = `/icons/${idx + 1}.png`;
 
       // 커스텀 오버레이 내용
       var content =
@@ -54,7 +55,7 @@ const useSetMarker = () => {
         yAnchor: 1,
       });
       // 마커 이미지의 이미지 크기 입니다
-      var imageSize = new kakao.maps.Size(25, 25);
+      var imageSize = new kakao.maps.Size(35, 35);
       // 마커 이미지를 생성합니다
       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 

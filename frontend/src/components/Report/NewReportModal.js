@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { Modal, Grid, Form, Label, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { media } from 'utils/style.util';
 import useInput from 'hooks/useInput';
 import PostCode from './PostCode';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_REPORT_REQUEST } from 'reducers/report';
 
 const ReportModal = styled(Modal)`
   max-width: 35rem;
@@ -74,6 +76,9 @@ const Tagcontainer = styled.div`
 `;
 const NewReportModal = (props) => {
   const [step, setStep] = useState(0);
+  const dispatch = useDispatch();
+  const { addReportDone, addReportError } = useSelector((state) => state.report);
+
   const [placename, onChangePlacename, setPlacename] = useInput('');
   const [address, setAddress] = useState('');
   const [detailAddress, onChangeDetailAddress, setDetailAddress] = useInput('');
@@ -82,7 +87,31 @@ const NewReportModal = (props) => {
   const [tags, setTags] = useState([]);
   const [imgs, setImgs] = useState([]);
 
+  const [nameError, setNameError] = useState('');
+  const [addressError, setAddressError] = useState('');
   const inputFile = useRef(null);
+
+  useEffect(() => {
+    if (addReportError) {
+      const { place, nonFieldErrors } = addReportError;
+      if (place && place.name) {
+        setNameError(place.name);
+      }
+      if (place && place.address) {
+        setAddressError(place.address);
+      }
+      if (nonFieldErrors) {
+        // setNonFieldError('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
+      }
+    }
+  }, [addReportError]);
+
+  useEffect(() => {
+    if (addReportDone) {
+      closeModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addReportDone]);
 
   const closeModal = () => {
     setStep(0);
@@ -93,6 +122,8 @@ const NewReportModal = (props) => {
     setTags([]);
     setContents('');
     setImgs([]);
+    setNameError('');
+    setAddressError('');
     props.setOpen(false);
   };
 
@@ -135,9 +166,27 @@ const NewReportModal = (props) => {
     }
   };
 
-  const handleSubmit = () => {
-    closeModal();
-  };
+  const handleSubmit = useCallback(() => {
+    const images = imgs.map((img) => {
+      return { image: img };
+    });
+    dispatch({
+      type: ADD_REPORT_REQUEST,
+      data: {
+        title: 'report',
+        content: contents,
+        place: {
+          name: placename,
+          tags,
+          images,
+          address,
+          detail_address: detailAddress || '',
+          longitude: 0,
+          latitude: 0,
+        },
+      },
+    });
+  }, [dispatch, contents, placename, tags, imgs, address, detailAddress]);
 
   return (
     <ReportModal onClose={() => closeModal()} onOpen={() => props.setOpen(true)} open={props.open}>
@@ -156,112 +205,125 @@ const NewReportModal = (props) => {
       </ModalHeader>
       {step === 0 ? (
         <Modal.Content scrolling style={{ maxHeight: '50vh', fontFamily: 'NS-R' }}>
-          <Grid.Column>
-            <Field
-              fluid
-              value={placename}
-              onChange={onChangePlacename}
-              label="장소명 *"
-              control={Form.Input}
-            />
-            {/* 여기 postcode에 따라 바뀌도록 처리해야함 */}
-            <Field fluid>
-              <label>위치 *</label>
-              <Form.Input
+          <Form>
+            <Grid.Column>
+              <Field
                 fluid
-                placeholder="도로명주소 찾기"
-                icon="angle right"
-                value={address}
-                onClick={() => setStep(1)}
+                value={placename}
+                onChange={onChangePlacename}
+                label="장소명 *"
+                control={Form.Input}
+                error={
+                  nameError.length > 0 && {
+                    content: nameError,
+                  }
+                }
               />
-              {address === '' ? null : (
+              {/* 여기 postcode에 따라 바뀌도록 처리해야함 */}
+              <Field
+                fluid
+                error={
+                  addressError.length > 0 && {
+                    content: addressError,
+                  }
+                }
+              >
+                <label>위치 *</label>
                 <Form.Input
                   fluid
-                  placeholder="상세주소"
-                  value={detailAddress}
-                  onChange={onChangeDetailAddress}
-                  style={{ marginTop: '0.5rem' }}
+                  placeholder="도로명주소 찾기"
+                  icon="angle right"
+                  value={address}
+                  onClick={() => setStep(1)}
                 />
-              )}
-            </Field>
-            <Field
-              fluid
-              value={inputTag}
-              onChange={onChangeInputTag}
-              onKeyDown={handleInputTag}
-              label="태그 *"
-              icon="plus"
-              control={Form.Input}
-            />
-            <Tagcontainer>
-              {tags.map((tag) => (
-                <Label style={{ margin: 0 }} id={tag}>
-                  {tag}
-                  <Icon name="delete" onClick={deleteTag} />
-                </Label>
-              ))}
-            </Tagcontainer>
-            <Field fluid>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
-                }}
-              >
-                <label>장소설명</label>
-                {/* <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
+                {address === '' ? null : (
+                  <Form.Input
+                    fluid
+                    placeholder="상세주소"
+                    value={detailAddress}
+                    onChange={onChangeDetailAddress}
+                    style={{ marginTop: '0.5rem' }}
+                  />
+                )}
+              </Field>
+              <Field
+                fluid
+                value={inputTag}
+                onChange={onChangeInputTag}
+                onKeyDown={handleInputTag}
+                label="태그 *"
+                icon="plus"
+                control={Form.Input}
+              />
+              <Tagcontainer>
+                {tags.map((tag) => (
+                  <Label style={{ margin: 0 }} id={tag}>
+                    {tag}
+                    <Icon name="delete" onClick={deleteTag} />
+                  </Label>
+                ))}
+              </Tagcontainer>
+              <Field fluid>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                  }}
+                >
+                  <label>장소설명</label>
+                  {/* <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
                   100
                 </label> */}
-              </div>
-              <Form>
+                </div>
                 <Form.TextArea
                   placeholder="장소에 대한 설명을 적어주세요."
                   value={contents}
                   onChange={onChangeContents}
                   style={{ fontFamily: 'NS-R' }}
                 />
-              </Form>
-            </Field>
-            <Field fluid>
-              <label>사진 첨부</label>
-              <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
-                장소에 대한 사진이 있다면 추가해주세요!
-              </label>
-              <label htmlFor="file">
-                <Form.Button
-                  fluid
-                  basic
-                  color="blue"
-                  content="사진첨부"
-                  icon="camera"
-                  onClick={handleInputFile}
-                  style={{ padding: '1rem 0', fontFamily: 'NS-R' }}
+              </Field>
+              <Field fluid>
+                <label>사진 첨부</label>
+                <label style={{ fontWeight: 'normal', fontSize: '0.85rem', color: '#a1a1a1' }}>
+                  장소에 대한 사진이 있다면 추가해주세요!
+                </label>
+                <label htmlFor="file">
+                  <Form.Button
+                    fluid
+                    basic
+                    type="button"
+                    color="blue"
+                    content="사진첨부"
+                    icon="camera"
+                    onClick={handleInputFile}
+                    style={{ padding: '1rem 0', fontFamily: 'NS-R' }}
+                  />
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  content_type="multipart/form-data"
+                  ref={inputFile}
+                  onChange={upload}
+                  style={{ display: 'none' }}
                 />
-              </label>
-              <input
-                type="file"
-                id="file"
-                accept="image/*"
-                content_type="multipart/form-data"
-                ref={inputFile}
-                onChange={upload}
-                style={{ display: 'none' }}
-              />
-            </Field>
-            <div style={{ whiteSpace: 'nowrap', overflow: 'auto', marginTop: '-2rem' }}>
-              {imgs.map((src, index) => (
-                <ImgContainer>
-                  <Label floating circular id={index} onClick={deleteImg}>
-                    <Icon name="delete" style={{ margin: '0', fontSize: '1rem' }} />
-                  </Label>
-                  <Img src={src} />
-                </ImgContainer>
-              ))}
-            </div>
-            {/* <Form.Checkbox label="이미지 저작권 동의 *" /> */}
-          </Grid.Column>
+              </Field>
+              <div style={{ whiteSpace: 'nowrap', overflow: 'auto', marginTop: '-2rem' }}>
+                {imgs.map((src, index) => (
+                  <ImgContainer>
+                    <Label floating circular id={index} onClick={deleteImg}>
+                      <Icon name="delete" style={{ margin: '0', fontSize: '1rem' }} />
+                    </Label>
+                    <Img src={src} />
+                  </ImgContainer>
+                ))}
+              </div>
+              {/* <Form.Checkbox label="이미지 저작권 동의 *" /> */}
+            </Grid.Column>
+          </Form>
         </Modal.Content>
       ) : step === 1 ? (
         <PostCode setAddress={setAddress} setStep={setStep} />

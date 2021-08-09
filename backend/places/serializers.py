@@ -1,10 +1,13 @@
 """# places serializers"""
 from math import atan2, cos, pi, sin, sqrt
 
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from file_managers.serializers import ImageSerializer
 from reports.models import Report
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from reviews.models import Review
+from reviews.serializers import ReviewSerializer
 from taggit_serializer.serializers import (TaggitSerializer,
                                            TagListSerializerField)
 from users.models import User
@@ -27,13 +30,14 @@ def getDistanceFromLatitudeAndLongitudeInMeter(latitude1, longitude1, latitude2,
     return distance  # meter
 
 
-class PlaceSerializer(TaggitSerializer, ModelSerializer):
+class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
     """## PlaceSerializer
     - Place Model serializer입니다.
     """
     tags = TagListSerializerField(required=False)
     images = ImageSerializer(many=True, required=False)
     user = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
     distance = serializers.SerializerMethodField()
     average_score = serializers.ReadOnlyField()
 
@@ -44,6 +48,7 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         read_only_fields = [
             'user',
             'distance',
+            'reviews',
             'view_count',
             'status',
             'total_score',
@@ -77,3 +82,6 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
             obj.latitude,
             obj.longitude
         ), 5)
+
+    def get_reviews(self, obj):
+        return ReviewSerializer(Review.objects.filter(place=obj), many=True).data or []
