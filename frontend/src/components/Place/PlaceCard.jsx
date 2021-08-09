@@ -97,7 +97,7 @@ function PlaceCard(props) {
       <Number circular size="large">
         {props.index}
       </Number>
-      <Section style={{ alignItems: 'baseline' }}>
+      <Section style={{ alignItems: 'baseline', maxWidth: '90%' }}>
         <Link to={`/places/${[props.data.id]}`}>
           <Name>{props.data.name}</Name>
         </Link>
