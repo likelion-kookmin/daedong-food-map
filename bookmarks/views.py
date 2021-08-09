@@ -12,6 +12,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Bookmark
 from .permissions import IsBookmarkEditableOrDestroyable
 from .serializers import BookmarkSerializer
+from django.core.exceptions import  ValidationError
 
 
 class BookmarkListView(BaseView, ListAPIView):
@@ -46,10 +47,12 @@ class BookmarkRetrieveView(BaseView, RetrieveAPIView):
         return self.retrieve(request, *args, **kwargs)
 
 
+
 class BookmarkCreateView(BaseView, CreateAPIView):
     """# BookmarkCreateView
     - 북마크를 생성한다.
     """
+    queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
@@ -74,4 +77,7 @@ class BookmarkDestroyView(BaseView, DestroyAPIView):
         return Bookmark.objects.filter(user=self.current_user)
 
     def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.place.bookmark_count -= 1
+        obj.place.save()
         return self.destroy(request, *args, **kwargs)

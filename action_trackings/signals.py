@@ -1,4 +1,5 @@
 """# action tracking signals"""
+from bookmarks.models import Bookmark
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -79,3 +80,26 @@ def create_inquiry_action_tracking(sender, **kwargs):
     user.inquiry_count += 1
     user.save()
 
+@receiver(post_save, sender=Bookmark)
+def create_bookmark_action_tracking(sender, **kwargs):
+    """ ## create_bookmark_action_tracking
+        - bookmark 생성 후의 action을 trackin합니다.
+        - action tracking 모델에 로그를 남기고, place.bookmark_count += 1 을 합니다.
+    """
+    instance = kwargs["instance"]
+
+    user = instance.user
+    bookmark_place = instance.place
+
+    if not kwargs["created"]:
+        return
+
+    ActionTracking.create_user_action_tracking(
+        user=user,
+        rule_name=Action.ADD_BOOKMARK,
+        actionable=instance
+
+    )
+
+    bookmark_place.bookmark_count += 1
+    bookmark_place.save()
