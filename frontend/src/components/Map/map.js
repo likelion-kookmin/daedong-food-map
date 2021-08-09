@@ -35,6 +35,7 @@ const Map = () => {
       const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
       displayMap(locPosition);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadPlacesLoading]);
 
   const displayMap = (locPosition) => {
