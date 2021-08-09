@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_MARKER } from '../../reducers/map';
+import { Label } from 'semantic-ui-react';
 const { kakao } = window;
 
 var places = [];
@@ -31,43 +32,20 @@ const useSetMarker = () => {
 
     // Marker 설정
     places.map((value) => {
+      let avg_score = value.totalScore / value.reviewCount;
+      if (!avg_score) avg_score = 0;
       const position = new kakao.maps.LatLng(value.latitude, value.longitude);
       var imageSrc = '/icons/붕어빵.png';
 
       // 커스텀 오버레이 내용
-      const content =
-        '<div class="overlaybox">' +
-        '    <div class="boxtitle">금주 영화순위</div>' +
-        '    <div class="first">' +
-        '        <div class="triangle text">1</div>' +
-        '        <div class="movietitle text">드래곤 길들이기2</div>' +
-        '    </div>' +
-        '    <ul>' +
-        '        <li class="up">' +
-        '            <span class="number">2</span>' +
-        '            <span class="title">명량</span>' +
-        '            <span class="arrow up"></span>' +
-        '            <span class="count">2</span>' +
-        '        </li>' +
-        '        <li>' +
-        '            <span class="number">3</span>' +
-        '            <span class="title">해적(바다로 간 산적)</span>' +
-        '            <span class="arrow up"></span>' +
-        '            <span class="count">6</span>' +
-        '        </li>' +
-        '        <li>' +
-        '            <span class="number">4</span>' +
-        '            <span class="title">해무</span>' +
-        '            <span class="arrow up"></span>' +
-        '            <span class="count">3</span>' +
-        '        </li>' +
-        '        <li>' +
-        '            <span class="number">5</span>' +
-        '            <span class="title">안녕, 헤이즐</span>' +
-        '            <span class="arrow down"></span>' +
-        '            <span class="count">1</span>' +
-        '        </li>' +
-        '    </ul>' +
+      var content =
+        '<div class="ui pointing below label">' +
+        ` <div class="ui blue circular large label">${value.id}</div>` +
+        ' <div>' +
+        `   <div class='title'>${value.name}</div>` +
+        '   <i aria-hidden="true" class="star icon"></i>' +
+        `   <div class='body'>${avg_score}&nbsp&nbsp&nbsp<span>&#183;</span>${value.tags[0]}</div>` +
+        ' </div>' +
         '</div>';
 
       // 커스텀 오버레이를 생성합니다
