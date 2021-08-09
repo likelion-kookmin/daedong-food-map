@@ -110,13 +110,12 @@ class ReportUpdateView(BaseView, UpdateAPIView):
         obj = self.get_object()
 
         if obj.place.status == 'p':
-            return Response({'error': 'It has been already published'}, status=401)
+            return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
         else:
             return self.update(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
-
 
 class ReportDestroyView(BaseView, DestroyAPIView):
     """# ReportDestroyView"""
