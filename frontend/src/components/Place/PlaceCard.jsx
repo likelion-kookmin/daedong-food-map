@@ -79,7 +79,7 @@ const Img = styled.img`
 
 function PlaceCard(props) {
   const { loadPlacesLoading } = useSelector((state) => state.place);
-
+  const distance = 1025;
   const imglist =
     props.data.images && props.data.images.length
       ? props.data.images.slice(0, 3).map((img, index) => (
@@ -102,8 +102,8 @@ function PlaceCard(props) {
         <Link to={`/places/${[props.data.id]}`}>
           <Name>{props.data.name}</Name>
         </Link>
-        <Icon name="star" style={{ color: '#F25C69', marginLeft: '0.8rem' }} />
-        <Text>{props.data.averageScore}</Text>
+        <Icon name="star" style={{ color: '#F25C69', margin: '0 0.2rem 0 0.8rem' }} />
+        <Text>{4.12}</Text>
         <Reviews>리뷰 {props.data.reviewCount}개</Reviews>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>
@@ -112,7 +112,9 @@ function PlaceCard(props) {
             return <Tag>{tag}</Tag>;
           })}
         </Section>
-        <Text style={{ paddingTop: '0.5rem' }}>{props.data.distance}</Text>
+        <Text style={{ paddingTop: '0.5rem' }}>
+          {distance > 1000 ? (distance * 0.001).toFixed(2) + 'km' : distance + 'm'}
+        </Text>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>{imglist}</Section>
     </Container>
