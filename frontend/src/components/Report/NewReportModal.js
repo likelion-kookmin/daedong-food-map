@@ -3,6 +3,7 @@ import { Modal, Grid, Form, Label, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { media } from 'utils/style.util';
 import useInput from 'hooks/useInput';
+import PostCode from './PostCode';
 
 const ReportModal = styled(Modal)`
   max-width: 35rem;
@@ -146,8 +147,8 @@ const NewReportModal = (props) => {
         <ModalTitle>제보하기</ModalTitle>
         <BtnText onClick={handleSubmit}>보내기</BtnText>
       </ModalHeader>
-      <Modal.Content scrolling style={{ maxHeight: '50vh', fontFamily: 'NS-R' }}>
-        {step === 0 ? (
+      {step === 0 ? (
+        <Modal.Content scrolling style={{ maxHeight: '50vh', fontFamily: 'NS-R' }}>
           <Grid.Column>
             <Field
               fluid
@@ -159,13 +160,22 @@ const NewReportModal = (props) => {
             {/* 여기 postcode에 따라 바뀌도록 처리해야함 */}
             <Field fluid>
               <label>위치 *</label>
-              <Form.Input fluid icon="angle right" value={address} onChange={address} />
               <Form.Input
                 fluid
-                value={detailAddress}
-                onChange={detailAddress}
-                style={{ marginTop: '0.5rem' }}
+                placeholder="도로명주소 찾기"
+                icon="angle right"
+                value={address}
+                onClick={() => setStep(1)}
               />
+              {address === '' ? null : (
+                <Form.Input
+                  fluid
+                  placeholder="상세주소"
+                  value={detailAddress}
+                  onChange={onChangeDetailAddress}
+                  style={{ marginTop: '0.5rem' }}
+                />
+              )}
             </Field>
             <Field
               fluid
@@ -245,12 +255,12 @@ const NewReportModal = (props) => {
             </div>
             {/* <Form.Checkbox label="이미지 저작권 동의 *" /> */}
           </Grid.Column>
-        ) : step === 1 ? (
-          <div>1</div>
-        ) : (
-          <div>2</div>
-        )}
-      </Modal.Content>
+        </Modal.Content>
+      ) : step === 1 ? (
+        <PostCode setAddress={setAddress} setStep={setStep} />
+      ) : (
+        <div>2</div>
+      )}
     </ReportModal>
   );
 };
