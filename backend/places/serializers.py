@@ -64,8 +64,11 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         return None
 
     def get_distance(self, obj):
-        if not (self.context["latitude"] and self.context["longitude"]):
+        if (not "latitude" in self.context) or (not "longitude" in self.context):
             return 0
+        if not self.context["latitude"] or not self.context["longitude"]:
+            return 0
+
         user_latitude = float(self.context["latitude"])
         user_longitude = float(self.context["longitude"])
         return round(getDistanceFromLatitudeAndLongitudeInMeter(

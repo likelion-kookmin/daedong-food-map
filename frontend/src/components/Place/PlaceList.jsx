@@ -5,7 +5,6 @@ import { Grid } from 'semantic-ui-react';
 import { SET_PLACE_LIST } from '../../reducers/map';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
-import Loading from 'components/Loading/loading.js';
 import PlacePagination from 'components/Place/Pagination';
 import useSetMarker from 'components/Map/useSetMarker';
 
@@ -26,16 +25,12 @@ const PlaceList = () => {
 
   return (
     <Fragment>
-      <Grid stackable columns={2} paded="true">
-        {loadPlacesLoading ? (
-          <Loading />
-        ) : (
-          mainPlaces.map((place) => (
-            <Grid.Column>
-              <PlaceCard data={place} />
-            </Grid.Column>
-          ))
-        )}
+      <Grid stackable columns={2} padded="true">
+        {mainPlaces.map((place) => (
+          <Grid.Column>
+            <PlaceCard data={place} />
+          </Grid.Column>
+        ))}
       </Grid>
       <PlacePagination currentPage={currentPage} totalPages={totalPages} />
     </Fragment>

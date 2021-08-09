@@ -2,6 +2,7 @@ import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_PLACE_LIST } from 'reducers/map';
+import camelize from 'camelize';
 
 import {
   LOAD_PLACES_REQUEST,
@@ -28,7 +29,7 @@ function* placeList(action) {
     const result = yield call(axios.get, queryString);
     yield put({
       type: LOAD_PLACES_SUCCESS,
-      data: result.data,
+      data: camelize(result.data),
     });
   } catch (err) {
     console.error(err);
@@ -46,7 +47,7 @@ function* placeDetail(action) {
     const result = yield call(placeDetailAPI, action.id);
     yield put({
       type: LOAD_PLACE_SUCCESS,
-      data: result.data,
+      data: camelize(result.data),
     });
   } catch (err) {
     console.error(err);

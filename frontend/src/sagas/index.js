@@ -6,6 +6,7 @@ import placeSaga from './place';
 import inquirySaga from './inquiry';
 import reportSaga from './report';
 // import mapSaga from './map';
+import bookmarkSaga from './bookmark';
 import { apiUrl } from '../config/api.config';
 
 axios.defaults.baseURL = apiUrl;
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(inquirySaga),
     fork(reportSaga),
     // fork(mapSaga),
+    fork(bookmarkSaga),
   ]);
 }

@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
-import LoginForm from 'components/LoginForm';
+import RegistrationForm from 'components/RegistrationForm';
 
 function Signup() {
   return (
     <Fragment>
-      <LoginForm />
-      {/* TODO: RegisterForm 으로 연결 */}
+      <RegistrationForm />
     </Fragment>
   );
 }

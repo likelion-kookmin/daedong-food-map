@@ -6,6 +6,7 @@ import place from './place';
 import inquiry from './inquiry';
 import report from './report';
 import map from './map';
+import bookmark from './bookmark';
 
 // (이전상태, 액션) => 다음상태
 const rootReducer = (state, action) => {
@@ -19,6 +20,7 @@ const rootReducer = (state, action) => {
         place,
         report,
         map,
+        bookmark,
       });
       return combinedReducer(state, action);
     }

@@ -32,8 +32,8 @@ const reducer = (state = initialState, action) =>
       case LOAD_PLACES_SUCCESS: // TODO: 이후 Search 기능을 활용한 부분도 고려해야함.
         draft.loadPlacesLoading = false;
         draft.loadPlacesDone = true;
-        draft.totalPages = action.data?.total_pages || 1;
-        draft.currentPage = action.data?.current_page || 1;
+        draft.totalPages = action.data?.totalPages || 1;
+        draft.currentPage = action.data?.currentPage || 1;
         draft.mainPlaces = action.data?.results || [];
         break;
       case LOAD_PLACES_FAILURE:
