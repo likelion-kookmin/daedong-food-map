@@ -1,6 +1,7 @@
 """# places serializers"""
 from math import atan2, cos, pi, sin, sqrt
 
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from file_managers.serializers import ImageSerializer
 from reports.models import Report
 from rest_framework import serializers
@@ -27,7 +28,7 @@ def getDistanceFromLatitudeAndLongitudeInMeter(latitude1, longitude1, latitude2,
     return distance  # meter
 
 
-class PlaceSerializer(TaggitSerializer, ModelSerializer):
+class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
     """## PlaceSerializer
     - Place Model serializer입니다.
     """
