@@ -82,7 +82,7 @@ function PlaceCard(props) {
 
   const imglist =
     props.data.images && props.data.images.length
-      ? props.data.images.map((img, index) => (
+      ? props.data.images.slice(0, 3).map((img, index) => (
           <ImgContainer>
             <Img src={img.image} />
           </ImgContainer>
