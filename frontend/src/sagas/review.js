@@ -17,8 +17,7 @@ import {
 const reviewNewAPI = (data) => axios.post('/reviews/new/', data, { headers: authHeader() });
 const reviewEditAPI = (data, id) =>
   axios.patch(`/reviews/${id}/edit/`, data, { headers: authHeader() });
-const reviewDestroyAPI = (data, id) =>
-  axios.delete(`/reviews/${id}/destroy/`, data, { headers: authHeader() });
+const reviewDestroyAPI = (id) => axios.delete(`/reviews/${id}/destroy/`, { headers: authHeader() });
 
 function* reviewNew(action) {
   try {
@@ -52,7 +51,7 @@ function* reviewEdit(action) {
 
 function* reviewDestroy(action) {
   try {
-    const result = yield call(reviewDestroyAPI, action.data, action.id);
+    const result = yield call(reviewDestroyAPI, action.id);
     yield put({
       type: DESTROY_REVIEW_SUCCESS,
       data: result?.data,
