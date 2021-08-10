@@ -10,13 +10,11 @@ const Search = () => {
   const dispatch = useDispatch();
   const getSearchPlaces = async () => {
     try {
-      if (value !== '') {
-        await dispatch({
-          type: LOAD_PLACES_REQUEST,
-          data: { value },
-        });
-        flag = true;
-      }
+      await dispatch({
+        type: LOAD_PLACES_REQUEST,
+        data: { value },
+      });
+      flag = true;
     } catch (error) {
       console.error(error);
     }

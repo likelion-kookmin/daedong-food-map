@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_GEO } from 'reducers/map';
 const { kakao } = window;
 
 var kakaoMap = {};
 
 const useGeolocation = () => {
+  const dispatch = useDispatch();
   const { map } = useSelector((state) => state.map);
-
   kakaoMap = map;
   const getGeo = () => {
     if (navigator.geolocation) {
@@ -16,6 +17,9 @@ const useGeolocation = () => {
             position.coords.longitude,
           );
           kakaoMap.panTo(nowPosition);
+          dispatch({
+            type: SET_GEO,
+          });
         });
     } else alert('이 브라우저에서는 Geolocation이 지원되지 않습니다.');
   };

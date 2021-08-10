@@ -5,11 +5,12 @@ import PlaceList from 'components/Place/PlaceList';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const { map } = useSelector((state) => state.map);
+  const { map, loading } = useSelector((state) => state.map);
   const { getGeo } = useGeolocation();
 
   useEffect(() => {
     getGeo();
+    if (loading) document.querySelector('.ui.placeholder').style.display = 'none';
   }, [getGeo, map]);
 
   return (

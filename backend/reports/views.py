@@ -108,10 +108,13 @@ class ReportUpdateView(BaseView, UpdateAPIView):
 
         if obj.place.status == 'p':
             return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
-        else:
-            return self.update(request, *args, **kwargs)
+        return self.update(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
+        obj = self.get_object()
+
+        if obj.place.status == 'p':
+            return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
         return self.partial_update(request, *args, **kwargs)
 
 
