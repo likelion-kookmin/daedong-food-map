@@ -79,7 +79,7 @@ const Img = styled.img`
 
 function PlaceCard(props) {
   const { loadPlacesLoading } = useSelector((state) => state.place);
-  const distance = Math.round(props.data.distance || 10);
+  // const distance = Math.round(props.data.distance || 10);
   const imglist =
     props.data.images && props.data.images.length
       ? props.data.images.slice(0, 3).map((img, index) => (
@@ -98,7 +98,7 @@ function PlaceCard(props) {
       <Number circular size="large">
         {props.index}
       </Number>
-      <Section style={{ alignItems: 'baseline' }}>
+      <Section style={{ alignItems: 'baseline', maxWidth: '90%' }}>
         <Link to={`/places/${[props.data.id]}`}>
           <Name>{props.data.name}</Name>
         </Link>

@@ -21,6 +21,7 @@ const MobileLayout = (props) => {
 
   props.history.listen((location, action) => {
     setSidebarOpened(false);
+    window.scrollTo(0, 0);
   });
 
   const logout = () => {
@@ -100,7 +101,7 @@ const MobileLayout = (props) => {
             <Menu secondary size="large" fixed="top">
               <Menu.Item>
                 <Link to="/">
-                  <Logo src="images/LogoTitle.png" />
+                  <Logo src={process.env.PUBLIC_URL + 'images/LogoTitle.png'} />
                 </Link>
               </Menu.Item>
               <Menu.Item onClick={handleToggle} position="right">
@@ -109,7 +110,7 @@ const MobileLayout = (props) => {
             </Menu>
           </Segment>
           <Container
-            style={{ width: maxWindowWidth, padding: '1rem', minHeight: window.outerHeight }}
+            style={{ width: maxWindowWidth, padding: '2rem', minHeight: window.outerHeight }}
           >
             {props.children}
           </Container>

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { maxWindowWidth } from 'utils/style.util';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { lighten, darken } from 'polished';
@@ -62,6 +62,10 @@ const DesktopLayout = (props) => {
     window.location.href = '/';
   };
 
+  props.history.listen((location, action) => {
+    window.scrollTo(0, 0);
+  });
+
   const openNewReportModal = () => {
     setNewReportOpened(true);
   };
@@ -118,7 +122,7 @@ const DesktopLayout = (props) => {
         ) : (
           <Container style={ContainerStyle}>
             <Link to="/">
-              <Logo src="images/LogoTitle.png" />
+              <Logo src={process.env.PUBLIC_URL + 'images/LogoTitle.png'} />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
             <Link to="/login">
@@ -143,4 +147,4 @@ const DesktopLayout = (props) => {
   );
 };
 
-export default DesktopLayout;
+export default withRouter(DesktopLayout);
