@@ -41,7 +41,7 @@ const useSetMarker = () => {
         '<div class="ui pointing below label">' +
         ` <div class="ui blue circular large label">${value.id}</div>` +
         ' <div>' +
-        `   <div class='title'>${value.name}</div>` +
+        `   <a href="/places/${value.id}"><div class='title'>${value.name}</div></a>` +
         '   <i aria-hidden="true" class="star icon"></i>' +
         `   <div class='body'>${avg_score}&nbsp&nbsp&nbsp<span>&#183;</span>${value.tags[0]}</div>` +
         ' </div>' +
@@ -52,6 +52,7 @@ const useSetMarker = () => {
         map: null,
         position: position,
         content: content,
+        clickable: true,
         yAnchor: 1,
       });
       // 마커 이미지의 이미지 크기 입니다
@@ -78,15 +79,11 @@ const useSetMarker = () => {
 
       const closeInfo = () => {
         overlay_new.forEach((each) => each.setMap(null));
-        // marker_new.forEach((marker, idx) => marker.setImage(images[idx]));
       };
-
+      marker.setClickable(true);
       kakao.maps.event.addListener(marker, 'click', function () {
         openInfo();
-        // document.querySelector('.close').addEventListener('click', closeInfo);
-        // marker_new.forEach((marker, idx) => marker.setImage());
-        // marker.setImage(bigMarkerImage);
-
+        // document.querySelector('#mapOverlay').addEventListener('click', closeInfo);
         kakaoMap.panTo(position);
       });
       kakao.maps.event.addListener(kakaoMap, 'click', closeInfo);

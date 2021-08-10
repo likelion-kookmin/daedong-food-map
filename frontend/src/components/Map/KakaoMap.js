@@ -21,10 +21,13 @@ const KakaoMap = () => {
       type: SET_MAP,
       map: map,
     });
-  }, [dispatch]);
+  }, [kakao]);
 
   return (
     <div id="mapOverlay">
+      <div class="ui placeholder">
+        <div class="rectangular image"></div>
+      </div>
       <Search />
     </div>
   );

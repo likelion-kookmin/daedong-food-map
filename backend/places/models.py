@@ -4,8 +4,8 @@ from django.db import models
 from file_managers.models import Image
 from taggit.managers import TaggableManager
 
-LONGITUDE_DIFF = 2
-LATITUDE_DIFF = 2
+LONGITUDE_DIFF = 10
+LATITUDE_DIFF = 10
 
 
 class PlaceQuerySet(models.QuerySet):
@@ -101,6 +101,12 @@ class Place(BaseModel):
 
     view_count = models.IntegerField(
         verbose_name='장소의 조회수',
+        default=0,
+        blank=True,
+    )
+
+    bookmark_count = models.IntegerField(
+        verbose_name='장소가 북바크 당한 숫자',
         default=0,
         blank=True,
     )

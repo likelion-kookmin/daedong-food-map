@@ -2,11 +2,13 @@ import produceUtil from 'utils/produce.util';
 
 export const initialState = {
   map: null,
+  loading: false,
   oldMarker: [],
   oldOverlay: [],
 };
 
 export const SET_MAP = 'SET_MAP';
+export const SET_GEO = 'SET_GEO';
 export const ADD_MARKER = 'ADD_MARKER';
 
 const reducer = (state = initialState, action) =>
@@ -18,6 +20,9 @@ const reducer = (state = initialState, action) =>
       case ADD_MARKER:
         draft.oldMarker = action.marker;
         draft.oldOverlay = action.overlay;
+        break;
+      case SET_GEO:
+        draft.loading = true;
         break;
       default:
         break;
