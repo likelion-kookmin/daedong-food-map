@@ -1,6 +1,7 @@
 """bookmarks views"""
 from config.views import BaseView
-from django.db.models import query
+from django.db.models import Q, query
+from django.http import JsonResponse
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
@@ -12,7 +13,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Bookmark
 from .permissions import IsBookmarkEditableOrDestroyable
 from .serializers import BookmarkSerializer
-from django.core.exceptions import  ValidationError
 
 
 class BookmarkListView(BaseView, ListAPIView):
@@ -58,7 +58,14 @@ class BookmarkCreateView(BaseView, CreateAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.current_user)
+        place_id = self.request.POST["place_id"]
+
+        if Bookmark.objects.filter(
+            Q(place = place_id) &
+            Q(user = self.current_user)):
+            return JsonResponse({'alreadyExists': 'True'})
+        else:
+            serializer.save(user=self.current_user)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
