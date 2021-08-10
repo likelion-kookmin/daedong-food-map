@@ -84,6 +84,8 @@ const NewReportModal = (props) => {
   const [detailAddress, onChangeDetailAddress, setDetailAddress] = useInput('');
   const [inputTag, onChangeInputTag, setInputTag] = useInput('');
   const [contents, onChangeContents, setContents] = useInput('');
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
   const [tags, setTags] = useState([]);
   const [imgs, setImgs] = useState([]);
 
@@ -181,12 +183,12 @@ const NewReportModal = (props) => {
           images,
           address,
           detail_address: detailAddress || '',
-          longitude: 0,
-          latitude: 0,
+          longitude: longitude,
+          latitude: latitude,
         },
       },
     });
-  }, [dispatch, contents, placename, tags, imgs, address, detailAddress]);
+  }, [imgs, dispatch, contents, placename, tags, address, detailAddress, longitude, latitude]);
 
   return (
     <ReportModal onClose={() => closeModal()} onOpen={() => props.setOpen(true)} open={props.open}>
@@ -326,7 +328,12 @@ const NewReportModal = (props) => {
           </Form>
         </Modal.Content>
       ) : step === 1 ? (
-        <PostCode setAddress={setAddress} setStep={setStep} />
+        <PostCode
+          setAddress={setAddress}
+          setStep={setStep}
+          setLongitude={setLongitude}
+          setLatitude={setLatitude}
+        />
       ) : (
         <div>2</div>
       )}
