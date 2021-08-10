@@ -1,6 +1,7 @@
 """# places serializers"""
 from math import atan2, cos, pi, sin, sqrt
 
+from bookmarks.models import Bookmark
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 from file_managers.serializers import ImageSerializer
 from reports.models import Report
@@ -40,6 +41,7 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
     reviews = serializers.SerializerMethodField()
     distance = serializers.SerializerMethodField()
     average_score = serializers.ReadOnlyField()
+    is_bookmarked = serializers.SerializerMethodField()
 
     class Meta:
         """### PlaceSerializer.Meta"""
@@ -86,3 +88,13 @@ class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
 
     def get_reviews(self, obj):
         return ReviewSerializer(Review.objects.filter(place=obj), many=True).data or []
+
+    def get_is_bookmarked(self, obj):
+        try:
+            current_user = self.context['request'].user
+
+            return Bookmark.objects.filter(
+                user=current_user, place=obj
+            ).exists()
+        except:
+            return False
