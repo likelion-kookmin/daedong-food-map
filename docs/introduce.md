@@ -1,3 +1,7 @@
+<a href="#">
+    <img src="./LogoTitle.png" alt="daedong logo" title="Daedong" align="right" height="40" />
+</a>
+
 # 대동먹지도
 **목차**
 - [서비스 소개](#서비스-소개)
@@ -113,3 +117,9 @@
 [netlify](https://www.netlify.com/)를 활용한 배포를 진행합니다.
 
 프론트엔드 폴더 상에서 nerlify command를 이용해 배포합니다.
+
+## Links
+
+* [웹사이트]("")
+* [이슈 트래커](https://github.com/likelion-kookmin/daedong-food-map/issues)
+* [소스코드](https://github.com/likelion-kookmin/daedong-food-map)
