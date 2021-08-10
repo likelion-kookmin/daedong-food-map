@@ -1,5 +1,5 @@
 """# places serializers"""
-from math import atan2, cos, pi, sin, sqrt
+from math import atan2, cos, pi, sin, sqrt, asin
 
 from bookmarks.models import Bookmark
 from drf_writable_nested.serializers import WritableNestedModelSerializer
@@ -23,10 +23,11 @@ def deg2rad(deg):
 
 def getDistanceFromLatitudeAndLongitudeInMeter(latitude1, longitude1, latitude2, longitude2):
     R = 6371
-    dLat = deg2rad(latitude2 - latitude1)
-    dLon = deg2rad(longitude2 - longitude1)
-    a = sin(dLat/2) * sin(dLat/2) + cos(deg2rad(latitude1)) * \
-        cos(deg2rad(latitude2)) * sin(dLon/2) * sin(dLon/2)
+    dLat = deg2rad(abs(latitude2 - latitude1))
+    dLon = deg2rad(abs(longitude2 - longitude1))
+    a = sin(dLat/2) * sin(dLat/2) + \
+        cos(deg2rad(latitude1)) * cos(deg2rad(latitude2)) * \
+        sin(dLon/2) * sin(dLon/2)
     distance = R * (2 * atan2(sqrt(a), sqrt(1-a))) * 1000
     return distance  # meter
 

@@ -79,7 +79,7 @@ const Img = styled.img`
 
 function PlaceCard(props) {
   const { loadPlacesLoading } = useSelector((state) => state.place);
-  const distance = 1025;
+  const distance = Math.round(props.data.distance || 10);
   const imglist =
     props.data.images && props.data.images.length
       ? props.data.images.slice(0, 3).map((img, index) => (
@@ -112,9 +112,9 @@ function PlaceCard(props) {
             return <Tag>{tag}</Tag>;
           })}
         </Section>
-        <Text style={{ paddingTop: '0.5rem' }}>
+        {/* <Text style={{ paddingTop: '0.5rem' }}>
           {distance > 1000 ? (distance * 0.001).toFixed(2) + 'km' : distance + 'm'}
-        </Text>
+        </Text> */}
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>{imglist}</Section>
     </Container>

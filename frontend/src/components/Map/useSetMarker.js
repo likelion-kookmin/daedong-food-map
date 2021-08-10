@@ -87,6 +87,11 @@ const useSetMarker = () => {
         kakaoMap.panTo(position);
       });
       kakao.maps.event.addListener(kakaoMap, 'click', closeInfo);
+      kakao.maps.event.addListener(kakaoMap, 'bounds_changed', function () {
+        const mapCenter = kakaoMap.getCenter();
+        localStorage.setItem('longitude', mapCenter.getLng());
+        localStorage.setItem('latitude', mapCenter.getLat());
+      });
     });
 
     dispatch({

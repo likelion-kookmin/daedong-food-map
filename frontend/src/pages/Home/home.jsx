@@ -3,6 +3,7 @@ import Map from 'components/Map/KakaoMap.js';
 import useGeolocation from 'components/Map/useGeolocation';
 import PlaceList from 'components/Place/PlaceList';
 import { useSelector } from 'react-redux';
+import { LOAD_PLACES_REQUEST } from 'reducers/place';
 
 const Home = () => {
   const { map, loading } = useSelector((state) => state.map);
@@ -10,8 +11,11 @@ const Home = () => {
 
   useEffect(() => {
     getGeo();
+  }, [getGeo]);
+
+  useEffect(() => {
     if (loading) document.querySelector('.ui.placeholder').style.display = 'none';
-  }, [getGeo, map]);
+  }, [loading, map]);
 
   return (
     <Fragment>

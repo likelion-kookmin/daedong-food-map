@@ -12,7 +12,6 @@ from .serializers import PlaceSerializer
 
 class PlaceListView(BaseView, ListAPIView):
     """## PlaceListView"""
-    queryset = Place.objects.published().order_by('-created_at').all()
     serializer_class = PlaceSerializer
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
