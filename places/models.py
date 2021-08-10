@@ -4,8 +4,8 @@ from django.db import models
 from file_managers.models import Image
 from taggit.managers import TaggableManager
 
-LONGITUDE_DIFF = 2
-LATITUDE_DIFF = 2
+LONGITUDE_DIFF = 10
+LATITUDE_DIFF = 10
 
 
 class PlaceQuerySet(models.QuerySet):
