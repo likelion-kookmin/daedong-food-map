@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
 import 'styles/search.css';
 
+let flag = false;
 const Search = () => {
   const [value, setValue] = useState('');
+  const { loadPlacesDone } = useSelector((state) => state.place);
   const dispatch = useDispatch();
   const getSearchPlaces = async () => {
     try {
@@ -12,10 +14,15 @@ const Search = () => {
         type: LOAD_PLACES_REQUEST,
         data: { value },
       });
+      flag = true;
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (loadPlacesDone && flag) scrollTo();
+  }, [loadPlacesDone]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -24,6 +31,12 @@ const Search = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     getSearchPlaces();
+  };
+
+  const scrollTo = () => {
+    const mapHeight = document.querySelector('#mapOverlay').offsetHeight;
+    const menuHeight = document.querySelector('.ui.menu').offsetHeight;
+    window.scrollTo({ top: mapHeight + menuHeight, behavior: 'smooth' });
   };
 
   return (
