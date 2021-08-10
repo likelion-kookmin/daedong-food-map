@@ -1,9 +1,16 @@
 #mapOverlay {
   max-width: 1364px;
-  height: 70vh;
+  height: 60vh;
   position: relative;
   transform: translate3d(-50%, 0, 0);
   left: 50%;
+}
+
+.ui.placeholder {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  max-width: none;
 }
 
 .ui .pointing {
