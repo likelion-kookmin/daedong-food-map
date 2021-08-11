@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import { SET_GEO_REQUEST } from 'reducers/map';
 import 'styles/search.css';
 
 let flag = false;
 const Search = () => {
   const [value, setValue] = useState('');
   const { loadPlacesDone } = useSelector((state) => state.place);
+  const { map } = useSelector((state) => state.map);
   const dispatch = useDispatch();
   const getSearchPlaces = async () => {
     try {
@@ -33,6 +35,14 @@ const Search = () => {
     getSearchPlaces();
   };
 
+  const getGeo = async (e) => {
+    e.preventDefault();
+    await dispatch({
+      type: SET_GEO_REQUEST,
+      map: map,
+    });
+  };
+
   const scrollTo = () => {
     const mapHeight = document.querySelector('#mapOverlay').offsetHeight;
     const menuHeight = document.querySelector('.ui.menu').offsetHeight;
@@ -51,9 +61,11 @@ const Search = () => {
               onChange={handleChange}
               placeholder="먹고 싶은 음식을 찾아보세요!"
             />
-            <i class="search large icon"></i>
+            <button type="submit">
+              <i class="search large icon"></i>
+            </button>
           </div>
-          <button type="submit">
+          <button className="btn" onClick={getGeo}>
             <i class="fas fa-location fa-2x"></i>
           </button>
         </form>

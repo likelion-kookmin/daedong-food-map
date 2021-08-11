@@ -1,21 +1,19 @@
 import React, { Fragment, useEffect } from 'react';
 import Map from 'components/Map/KakaoMap.js';
-import useGeolocation from 'components/Map/useGeolocation';
 import PlaceList from 'components/Place/PlaceList';
-import { useSelector } from 'react-redux';
-import { LOAD_PLACES_REQUEST } from 'reducers/place';
+import { SET_GEO_REQUEST } from 'reducers/map';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Home = () => {
-  const { map, loading } = useSelector((state) => state.map);
-  const { getGeo } = useGeolocation();
+  const { map } = useSelector((state) => state.map);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getGeo();
-  }, [getGeo]);
-
-  useEffect(() => {
-    if (loading) document.querySelector('.ui.placeholder').style.display = 'none';
-  }, [loading, map]);
+    dispatch({
+      type: SET_GEO_REQUEST,
+      map: map,
+    });
+  }, [map]);
 
   return (
     <Fragment>
