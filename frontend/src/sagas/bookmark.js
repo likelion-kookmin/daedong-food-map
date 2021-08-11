@@ -17,7 +17,7 @@ import {
 const bookmarkListAPI = (data) => axios.get('/bookmarks/', { headers: authHeader() }, data);
 
 const bookmarkNewAPI = (id) =>
-  axios.post('/bookmarks/new/', { headers: authHeader() }, { place_id: id });
+  axios.post('/bookmarks/new/', { place_id: id }, { headers: authHeader() });
 
 // id = > place_id
 const bookmarkDestroyAPI = (id) =>
