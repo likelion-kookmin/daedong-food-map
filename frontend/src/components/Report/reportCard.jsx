@@ -32,7 +32,7 @@ const ReportCard = (props) => {
 
   const imglist = place.images.map((img, index) => (
     <ImgContainer mobile={3} tablet={2} width={1}>
-      <Img src={img.image} />
+      <Img src={img?.image} />
     </ImgContainer>
   ));
   return (
