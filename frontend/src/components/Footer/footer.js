@@ -62,7 +62,7 @@ function Footer() {
               <Header as="h4" inverted>
                 Daedong Food Map
               </Header>
-              <p>대동멋지도에 여러분들만 알고 있는 먹거리를 소개해주세요.</p>
+              <p>대동먹지도에 여러분들만 알고 있는 먹거리를 소개해주세요.</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>
