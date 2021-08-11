@@ -89,22 +89,6 @@ const PlaceImgContainer = styled.div`
   flex-grow: 1;
   width: 20%;
   padding-bottom: 15%;
-
-  &:last-child {
-    img {
-      border-radius: 0 10px 10px 0;
-    }
-  }
-  &:first-child {
-    img {
-      border-radius: 10px 0 0 10px;
-    }
-  }
-  &:only-child {
-    img {
-      border-radius: 10px;
-    }
-  }
 `;
 
 const PlaceImg = styled.img`
