@@ -30,9 +30,9 @@ const Img = styled.img`
 const ReportCard = (props) => {
   const { content, place } = props?.report;
 
-  const imglist = place.images.map((img, index) => (
+  const imglist = (place?.images || []).map((img, index) => (
     <ImgContainer mobile={3} tablet={2} width={1}>
-      <Img src={img.image} />
+      <Img src={img?.image} />
     </ImgContainer>
   ));
   return (
@@ -41,9 +41,9 @@ const ReportCard = (props) => {
         <Grid.Row columns={16}>
           <Grid.Column width={10}>
             <h3>
-              {place.name}
+              {place?.name}
               <br />
-              <span style={{ fontSize: 'small', color: 'gray' }}> ({place.address}) </span>
+              <span style={{ fontSize: 'small', color: 'gray' }}> ({place?.address}) </span>
             </h3>
           </Grid.Column>
           <Grid.Column width={6} textAlign="right">
@@ -66,7 +66,7 @@ const ReportCard = (props) => {
         <Grid.Row>
           <Grid.Column>
             <section style={{ margin: '0' }}>
-              {place.tags.map((tag) => {
+              {place?.tags.map((tag) => {
                 return <Label>{tag}</Label>;
               })}
             </section>
