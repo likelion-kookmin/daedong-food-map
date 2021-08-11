@@ -10,7 +10,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Bookmark
+from .models import Bookmark, Place
 from .permissions import IsBookmarkEditableOrDestroyable
 from .serializers import BookmarkSerializer
 
@@ -47,7 +47,6 @@ class BookmarkRetrieveView(BaseView, RetrieveAPIView):
         return self.retrieve(request, *args, **kwargs)
 
 
-
 class BookmarkCreateView(BaseView, CreateAPIView):
     """# BookmarkCreateView
     - 북마크를 생성한다.
@@ -58,16 +57,19 @@ class BookmarkCreateView(BaseView, CreateAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def perform_create(self, serializer):
-        place_id = self.request.POST["place_id"]
-
-        if Bookmark.objects.filter(
-            Q(place = place_id) &
-            Q(user = self.current_user)):
-            return JsonResponse({'alreadyExists': 'True'})
-        else:
-            serializer.save(user=self.current_user)
+        serializer.save(user=self.current_user)
 
     def post(self, request, *args, **kwargs):
+        place_id = self.request.data.get("place_id")
+
+        if Bookmark.objects.filter(
+                Q(place=place_id) &
+                Q(user=self.current_user)):
+            return JsonResponse({'alreadyExists': 'True'})
+
+        place = Place.objects.get(place_id)
+        place.bookmark_count += 1
+        place.save()
         return self.create(request, *args, **kwargs)
 
 
