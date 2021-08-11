@@ -43,7 +43,7 @@ const ReportCard = (props) => {
             <h3>
               {place?.name}
               <br />
-              <span style={{ fontSize: 'small', color: 'gray' }}> ({place.address}) </span>
+              <span style={{ fontSize: 'small', color: 'gray' }}> ({place?.address}) </span>
             </h3>
           </Grid.Column>
           <Grid.Column width={6} textAlign="right">
