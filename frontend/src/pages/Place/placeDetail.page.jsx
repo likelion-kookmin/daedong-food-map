@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACE_REQUEST } from 'reducers/place';
 import { ADD_REVIEW_REQUEST } from 'reducers/review';
@@ -29,6 +28,10 @@ const Name = styled.div`
   font-family: 'NS-EB';
   font-size: 2rem;
   color: #3e3e3e;
+
+  ${media.phone`
+  font-size: 1.8rem
+  `};
 `;
 
 const Text = styled.div`
@@ -144,7 +147,7 @@ const PlaceDetailPage = () => {
   const { addReviewDone, addReviewError } = useSelector((state) => state.review);
   const [imgs, setImgs] = useState([]);
   const inputFile = useRef(null);
-  const [contents, onChangeContents] = useInput('');
+  const [contents, setContents] = useState('');
   const [contentsError, setContentsError] = useState('');
   const [rating, setRating] = useState(1);
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
@@ -219,6 +222,13 @@ const PlaceDetailPage = () => {
     setRating(rating);
   };
 
+  const handleContents = (e) => {
+    setContents(e.target.value);
+    if (e.target.value.length >= 100) {
+      setContents(e.target.value.slice(0, 100));
+    }
+  };
+
   const handleBookmark = (isBookmarked, id) => {
     if (isBookmarked) {
       dispatch({
@@ -263,12 +273,14 @@ const PlaceDetailPage = () => {
             handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
           }}
         >
-          <Icon
-            name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
-            color="yellow"
-            size="big"
-            style={{ marginRight: '2rem' }}
-          />
+          <Section>
+            <Icon
+              name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
+              color="yellow"
+              size="big"
+              style={{ marginRight: '1rem' }}
+            />
+          </Section>
         </button>
       </Section>
       <Section style={{ opacity: '0.8', gap: '2rem', borderBottom: '1px solid #d6d6d6' }}>
@@ -339,23 +351,26 @@ const PlaceDetailPage = () => {
             style={{ display: 'none' }}
           />
         </Section>
-        <Section style={{ alignItems: 'flex-end' }}>
-          <Rating
-            icon="star"
-            size="large"
-            defaultRating={1}
-            maxRating={5}
-            onRate={handleRating}
-            style={{ marginRight: '1rem' }}
-          />
-          <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
+        <Section style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <Section style={{ margin: 0 }}>
+            <Rating
+              icon="star"
+              size="large"
+              defaultRating={1}
+              maxRating={5}
+              onRate={handleRating}
+              style={{ marginRight: '1rem' }}
+            />
+            <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
+          </Section>
+          <Text>{contents.length} / 100</Text>
         </Section>
         <Form.Field
           fluid
           placeholder="리뷰를 작성해주세요."
           control={TextArea}
           value={contents}
-          onChange={onChangeContents}
+          onChange={handleContents}
           style={{ fontFamily: 'NS-R' }}
           error={contentsError.length > 0}
         />
