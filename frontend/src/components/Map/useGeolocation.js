@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_GEO } from 'reducers/map';
+import { SET_GEO_SUCCESS } from 'reducers/map';
 const { kakao } = window;
 
 const useGeolocation = () => {
   const dispatch = useDispatch();
   const { map } = useSelector((state) => state.map);
-  const [location, setLocation] = useState([33.450701, 126.570667]);
+  const [location, setLocation] = useState([37.51260163813798, 127.05525734428048]);
   const kakaoMap = map;
 
   useEffect(() => {
@@ -19,9 +19,10 @@ const useGeolocation = () => {
 
     var options = {
       enableHighAccuracy: true,
-      timeout: 1000,
+      timeout: 10000,
       maximumAge: 1,
     };
+
     const success = (position) =>
       setLocation([position.coords.latitude, position.coords.longitude]);
     const error = () => {};
@@ -34,7 +35,7 @@ const useGeolocation = () => {
       kakaoMap.panTo(nowPosition);
 
       dispatch({
-        type: SET_GEO,
+        type: SET_GEO_SUCCESS,
       });
     }
   };
