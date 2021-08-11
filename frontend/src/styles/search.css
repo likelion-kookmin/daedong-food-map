@@ -22,7 +22,7 @@
   border-radius: 6px;
 }
 
-.search button {
+.search .btn {
   position: relative;
   background-color: #f25c69;
   border: 0;
@@ -34,6 +34,7 @@
 }
 
 .search button i {
+  cursor: pointer;
   color: white;
   position: absolute;
   transform: translate3d(-50%, -50%, 0);
@@ -50,13 +51,18 @@
 
 .search .container .search {
   color: grey;
-  position: absolute;
-  float: right;
-  transform: translate3d(0, -50%, 0);
-  top: 50%;
-  right: 0;
 }
 
 input:focus {
   outline: none;
+}
+
+.search .container .container button {
+  cursor: pointer;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  right: 2%;
+  top: 50%;
+  background-color: white;
+  border: 0;
 }
