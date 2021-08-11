@@ -16,9 +16,10 @@ import {
 
 const bookmarkListAPI = (data) => axios.get('/bookmarks/', { headers: authHeader() }, data);
 
-const bookmarkNewAPI = (data) =>
-  axios.post('/bookmarks/new/', { headers: authHeader() }, { place_id: data.id });
+const bookmarkNewAPI = (id) =>
+  axios.post('/bookmarks/new/', { headers: authHeader() }, { place_id: id });
 
+// id = > place_id
 const bookmarkDestroyAPI = (id) =>
   axios.delete(`/bookmarks/${id}/destroy/`, { headers: authHeader() });
 
@@ -40,7 +41,7 @@ function* bookmarkList(action) {
 
 function* bookmarkNew(action) {
   try {
-    const result = yield call(bookmarkNewAPI, action.data);
+    const result = yield call(bookmarkNewAPI, action.id);
     yield put({
       type: ADD_BOOKMARK_SUCCESS,
       data: result.data,

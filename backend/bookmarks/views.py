@@ -2,12 +2,14 @@
 from config.views import BaseView
 from django.db.models import Q, query
 from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Bookmark, Place
@@ -64,10 +66,10 @@ class BookmarkCreateView(BaseView, CreateAPIView):
 
         if Bookmark.objects.filter(
                 Q(place=place_id) &
-                Q(user=self.current_user)):
+                Q(user=self.current_user)).exists():
             return JsonResponse({'alreadyExists': 'True'})
 
-        place = Place.objects.get(place_id)
+        place = Place.objects.get(pk=place_id)
         place.bookmark_count += 1
         place.save()
         return self.create(request, *args, **kwargs)
@@ -85,8 +87,18 @@ class BookmarkDestroyView(BaseView, DestroyAPIView):
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.current_user)
 
+    def get_object(self, request, *args, **kwargs):
+
+        place_id = kwargs['pk']
+        user = self.current_user
+        return Bookmark.objects.filter(user=user, place=place_id).first()
+
     def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        obj.place.bookmark_count -= 1
-        obj.place.save()
-        return self.destroy(request, *args, **kwargs)
+        instance = self.get_object(request, *args, **kwargs)
+
+        instance.place.bookmark_count -= 1
+        instance.place.save()
+
+        self.perform_destroy(instance)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

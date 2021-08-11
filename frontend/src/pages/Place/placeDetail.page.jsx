@@ -4,6 +4,7 @@ import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACE_REQUEST } from 'reducers/place';
 import { ADD_REVIEW_REQUEST } from 'reducers/review';
+import { DESTROY_BOOKMARK_REQUEST, ADD_BOOKMARK_REQUEST } from 'reducers/bookmark';
 import styled from 'styled-components';
 import { Icon, Form, TextArea, Button, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
@@ -193,6 +194,24 @@ const PlaceDetailPage = () => {
     setRating(rating);
   };
 
+  const handleBookmark = (isBookmarked, id) => {
+    if (isBookmarked) {
+      dispatch({
+        type: DESTROY_BOOKMARK_REQUEST,
+        id: id,
+      });
+    } else {
+      dispatch({
+        type: ADD_BOOKMARK_REQUEST,
+        id: id,
+      });
+    }
+    dispatch({
+      type: LOAD_PLACE_REQUEST,
+      id: id,
+    });
+  };
+
   return (
     <div className={loadPlaceLoading ? 'loading' : ''}>
       <Section
@@ -209,7 +228,19 @@ const PlaceDetailPage = () => {
             {parseFloat(singlePlace?.averageScore.toFixed(2))}
           </Text>
         </Section>
-        <Icon name="star outline" color="yellow" size="big" style={{ marginRight: '2rem' }} />
+        <button
+          style={{ background: 'none', border: 'none' }}
+          onClick={() => {
+            handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
+          }}
+        >
+          <Icon
+            name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
+            color="yellow"
+            size="big"
+            style={{ marginRight: '2rem' }}
+          />
+        </button>
       </Section>
       <Section style={{ opacity: '0.8', gap: '2rem', borderBottom: '1px solid #d6d6d6' }}>
         <Section>

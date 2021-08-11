@@ -1,6 +1,7 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 import camelize from 'camelize';
+import authHeader from './auth-header';
 
 import {
   LOAD_PLACES_REQUEST,
@@ -37,7 +38,7 @@ function* placeList(action) {
   }
 }
 
-const placeDetailAPI = (id) => axios.get(`/places/${id}/`);
+const placeDetailAPI = (id) => axios.get(`/places/${id}/`, { headers: authHeader() });
 
 function* placeDetail(action) {
   try {
