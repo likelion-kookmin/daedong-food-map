@@ -60,13 +60,14 @@ const Search = () => {
               value={value}
               onChange={handleChange}
               placeholder="먹고 싶은 음식을 찾아보세요!"
+              style={{ fontFamily: 'NS-R' }}
             />
             <button type="submit">
               <i class="search large icon"></i>
             </button>
           </div>
           <button className="btn" onClick={getGeo}>
-            <i class="fas fa-location fa-2x"></i>
+            <i class="fas fa-location fa" style={{ fontSize: '1.6rem' }}></i>
           </button>
         </form>
       </div>
