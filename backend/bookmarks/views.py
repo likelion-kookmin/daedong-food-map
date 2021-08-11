@@ -68,10 +68,6 @@ class BookmarkCreateView(BaseView, CreateAPIView):
                 Q(place=place_id) &
                 Q(user=self.current_user)).exists():
             return JsonResponse({'alreadyExists': 'True'})
-
-        place = Place.objects.get(pk=place_id)
-        place.bookmark_count += 1
-        place.save()
         return self.create(request, *args, **kwargs)
 
 
@@ -96,8 +92,9 @@ class BookmarkDestroyView(BaseView, DestroyAPIView):
     def delete(self, request, *args, **kwargs):
         instance = self.get_object(request, *args, **kwargs)
 
-        instance.place.bookmark_count -= 1
-        instance.place.save()
+        place = instance.place
+        place.bookmark_count -= 1
+        place.save()
 
         self.perform_destroy(instance)
 
