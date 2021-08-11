@@ -41,7 +41,7 @@ const ReportCard = (props) => {
         <Grid.Row columns={16}>
           <Grid.Column width={10}>
             <h3>
-              {place.name}
+              {place?.name}
               <br />
               <span style={{ fontSize: 'small', color: 'gray' }}> ({place.address}) </span>
             </h3>
@@ -66,7 +66,7 @@ const ReportCard = (props) => {
         <Grid.Row>
           <Grid.Column>
             <section style={{ margin: '0' }}>
-              {place.tags.map((tag) => {
+              {place?.tags.map((tag) => {
                 return <Label>{tag}</Label>;
               })}
             </section>
