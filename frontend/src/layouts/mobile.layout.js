@@ -101,7 +101,7 @@ const MobileLayout = (props) => {
             <Menu secondary size="large" fixed="top">
               <Menu.Item>
                 <Link to="/">
-                  <Logo src={process.env.PUBLIC_URL + 'images/LogoTitle.png'} />
+                  <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
                 </Link>
               </Menu.Item>
               <Menu.Item onClick={handleToggle} position="right">

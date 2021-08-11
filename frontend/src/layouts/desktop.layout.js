@@ -77,7 +77,7 @@ const DesktopLayout = (props) => {
         {user ? (
           <Container style={ContainerStyle}>
             <Link to="/">
-              <Logo src="images/LogoTitle.png" />
+              <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
             <SecondaryBtn onClick={openNewReportModal}>
@@ -122,7 +122,7 @@ const DesktopLayout = (props) => {
         ) : (
           <Container style={ContainerStyle}>
             <Link to="/">
-              <Logo src={process.env.PUBLIC_URL + 'images/LogoTitle.png'} />
+              <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
             <Link to="/login">
