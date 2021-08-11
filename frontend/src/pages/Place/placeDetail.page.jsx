@@ -256,7 +256,7 @@ const PlaceDetailPage = () => {
       <Form onSubmit={handleSubmit}>
         <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
           <Name style={{ fontSize: '1.8rem' }}>리뷰 작성하기</Name>
-          <label htmlFor="file">
+          {/* <label htmlFor="file">
             <Button
               basic
               type="button"
@@ -266,7 +266,7 @@ const PlaceDetailPage = () => {
               onClick={handleInputFile}
               style={{ marginLeft: '1rem', fontFamily: 'NS-R' }}
             />
-          </label>
+          </label> */}
           <input
             type="file"
             id="file"
