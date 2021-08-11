@@ -6,8 +6,9 @@ import { LOAD_PLACE_REQUEST } from 'reducers/place';
 import { ADD_REVIEW_REQUEST } from 'reducers/review';
 import { DESTROY_BOOKMARK_REQUEST, ADD_BOOKMARK_REQUEST } from 'reducers/bookmark';
 import styled from 'styled-components';
-import { Icon, Form, TextArea, Button, Label, Rating, Grid } from 'semantic-ui-react';
+import { Icon, Form, TextArea, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
+import { media } from 'utils/style.util';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -15,6 +16,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import NextArrow from 'components/common/NextArrow';
 import PrevArrow from 'components/common/PrevArrow';
 import Review from 'components/Review/Review';
+import NewInquiryModal from 'components/Inquiry/NewInquiryModal';
 
 const Section = styled.div`
   display: flex;
@@ -36,7 +38,6 @@ const Text = styled.div`
 `;
 
 const Carousel = styled(Slider)`
-  margin-top: 5rem;
   width: 90%;
 `;
 
@@ -85,9 +86,20 @@ const InputImg = styled.img`
 
 const PlaceImgContainer = styled.div`
   display: inline-block;
-  width: 15%;
   position: relative;
+  flex-grow: 1;
+  width: 20%;
   padding-bottom: 15%;
+
+  ${media.tablet`
+    width: 30%;
+    padding-bottom: 25%;
+  `};
+
+  ${media.phone`
+    width: 40%;
+    padding-bottom: 35%;
+  `};
 `;
 
 const PlaceImg = styled.img`
@@ -95,6 +107,8 @@ const PlaceImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  padding-right: 0.3rem;
+  border-radius: 0;
 `;
 
 const Btn = styled.button`
@@ -115,6 +129,15 @@ const PrimaryBtn = styled(Btn)`
   }
 `;
 
+const LinkedText = styled(Text)`
+  cursor: pointer;
+
+  &:hover {
+    color: #0475f4;
+    text-decoration: underline;
+  }
+`;
+
 const PlaceDetailPage = () => {
   const { id } = useParams();
   const { singlePlace, loadPlaceLoading } = useSelector((state) => state.place);
@@ -124,6 +147,7 @@ const PlaceDetailPage = () => {
   const [contents, onChangeContents] = useInput('');
   const [contentsError, setContentsError] = useState('');
   const [rating, setRating] = useState(1);
+  const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -171,10 +195,11 @@ const PlaceDetailPage = () => {
     setImgs(imgs.filter((img) => img !== imgs[value]));
   };
 
-  const handleInputFile = (e) => {
-    e.preventDefault();
-    inputFile.current.click();
-  };
+  // 리뷰 사진 기능
+  // const handleInputFile = (e) => {
+  //   e.preventDefault();
+  //   inputFile.current.click();
+  // };
 
   const upload = (e) => {
     const reader = new FileReader();
@@ -210,6 +235,10 @@ const PlaceDetailPage = () => {
       type: LOAD_PLACE_REQUEST,
       id: id,
     });
+  };
+
+  const openInquiryModal = () => {
+    setInquiryModalOpen(true);
   };
 
   return (
@@ -256,18 +285,20 @@ const PlaceDetailPage = () => {
           <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
       </Section>
-      <Text style={{ fontSize: '1.2rem' }}>
-        {singlePlace?.address + ' ' + singlePlace?.detailAddress}
-      </Text>
-      <br />
-      <Text style={{ fontSize: '1.2rem' }}>{singlePlace?.content}</Text>
-      <Section
-        style={{
-          justifyContent: 'center',
-          paddingBottom: '2rem',
-        }}
-      >
-        {singlePlace?.images.length > 4 ? (
+      <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <Text style={{ fontSize: '1.2rem', marginBottom: '5rem' }}>
+          {singlePlace?.address + ' ' + singlePlace?.detailAddress}
+        </Text>
+        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
+        <NewInquiryModal id={id} setOpen={setInquiryModalOpen} open={inquiryModalOpen} />
+      </Section>
+      {singlePlace?.images.length > 3 ? (
+        <Section
+          style={{
+            justifyContent: 'center',
+            paddingBottom: '2rem',
+          }}
+        >
           <Carousel {...settings}>
             {singlePlace?.images.map((img) => (
               <CarouselContainer>
@@ -275,18 +306,14 @@ const PlaceDetailPage = () => {
               </CarouselContainer>
             ))}
           </Carousel>
-        ) : (
-          // <Grid>
-          //   <Grid.Row>
-          singlePlace?.images.map((img) => (
-            <PlaceImgContainer>
-              <PlaceImg src={img.image} />
-            </PlaceImgContainer>
-          ))
-          //   </Grid.Row>
-          // </Grid>
-        )}
-      </Section>
+        </Section>
+      ) : (
+        singlePlace?.images.map((img) => (
+          <PlaceImgContainer>
+            <PlaceImg src={img.image} />
+          </PlaceImgContainer>
+        ))
+      )}
 
       <Form onSubmit={handleSubmit}>
         <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
