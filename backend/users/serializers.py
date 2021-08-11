@@ -23,6 +23,7 @@ class UserSerializer(WritableNestedModelSerializer):
             'last_name',
             'created_at',
             'updated_at',
+            'avatar'
         ]
         read_only_fields = [
             'created_at',

@@ -120,6 +120,6 @@
 
 ## Links
 
-* [웹사이트]("")
+* [웹사이트](https://daedong-food-map.netlify.app/)
 * [이슈 트래커](https://github.com/likelion-kookmin/daedong-food-map/issues)
 * [소스코드](https://github.com/likelion-kookmin/daedong-food-map)
