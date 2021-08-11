@@ -259,6 +259,8 @@ const PlaceDetailPage = () => {
       <Text style={{ fontSize: '1.2rem' }}>
         {singlePlace?.address + ' ' + singlePlace?.detailAddress}
       </Text>
+      <br />
+      <Text style={{ fontSize: '1.2rem' }}>{singlePlace?.content}</Text>
       <Section
         style={{
           justifyContent: 'center',
