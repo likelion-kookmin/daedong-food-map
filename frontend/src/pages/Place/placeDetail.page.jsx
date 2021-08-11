@@ -302,7 +302,7 @@ const PlaceDetailPage = () => {
         </Section>
       </Section>
       <Section>
-        {singlePlace.tags.map((tag) => {
+        {singlePlace?.tags.map((tag) => {
           return <Tag>{tag}</Tag>;
         })}
       </Section>
