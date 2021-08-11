@@ -30,8 +30,12 @@ const Name = styled.div`
   color: #3e3e3e;
 
   ${media.phone`
-  font-size: 1.8rem
+    font-size: 1.7rem;
   `};
+`;
+
+const Tag = styled(Label)`
+  font-family: 'NS-R';
 `;
 
 const Text = styled.div`
@@ -254,7 +258,7 @@ const PlaceDetailPage = () => {
   return (
     <div className={loadPlaceLoading ? 'loading' : ''}>
       <Section
-        style={{ marginTop: '1.5rem', justifyContent: 'space-between', alignItems: 'center' }}
+        style={{ margin: '1.5rem 0 0 0', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <Section>
           <Name>{singlePlace?.name}</Name>
@@ -296,6 +300,11 @@ const PlaceDetailPage = () => {
           <Icon name="star" style={{ color: '#707070', marginRight: '0.2rem' }} />
           <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
+      </Section>
+      <Section>
+        {singlePlace.tags.map((tag) => {
+          return <Tag>{tag}</Tag>;
+        })}
       </Section>
       <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
         <Text style={{ fontSize: '1.2rem', marginBottom: '5rem' }}>
