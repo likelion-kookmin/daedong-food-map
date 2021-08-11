@@ -3,6 +3,7 @@ from config.models import BaseModel, BaseModelManager
 from django.db import models
 from file_managers.models import Image
 from taggit.managers import TaggableManager
+
 # from django.db.models.expressions import RawSQL
 # from config.settings import USE_HEROKU
 
@@ -142,4 +143,4 @@ class Place(BaseModel):
         """### average_score
         - 평균 점수를 도출하는 함수입니다.
         """
-        return 0 if self.review_count == 0 else self.total_score // self.review_count
+        return 0 if self.review_count == 0 else self.total_score / self.review_count
