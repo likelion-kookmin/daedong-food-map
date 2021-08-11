@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
+import { ADD_INQUIRIES_REQUEST } from 'reducers/inquiry';
 import styled from 'styled-components';
 import { Modal, Form } from 'semantic-ui-react';
 import { media } from 'utils/style.util';
@@ -61,17 +62,37 @@ const Text = styled.div`
   color: #3e3e3e;
 `;
 
+//admin에서 카테고리에 추가해 줄 것
 const options = [
-  { key: 1, text: '가게 이름', value: '가게 이름' },
-  { key: 2, text: '가게 위치', value: '가게 위치' },
-  { key: 3, text: '태그', value: '태그' },
-  { key: 4, text: '사진', value: '사진' },
+  { key: 1, text: '장소명', value: '1' },
+  { key: 2, text: '위치', value: '2' },
+  { key: 3, text: '태그', value: '3' },
+  { key: 4, text: '사진', value: '4' },
+  { key: 4, text: '그 외 기타', value: '5' },
 ];
 const NewInquiryModal = (props) => {
   const [category, setCategory] = useState('');
   const [contents, onChangeContents, setContents] = useInput('');
-
   const dispatch = useDispatch();
+  const { addInquiriesDone, addInquiriesError } = useSelector((state) => state.inquiry);
+  const [categoryError, setCategoryError] = useState('');
+  const [contentsError, setContentsError] = useState('');
+
+  useEffect(() => {
+    if (addInquiriesError) {
+      const { inquiries, nonFieldErrors } = addInquiriesError;
+      console.log(inquiries);
+      if (nonFieldErrors) {
+        // 에러
+      }
+    }
+
+    if (addInquiriesDone) {
+      closeModal();
+      window.location.reload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addInquiriesError, addInquiriesDone]);
 
   const closeModal = () => {
     setCategory('');
@@ -83,9 +104,17 @@ const NewInquiryModal = (props) => {
     setCategory(value);
   };
 
-  const handleSubmit = () => {
-    closeModal();
-  };
+  const handleSubmit = useCallback(() => {
+    dispatch({
+      type: ADD_INQUIRIES_REQUEST,
+      data: {
+        place_id: props.id,
+        content: contents,
+        category: category,
+      },
+    });
+  }, [dispatch, props.id, contents, category]);
+
   return (
     <InquiryModal onClose={() => closeModal()} onOpen={() => props.setOpen(true)} open={props.open}>
       <ModalHeader>
