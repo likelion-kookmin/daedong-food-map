@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import NewReport from 'components/Report/NewReportModal';
 
 const Logo = styled.img`
-  height: 30px;
+  height: 27px;
   vertical-align: middle;
 `;
 
@@ -97,8 +97,8 @@ const MobileLayout = (props) => {
         )}
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
-          <Segment textAlign="center" vertical padded>
-            <Menu secondary size="large" fixed="top">
+          <Segment size="large" textAlign="center" vertical padded>
+            <Menu secondary fixed="top">
               <Menu.Item>
                 <Link to="/">
                   <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
