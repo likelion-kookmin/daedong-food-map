@@ -275,13 +275,7 @@ REST_FRAMEWORK = {
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
-    'LOGIN_SERIALIZER': 'users.serializers.UserSerializer',
-    'REGISTER_SERIALIZER': 'users.serializers.UserSerializer',
 }
-
-REST_AUTH_REGISTER_PERMISSION_CLASSES = (
-    'users.serializers.UserSerializer',
-)
 
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
