@@ -8,6 +8,7 @@ import { DESTROY_BOOKMARK_REQUEST, ADD_BOOKMARK_REQUEST } from 'reducers/bookmar
 import styled from 'styled-components';
 import { Icon, Form, TextArea, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
+import { media } from 'utils/style.util';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -89,6 +90,16 @@ const PlaceImgContainer = styled.div`
   flex-grow: 1;
   width: 20%;
   padding-bottom: 15%;
+
+  ${media.tablet`
+    width: 30%;
+    padding-bottom: 25%;
+  `};
+
+  ${media.phone`
+    width: 40%;
+    padding-bottom: 35%;
+  `};
 `;
 
 const PlaceImg = styled.img`
