@@ -205,7 +205,9 @@ const PlaceDetailPage = () => {
             size="large"
             style={{ color: '#F25C69', margin: '0 0.4rem 0 0.8rem' }}
           />
-          <Text style={{ fontSize: '1.5rem' }}>{singlePlace?.averageScore}</Text>
+          <Text style={{ fontSize: '1.5rem' }}>
+            {parseFloat(singlePlace?.averageScore.toFixed(2))}
+          </Text>
         </Section>
         <Icon name="star outline" color="yellow" size="big" style={{ marginRight: '2rem' }} />
       </Section>
