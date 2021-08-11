@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACE_REQUEST } from 'reducers/place';
-import { Icon, Form, TextArea, Button, Label, Rating } from 'semantic-ui-react';
+import { ADD_REVIEW_REQUEST } from 'reducers/review';
+import styled from 'styled-components';
+import { Icon, Form, TextArea, Button, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -80,6 +82,20 @@ const InputImg = styled.img`
   border-radius: 5px;
 `;
 
+const PlaceImgContainer = styled.div`
+  display: inline-block;
+  width: 15%;
+  position: relative;
+  padding-bottom: 15%;
+`;
+
+const PlaceImg = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const Btn = styled.button`
   font-family: 'NS-B';
   padding: 0.6435rem 1rem;
@@ -101,9 +117,12 @@ const PrimaryBtn = styled(Btn)`
 const PlaceDetailPage = () => {
   const { id } = useParams();
   const { singlePlace, loadPlaceLoading } = useSelector((state) => state.place);
+  const { addReviewDone, addReviewError } = useSelector((state) => state.review);
   const [imgs, setImgs] = useState([]);
   const inputFile = useRef(null);
-  const [rating, setRating] = useState(0);
+  const [contents, onChangeContents] = useInput('');
+  const [contentsError, setContentsError] = useState('');
+  const [rating, setRating] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -113,6 +132,39 @@ const PlaceDetailPage = () => {
       id: id,
     });
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (addReviewError) {
+      const { content, nonFieldErrors } = addReviewError;
+      if (content) {
+        setContentsError(content);
+      }
+      if (nonFieldErrors) {
+        console.log('에러');
+      }
+    }
+
+    if (addReviewDone) {
+      window.location.reload();
+    }
+  }, [addReviewError, addReviewDone]);
+
+  const handleSubmit = useCallback(() => {
+    const images = imgs.map((img) => {
+      return { image: img };
+    });
+    console.log('dispatch');
+    dispatch({
+      type: ADD_REVIEW_REQUEST,
+      data: {
+        place_id: id,
+        score: rating,
+        content: contents,
+        place: id,
+        images,
+      },
+    });
+  }, [imgs, dispatch, id, contents, rating]);
 
   const deleteImg = (e) => {
     const value = e.target.parentElement.id;
@@ -140,13 +192,6 @@ const PlaceDetailPage = () => {
 
   const handleRating = (e, { rating }) => {
     setRating(rating);
-  };
-  const testprops = {
-    userProfile: 'https://react.semantic-ui.com/images/wireframe/image.png',
-    userNickname: '닉네임',
-    score: 4,
-    content: '리뷰내용입니다 맛고 저쩌고',
-    createAt: '2000-00-00',
   };
 
   return (
@@ -196,10 +241,20 @@ const PlaceDetailPage = () => {
               </CarouselContainer>
             ))}
           </Carousel>
-        ) : null}
+        ) : (
+          // <Grid>
+          //   <Grid.Row>
+          singlePlace?.images.map((img) => (
+            <PlaceImgContainer>
+              <PlaceImg src={img.image} />
+            </PlaceImgContainer>
+          ))
+          //   </Grid.Row>
+          // </Grid>
+        )}
       </Section>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
           <Name style={{ fontSize: '1.8rem' }}>리뷰 작성하기</Name>
           <label htmlFor="file">
@@ -227,14 +282,22 @@ const PlaceDetailPage = () => {
           <Rating
             icon="star"
             size="large"
-            defaultRating={0}
+            defaultRating={1}
             maxRating={5}
             onRate={handleRating}
             style={{ marginRight: '1rem' }}
           />
           <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
         </Section>
-        <TextArea fluid placeholder="리뷰를 작성해주세요." style={{ fontFamily: 'NS-R' }} />
+        <Form.Field
+          fluid
+          placeholder="리뷰를 작성해주세요."
+          control={TextArea}
+          value={contents}
+          onChange={onChangeContents}
+          style={{ fontFamily: 'NS-R' }}
+          error={contentsError.length > 0}
+        />
         <Section
           style={{
             justifyContent: 'space-between',
@@ -264,9 +327,11 @@ const PlaceDetailPage = () => {
             {singlePlace?.reviewCount}개의 리뷰가 있습니다.
           </Text>
         </Section>
-        {[...Array(3)].map((n) => {
-          return <Review data={testprops} />;
-        })}
+        <Grid centered divided="vertically">
+          {singlePlace?.reviews.map((review, index) => {
+            return <Review data={review} key={index} />;
+          })}
+        </Grid>
       </Form>
     </div>
   );
