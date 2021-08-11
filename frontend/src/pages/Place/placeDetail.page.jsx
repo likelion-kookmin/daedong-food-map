@@ -153,7 +153,6 @@ const PlaceDetailPage = () => {
     const images = imgs.map((img) => {
       return { image: img };
     });
-    console.log('dispatch');
     dispatch({
       type: ADD_REVIEW_REQUEST,
       data: {
