@@ -31,7 +31,7 @@ const Review = (props) => {
           }
           style={{ display: 'inline-block', marginBottom: '1rem' }}
         />
-        <Text>{props.data.userNickname ? props.data.userNickname : '익명'}</Text>
+        <Text>{props.data.user.nickname ? props.data.user.nickname : '익명'}</Text>
       </Grid.Column>
       <Grid.Column width={12}>
         <Grid stackable verticalAlign="bottom" columns={2} style={{ marginBottom: '1rem' }}>
