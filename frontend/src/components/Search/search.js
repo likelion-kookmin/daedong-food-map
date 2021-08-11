@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACES_REQUEST } from 'reducers/place';
 import { SET_GEO_REQUEST } from 'reducers/map';
+import useWindowDimensions from 'utils/window.util';
 import 'styles/search.css';
 
 let flag = false;
 const Search = () => {
+  const { width } = useWindowDimensions();
   const [value, setValue] = useState('');
   const { loadPlacesDone } = useSelector((state) => state.place);
   const { map } = useSelector((state) => state.map);
@@ -60,7 +62,11 @@ const Search = () => {
               value={value}
               onChange={handleChange}
               placeholder="먹고 싶은 음식을 찾아보세요!"
-              style={{ fontFamily: 'NS-R' }}
+              style={
+                width > 768
+                  ? { fontFamily: 'NS-R', fontSize: '1.2rem' }
+                  : { fontFamily: 'NS-R', fontSize: '0.9rem' }
+              }
             />
             <button type="submit">
               <i class="search large icon"></i>
