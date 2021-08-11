@@ -220,7 +220,7 @@ const PlaceDetailPage = () => {
         </Section>
         <Section>
           <Icon name="star" style={{ color: '#707070', marginRight: '0.2rem' }} />
-          <Text>0</Text>
+          <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
       </Section>
       <Text style={{ fontSize: '1.2rem' }}>
