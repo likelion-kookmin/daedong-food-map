@@ -11,7 +11,7 @@ const useSetMarker = () => {
   const mainPlaces = useSelector((state) => state.place.mainPlaces);
   const { map, oldMarker, oldOverlay } = useSelector((state) => state.map);
   const dispatch = useDispatch();
-  console.log(mainPlaces);
+
   places = mainPlaces;
   kakaoMap = map;
   marker_old = oldMarker;
@@ -35,7 +35,6 @@ const useSetMarker = () => {
       if (!avg_score) avg_score = 0;
 
       const position = new kakao.maps.LatLng(value.latitude, value.longitude);
-      console.log(value);
       var imageSrc = `/icons/${idx + 1}.png`;
 
       // 커스텀 오버레이 내용

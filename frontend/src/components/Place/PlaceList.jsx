@@ -22,7 +22,7 @@ const PlaceList = () => {
     setMarker();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainPlaces]);
-  console.log(mainPlaces);
+
   return (
     <Fragment>
       <Grid stackable columns={2} padded="true">
