@@ -9,6 +9,7 @@ import {
   Signup,
   PlaceDetailPage,
   InquiryListPage,
+  BookmarkListPage,
   PolicyPage,
 } from 'pages';
 import wrapper from 'store/configureStore';
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/register" component={Signup} />
         <PrivateRoute exact path="/reports" component={ReportListPage} />
         <PrivateRoute exact path="/inquiries" component={InquiryListPage} />
+        <PrivateRoute exact path="/bookmarks" component={BookmarkListPage} />
         <Route path="/places/:id" component={PlaceDetailPage} />
         <Route path="/policies" component={PolicyPage} />
       </ResponsiveLayout>

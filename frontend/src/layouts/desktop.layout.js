@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { maxWindowWidth } from 'utils/style.util';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { lighten, darken } from 'polished';
+
+import NewReport from 'components/Report/NewReportModal';
 
 const Logo = styled.img`
   width: 8rem;
@@ -53,25 +55,35 @@ const ContainerStyle = {
 
 const DesktopLayout = (props) => {
   const { user } = useSelector((state) => state.authentication);
+  const [newReportOpened, setNewReportOpened] = useState(false);
+
   const logout = () => {
     localStorage.removeItem('user');
     window.location.href = '/';
   };
+
+  props.history.listen((location, action) => {
+    window.scrollTo(0, 0);
+  });
+
+  const openNewReportModal = () => {
+    setNewReportOpened(true);
+  };
+
   return (
-    <div>
+    <Fragment>
+      <NewReport setOpen={setNewReportOpened} open={newReportOpened} />
       <Menu>
         {user ? (
           <Container style={ContainerStyle}>
             <Link to="/">
-              <Logo src="images/LogoTitle.png" />
+              <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
-            <Link>
-              <SecondaryBtn>
-                <Icon name="mail" style={{ marginRight: '0.5rem' }} />
-                제보하기
-              </SecondaryBtn>
-            </Link>
+            <SecondaryBtn onClick={openNewReportModal}>
+              <Icon name="mail" style={{ marginRight: '0.5rem' }} />
+              제보하기
+            </SecondaryBtn>
             <Dropdown
               icon="user"
               simple
@@ -86,28 +98,31 @@ const DesktopLayout = (props) => {
                   color: '#ffffff',
                 }}
               >
+                <Link to="/bookmarks">
+                  <Dropdown.Item as="a">
+                    <DropText>북마크 목록</DropText>
+                  </Dropdown.Item>
+                </Link>
                 <Link to="/reports">
                   <Dropdown.Item as="a">
-                    <DropText>제보목록</DropText>
+                    <DropText>제보 목록</DropText>
                   </Dropdown.Item>
                 </Link>
                 <Link to="/inquiries">
                   <Dropdown.Item as="a">
-                    <DropText>신고목록</DropText>
+                    <DropText>신고 목록</DropText>
                   </Dropdown.Item>
                 </Link>
-                <Link>
-                  <Dropdown.Item as="a" onClick={logout}>
-                    <DropText>로그아웃</DropText>
-                  </Dropdown.Item>
-                </Link>
+                <Dropdown.Item as="a" onClick={logout}>
+                  <DropText>로그아웃</DropText>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Container>
         ) : (
           <Container style={ContainerStyle}>
             <Link to="/">
-              <Logo src="images/LogoTitle.png" />
+              <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />
             </Link>
             <div style={{ flexGrow: 1 }}></div>
             <Link to="/login">
@@ -128,8 +143,8 @@ const DesktopLayout = (props) => {
       <Container style={{ width: maxWindowWidth, padding: '2rem', minHeight: window.outerHeight }}>
         {props.children}
       </Container>
-    </div>
+    </Fragment>
   );
 };
 
-export default DesktopLayout;
+export default withRouter(DesktopLayout);

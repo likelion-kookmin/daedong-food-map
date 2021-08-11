@@ -37,7 +37,7 @@ const Reviews = styled(Text)`
 `;
 
 const Tag = styled(Label)`
-  font-family: 'NS-B';
+  font-family: 'NS-R';
 `;
 
 const Number = styled(Label)`
@@ -51,17 +51,17 @@ const ImgContainer = styled.div`
   position: relative;
   flex-grow: 1;
   padding-bottom: 30%;
-  &: last-child {
+  &:last-child {
     img {
       border-radius: 0 10px 10px 0;
     }
   }
-  &: first-child {
+  &:first-child {
     img {
       border-radius: 10px 0 0 10px;
     }
   }
-  &: only-child {
+  &:only-child {
     img {
       border-radius: 10px;
     }
@@ -79,10 +79,10 @@ const Img = styled.img`
 
 function PlaceCard(props) {
   const { loadPlacesLoading } = useSelector((state) => state.place);
-
+  // const distance = Math.round(props.data.distance || 10);
   const imglist =
     props.data.images && props.data.images.length
-      ? props.data.images.map((img, index) => (
+      ? props.data.images.slice(0, 3).map((img, index) => (
           <ImgContainer>
             <Img src={img.image} />
           </ImgContainer>
@@ -96,14 +96,14 @@ function PlaceCard(props) {
   return (
     <Container className={loadPlacesLoading ? 'loading' : ''}>
       <Number circular size="large">
-        {props.data.id}
+        {props.index}
       </Number>
-      <Section style={{ alignItems: 'baseline' }}>
+      <Section style={{ alignItems: 'baseline', maxWidth: '90%' }}>
         <Link to={`/places/${[props.data.id]}`}>
           <Name>{props.data.name}</Name>
         </Link>
-        <Icon name="star" style={{ color: '#F25C69', marginLeft: '0.8rem' }} />
-        <Text>{props.data.averageScore}</Text>
+        <Icon name="star" style={{ color: '#F25C69', margin: '0 0.2rem 0 0.8rem' }} />
+        <Text>{parseFloat(props.data.averageScore.toFixed(2))}</Text>
         <Reviews>리뷰 {props.data.reviewCount}개</Reviews>
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>
@@ -112,7 +112,9 @@ function PlaceCard(props) {
             return <Tag>{tag}</Tag>;
           })}
         </Section>
-        <Text style={{ paddingTop: '0.5rem' }}>{props.data.distance}</Text>
+        {/* <Text style={{ paddingTop: '0.5rem' }}>
+          {distance > 1000 ? (distance * 0.001).toFixed(2) + 'km' : distance + 'm'}
+        </Text> */}
       </Section>
       <Section style={{ justifyContent: 'space-between' }}>{imglist}</Section>
     </Container>

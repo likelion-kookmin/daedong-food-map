@@ -7,7 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Review
+from .models import Place, Review
 from .permissions import IsReviewEditableOrDestroyable
 from .serializers import ReviewSerializer
 
@@ -54,6 +54,16 @@ class ReviewCreateView(BaseView, CreateAPIView):
         serializer.save(user=self.current_user)
 
     def post(self, request, *args, **kwargs):
+        try:
+            place_id = self.request.data.get('place_id')
+            score = self.request.data.get('score')
+
+            place = Place.objects.get(pk=place_id)
+            place.review_count += 1
+            place.total_score += score
+            place.save()
+        except:
+            pass
         return self.create(request, *args, **kwargs)
 
 
@@ -68,9 +78,29 @@ class ReviewUpdateView(BaseView, UpdateAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def put(self, request, *args, **kwargs):
+        obj = self.get_object()
+        try:
+            prev_score = obj.score
+            score = self.request.data.get('score')
+            if score:
+                place = obj.place
+                place.total_score += int(score) - prev_score
+                place.save()
+        except:
+            pass
         return self.update(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        try:
+            prev_score = obj.score
+            score = self.request.data.get('score')
+            if score:
+                place = obj.place
+                place.total_score += int(score) - prev_score
+                place.save()
+        except:
+            pass
         return self.partial_update(request, *args, **kwargs)
 
 
@@ -83,6 +113,14 @@ class ReviewDestroyView(BaseView, DestroyAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def delete(self, request, *args, **kwargs):
-        self.current_user.review_count -= 1
-        self.current_user.save()
+        try:
+            review = self.get_object()
+            place = review.place
+            place.review_count -= 1
+            place.total_score -= review.score
+            place.save()
+            self.current_user.review_count -= 1
+            self.current_user.save()
+        except:
+            pass
         return self.destroy(request, *args, **kwargs)

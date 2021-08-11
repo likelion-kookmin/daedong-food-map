@@ -4,9 +4,10 @@ from .models import Image
 
 
 class ImageSerializer(ModelSerializer):
+
     class Meta:
         model = Image
-        fields = '__all__'
+        fields = ['image']
         read_only_fields = [
             'created_at',
             'updated_at',

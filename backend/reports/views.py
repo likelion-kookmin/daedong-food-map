@@ -5,6 +5,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      UpdateAPIView)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Report
@@ -20,14 +21,11 @@ class ReportListView(BaseView, ListAPIView):
         - 없는 경우, 전체 제보 목록이 반환된다.
     """
     serializer_class = ReportSerializer
-    queryset = Report.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def get_queryset(self):
-        user_id = self.request.query_params.get('user_id')
-        if user_id:
-            return Report.objects.filter(user__id=user_id)
-        else:
-            return Report.objects.all()
+        return Report.objects.filter(user=self.current_user)
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -106,9 +104,17 @@ class ReportUpdateView(BaseView, UpdateAPIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def put(self, request, *args, **kwargs):
+        obj = self.get_object()
+
+        if obj.place.status == 'p':
+            return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
         return self.update(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
+        obj = self.get_object()
+
+        if obj.place.status == 'p':
+            return Response({'error': '등록된 제보는 수정할 수 없습니다.'}, status=401)
         return self.partial_update(request, *args, **kwargs)
 
 

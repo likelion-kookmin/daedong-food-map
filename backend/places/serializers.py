@@ -1,10 +1,14 @@
 """# places serializers"""
-from math import atan2, cos, pi, sin, sqrt
+from math import atan2, cos, pi, sin, sqrt, asin
 
+from bookmarks.models import Bookmark
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from file_managers.serializers import ImageSerializer
 from reports.models import Report
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from reviews.models import Review
+from reviews.serializers import ReviewSerializer
 from taggit_serializer.serializers import (TaggitSerializer,
                                            TagListSerializerField)
 from users.models import User
@@ -19,23 +23,26 @@ def deg2rad(deg):
 
 def getDistanceFromLatitudeAndLongitudeInMeter(latitude1, longitude1, latitude2, longitude2):
     R = 6371
-    dLat = deg2rad(latitude2 - latitude1)
-    dLon = deg2rad(longitude2 - longitude1)
-    a = sin(dLat/2) * sin(dLat/2) + cos(deg2rad(latitude1)) * \
-        cos(deg2rad(latitude2)) * sin(dLon/2) * sin(dLon/2)
+    dLat = deg2rad(abs(latitude2 - latitude1))
+    dLon = deg2rad(abs(longitude2 - longitude1))
+    a = sin(dLat/2) * sin(dLat/2) + \
+        cos(deg2rad(latitude1)) * cos(deg2rad(latitude2)) * \
+        sin(dLon/2) * sin(dLon/2)
     distance = R * (2 * atan2(sqrt(a), sqrt(1-a))) * 1000
     return distance  # meter
 
 
-class PlaceSerializer(TaggitSerializer, ModelSerializer):
+class PlaceSerializer(TaggitSerializer, WritableNestedModelSerializer):
     """## PlaceSerializer
     - Place Model serializer입니다.
     """
     tags = TagListSerializerField(required=False)
     images = ImageSerializer(many=True, required=False)
     user = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
     distance = serializers.SerializerMethodField()
     average_score = serializers.ReadOnlyField()
+    is_bookmarked = serializers.SerializerMethodField()
 
     class Meta:
         """### PlaceSerializer.Meta"""
@@ -44,10 +51,12 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
         read_only_fields = [
             'user',
             'distance',
+            'reviews',
             'view_count',
             'status',
             'total_score',
             'review_count',
+            'bookmark_count',
             'created_at',
             'updated_at',
             'deleted_at',
@@ -77,3 +86,16 @@ class PlaceSerializer(TaggitSerializer, ModelSerializer):
             obj.latitude,
             obj.longitude
         ), 5)
+
+    def get_reviews(self, obj):
+        return ReviewSerializer(Review.objects.filter(place=obj), many=True).data or []
+
+    def get_is_bookmarked(self, obj):
+        try:
+            current_user = self.context['request'].user
+
+            return Bookmark.objects.filter(
+                user=current_user, place=obj
+            ).exists()
+        except:
+            return False

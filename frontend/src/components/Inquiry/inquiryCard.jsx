@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Label, Card, Item, Segment, Grid, Button } from 'semantic-ui-react';
+import { Icon, Label, Segment, Grid, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 const ImgContainer = styled(Grid.Column)`
   padding-right: 0 !important;
