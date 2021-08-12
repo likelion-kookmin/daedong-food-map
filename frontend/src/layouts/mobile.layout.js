@@ -57,12 +57,12 @@ const MobileLayout = (props) => {
                   </Menu.Item>
                 </div>
                 <div>
-                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
+                  <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
                     제보목록
                   </Menu.Item>
                 </div>
                 <div>
-                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
+                  <Menu.Item href="/inquiries" style={{ fontSize: '1rem' }}>
                     신고목록
                   </Menu.Item>
                 </div>
