@@ -317,7 +317,13 @@ const PlaceDetailPage = () => {
         <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
       </Section>
       <Section>
-        <Text style={{ fontSize: '1.2rem', marginBottom: '5rem' }}>
+        <Text
+          style={
+            width > 376
+              ? { fontSize: '1.2rem', marginBottom: '5rem' }
+              : { fontSize: '1rem', marginBottom: '5rem' }
+          }
+        >
           {singlePlace?.address + ' ' + singlePlace?.detailAddress}
         </Text>
         <NewInquiryModal id={id} setOpen={setInquiryModalOpen} open={inquiryModalOpen} />
