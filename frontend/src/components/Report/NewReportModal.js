@@ -254,7 +254,7 @@ const NewReportModal = (props) => {
                 value={inputTag}
                 onChange={onChangeInputTag}
                 onKeyDown={handleInputTag}
-                label="태그 *"
+                label="태그"
                 icon="plus"
                 control={Form.Input}
               />

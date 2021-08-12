@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid, Icon, Image } from 'semantic-ui-react';
 import moment from 'moment';
-import { media } from 'utils/style.util';
 import useWindowDimensions from 'utils/window.util';
 
 const Section = styled.div`
