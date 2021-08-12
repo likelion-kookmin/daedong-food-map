@@ -37,7 +37,7 @@ const InquiryListPage = () => {
   return (
     <div>
       <Section style={{ margin: '1.5rem 0 3rem  0' }}>
-        <Name>나의 신고내역</Name>
+        <Name>내 신고내역</Name>
       </Section>
       {loadInquiriesLoading ? (
         <Dimmer active inverted>

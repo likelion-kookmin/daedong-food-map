@@ -37,7 +37,7 @@ const ReportListPage = () => {
   return (
     <div>
       <Section style={{ margin: '1.5rem 0 3rem  0' }}>
-        <Name>나의 제보내역</Name>
+        <Name>내 제보내역</Name>
       </Section>
       {loadReportsLoading ? (
         <Dimmer active inverted>
