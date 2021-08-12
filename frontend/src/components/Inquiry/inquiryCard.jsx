@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Label, Grid, Divider } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { media } from 'utils/style.util';
 import moment from 'moment';
-import { lighten } from 'polished';
 
 const Container = styled.div`
   width: 100%;
@@ -53,46 +52,6 @@ const Tag = styled(Label)`
   font-family: 'NS-R';
 `;
 
-const ImgContainer = styled.div`
-  position: relative;
-  flex-grow: 1;
-  padding-bottom: 25%;
-  &:last-child {
-    img {
-      border-radius: 0 10px 10px 0;
-    }
-  }
-  &:first-child {
-    img {
-      border-radius: 10px 0 0 10px;
-    }
-  }
-  &:only-child {
-    img {
-      border-radius: 10px;
-    }
-  }
-`;
-
-const Img = styled.img`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  padding-right: 0.3rem;
-  border-radius: 0;
-`;
-
-const Btn = styled.button`
-  font-family: 'NS-B';
-  padding: 0.6435rem 1rem;
-  text-decoration: none;
-  transition: 0.1s all;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-`;
-
 const InquiryCard = (props) => {
   const { category, content, created_at, place } = props?.inquiry;
 
@@ -114,7 +73,7 @@ const InquiryCard = (props) => {
             <Category>{category}</Category>
             <Text>에 문제가 있어요.</Text>
           </Section>
-          <Text>{moment(place.created_at).format('YYYY.MM.DD')}</Text>
+          <Text>{moment(created_at).format('YYYY.MM.DD')}</Text>
         </Section>
         <Section style={{ margin: '1rem 0' }}>
           {content ? <Text>{content}</Text> : <Text style={{ visibility: 'hidden' }}>빈칸</Text>}
