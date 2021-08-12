@@ -70,6 +70,7 @@ const options = [
   { key: 4, text: '사진', value: '4' },
   { key: 4, text: '그 외 기타', value: '5' },
 ];
+
 const NewInquiryModal = (props) => {
   const [category, setCategory] = useState('');
   const [contents, onChangeContents, setContents] = useInput('');
@@ -110,7 +111,7 @@ const NewInquiryModal = (props) => {
       data: {
         place_id: props.id,
         content: contents,
-        category: category,
+        category: options[category - 1].text,
       },
     });
   }, [dispatch, props.id, contents, category]);
