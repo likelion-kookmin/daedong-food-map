@@ -288,7 +288,7 @@ const PlaceDetailPage = () => {
               name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
               color="yellow"
               size={width > 376 ? 'big' : 'large'}
-              style={{ marginRight: '1rem' }}
+              style={{ marginRight: '1rem', cursor: 'pointer' }}
             />
           </Section>
         </button>

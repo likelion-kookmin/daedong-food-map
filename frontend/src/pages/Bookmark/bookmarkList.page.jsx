@@ -1,10 +1,28 @@
 import React, { useEffect } from 'react';
 import { LOAD_BOOKMARKS_REQUEST } from 'reducers/bookmark';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { Divider, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+import styled from 'styled-components';
+import { media } from 'utils/style.util';
 
 import BookmarkCard from 'components/Bookmark/bookmarkCard';
+
+const Section = styled.div`
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  gap: 0.2rem;
+`;
+
+const Name = styled.div`
+  font-family: 'NS-EB';
+  font-size: 2rem;
+  color: #3e3e3e;
+
+  ${media.phone`
+    font-size: 1.7rem;
+  `};
+`;
 
 const BookmarkListPage = () => {
   const dispatch = useDispatch();
@@ -18,20 +36,19 @@ const BookmarkListPage = () => {
 
   return (
     <div>
-      <h1>북마크 목록</h1>
-      <Divider />
+      <Section style={{ margin: '1.5rem 0 3rem  0' }}>
+        <Name>내 북마크</Name>
+      </Section>
       {loadBookmarksLoading ? (
-        <Segment>
-          <Dimmer active inverted>
-            <Loader size="huge">Loading</Loader>
-          </Dimmer>
-        </Segment>
+        <Dimmer active inverted>
+          <Loader size="huge">Loading</Loader>
+        </Dimmer>
       ) : (
-        <Segment.Group>
+        <Grid stackable columns={2}>
           {bookmarks.map((bookmark) => (
-            <BookmarkCard bookmark={bookmark} />
+            <BookmarkCard bookmark={bookmark}> {console.log(bookmark)} </BookmarkCard>
           ))}
-        </Segment.Group>
+        </Grid>
       )}
     </div>
   );
