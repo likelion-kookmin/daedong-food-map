@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Label, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { media } from 'utils/style.util';
@@ -11,7 +12,7 @@ import { DESTROY_REPORT_REQUEST } from 'reducers/report';
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   position: relative;
   background-color: #ffffff;
   border: 1px solid #a1a1a1;
@@ -28,7 +29,7 @@ const Section = styled.div`
 const Name = styled.div`
   font-family: 'NS-EB';
   font-size: 1.5rem;
-  color: #3e3e3e;
+  color: #0c43b6;
   margin-right: 1rem;
 
   ${media.phone`
@@ -78,7 +79,7 @@ const Img = styled.img`
 
 const Btn = styled.button`
   font-family: 'NS-B';
-  padding: 0.6435rem 1rem;
+  padding: 0.4rem 0.6rem;
   text-decoration: none;
   transition: 0.1s all;
   border-radius: 5px;
@@ -139,7 +140,9 @@ const ReportCard = (props) => {
     <Grid.Column>
       <Container>
         <Section style={{ marginBottom: '1rem' }}>
-          <Name>{place.name}</Name>
+          <Link to={`/places/${[place.id]}`}>
+            <Name>{place.name}</Name>
+          </Link>
           {place.tags.map((tag) => {
             return <Tag>{tag}</Tag>;
           })}
@@ -150,7 +153,7 @@ const ReportCard = (props) => {
         <Section style={{ marginBottom: '1rem' }}>
           {content ? <Text>{content}</Text> : <Text style={{ visibility: 'hidden' }}>빈칸</Text>}
         </Section>
-        <Section style={{ justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <Section style={{ justifyContent: 'space-between', marginBottom: '0.7rem' }}>
           {imglist}
         </Section>
         <Section style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>

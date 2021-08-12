@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Label, Grid, Divider } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { media } from 'utils/style.util';
@@ -7,7 +8,7 @@ import moment from 'moment';
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   position: relative;
   background-color: #ffffff;
   border: 1px solid #a1a1a1;
@@ -24,7 +25,7 @@ const Section = styled.div`
 const Name = styled.div`
   font-family: 'NS-EB';
   font-size: 1.5rem;
-  color: #3e3e3e;
+  color: #0c43b6;
   margin-right: 1rem;
 
   ${media.phone`
@@ -36,6 +37,7 @@ const Category = styled(Name)`
   font-family: 'NS-B';
   font-size: 1.3rem;
   margin: 0;
+  color: #3e3e3e;
 
   ${media.phone`
     font-size: 1.5rem;
@@ -59,7 +61,9 @@ const InquiryCard = (props) => {
     <Grid.Column>
       <Container>
         <Section style={{ marginBottom: '0.5rem' }}>
-          <Name>{place.name}</Name>
+          <Link to={`/places/${[place.id]}`}>
+            <Name>{place.name}</Name>
+          </Link>
           {place.tags.map((tag) => {
             return <Tag>{tag}</Tag>;
           })}

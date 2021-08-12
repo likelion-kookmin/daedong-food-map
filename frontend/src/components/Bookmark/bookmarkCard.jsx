@@ -9,7 +9,7 @@ import { Icon, Label, Grid } from 'semantic-ui-react';
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 1rem 1rem 0 1rem;
+  padding: 0.8rem 1.5rem;
   position: relative;
   background-color: #ffffff;
   border: 1px solid #a1a1a1;
