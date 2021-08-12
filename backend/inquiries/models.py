@@ -22,7 +22,10 @@ class Inquiry(BaseModel):
         null=True,
         verbose_name='장소'
     )
-    category = models.TextField(
+    category = models.ForeignKey(
+        InquiryCategory,
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name="문의 종류"
     )
     content = models.TextField(
