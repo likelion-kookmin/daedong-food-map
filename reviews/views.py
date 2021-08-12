@@ -18,7 +18,7 @@ class ReviewListView(BaseView, ListAPIView):
         - place_id
             - place_id가 있는 경우, 해당 장소의 리뷰 목록이 반환된다.
             - 없는 경우, 전체 리뷰 목록이 반환된다.
-        - user_id
+        - token이 있는 경우
             - user_id가 있는 경우, 해당 유저의 리뷰 목록이 반환된다.
     """
 
@@ -27,14 +27,14 @@ class ReviewListView(BaseView, ListAPIView):
 
     def get_queryset(self):
         place_id = self.request.query_params.get('place_id')
-        user_id = self.request.query_params.get('user_id')
+        user = self.current_user
 
         reviews = Review.objects.all()
         if place_id:
             reviews = reviews.filter(place__id=place_id)
 
-        if place_id:
-            reviews = reviews.filter(user__id=place_id)
+        if user:
+            reviews = reviews.filter(user=user)
 
         return reviews
 
