@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Grid, Icon, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import useWindowDimensions from 'utils/window.util';
+import { apiUrl } from 'config/api.config';
 
 const Section = styled.div`
   display: flex;
@@ -47,13 +48,13 @@ const Review = (props) => {
           circular
           size="small"
           src={
-            props.data.userProfile
-              ? props.data.userProfile
+            props.data.user.avatar
+              ? apiUrl + props.data.user.avatar
               : 'https://react.semantic-ui.com/images/wireframe/square-image.png'
           }
           style={{ display: 'inline-block', marginBottom: '1rem' }}
         />
-        <Text>{props.data.user.nickname ? props.data.user.nickname : '익명'}</Text>
+        <Text>{props.data.user.email.split('@')[0]}</Text>
       </Grid.Column>
       <Grid.Column width={11}>
         <InfoSection>
