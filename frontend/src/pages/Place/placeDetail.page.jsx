@@ -302,9 +302,11 @@ const PlaceDetailPage = () => {
         </Section>
       </Section>
       <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
-        {singlePlace?.tags.map((tag) => {
-          return <Tag>{tag}</Tag>;
-        })}
+        <div>
+          {singlePlace?.tags.map((tag) => {
+            return <Tag>{tag}</Tag>;
+          })}
+        </div>
         <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
       </Section>
       <Section>
