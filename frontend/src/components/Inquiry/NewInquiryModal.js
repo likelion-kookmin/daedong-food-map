@@ -124,7 +124,7 @@ const NewInquiryModal = (props) => {
           보내기
         </BtnText>
       </ModalHeader>
-      <Modal.Content scrolling style={{ maxHeight: '50vh', fontFamily: 'NS-R' }}>
+      <Modal.Content scrolling style={{ minHeight: '50vh', fontFamily: 'NS-R' }}>
         <Form>
           <Section style={{ marginBottom: '2rem' }}>
             <Text style={{ fontSize: '1.4rem', fontFamily: 'NS-EB' }}>정보에 문제가 있어요.</Text>

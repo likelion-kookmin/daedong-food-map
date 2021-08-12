@@ -301,16 +301,16 @@ const PlaceDetailPage = () => {
           <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
       </Section>
-      <Section>
+      <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
         {singlePlace?.tags.map((tag) => {
           return <Tag>{tag}</Tag>;
         })}
+        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
       </Section>
-      <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+      <Section>
         <Text style={{ fontSize: '1.2rem', marginBottom: '5rem' }}>
           {singlePlace?.address + ' ' + singlePlace?.detailAddress}
         </Text>
-        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
         <NewInquiryModal id={id} setOpen={setInquiryModalOpen} open={inquiryModalOpen} />
       </Section>
       {singlePlace?.images.length > 3 ? (
