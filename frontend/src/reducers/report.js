@@ -9,6 +9,9 @@ export const initialState = {
   addReportLoading: false,
   addReportDone: false,
   addReportError: null,
+  destroyReportLoading: false,
+  destroyReportDone: false,
+  destroyReportError: null,
 };
 
 export const LOAD_REPORTS_REQUEST = 'LOAD_REPORTS_REQUEST';
@@ -18,6 +21,10 @@ export const LOAD_REPORTS_FAILURE = 'LOAD_REPORTS_FAILURE';
 export const ADD_REPORT_REQUEST = 'ADD_REPORT_REQUEST';
 export const ADD_REPORT_SUCCESS = 'ADD_REPORT_SUCCESS';
 export const ADD_REPORT_FAILURE = 'ADD_REPORT_FAILURE';
+
+export const DESTROY_REPORT_REQUEST = 'DESTROY_REPORT_REQUEST';
+export const DESTROY_REPORT_SUCCESS = 'DESTROY_REPORT_SUCCESS';
+export const DESTROY_REPORT_FAILURE = 'DESTROY_REPORT_FAILURE';
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -49,6 +56,19 @@ const reducer = (state = initialState, action) =>
       case ADD_REPORT_FAILURE:
         draft.addReportLoading = false;
         draft.addReportError = action.error;
+        break;
+      case DESTROY_REPORT_REQUEST:
+        draft.destroyReportLoading = true;
+        draft.destroyReportDone = false;
+        draft.destroyReportError = null;
+        break;
+      case DESTROY_REPORT_SUCCESS:
+        draft.destroyReportLoading = false;
+        draft.destroyReportDone = true;
+        break;
+      case DESTROY_REPORT_FAILURE:
+        draft.destroyReportLoading = false;
+        draft.destroyReportError = action.error;
         break;
       default:
         break;
