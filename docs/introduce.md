@@ -128,7 +128,9 @@ Django 로 웹 서비스를 개발한 적은 있었지만, 존재 여부만 알�
 
 ### 카카오맵
 [Kakao developer](https://developers.kakao.com/)에 로컬url과 도메인url을 등록해서 api key를 발급받아 이용했습니다.(1일 최대 30만번 까지는 무료이용이 가능했습니다.)
+
 [Kakao Map](https://apis.map.kakao.com/web/guide/)를 참고해서 진행했습니다.
+
 ## 배포 방식
 
 #### 백엔드
