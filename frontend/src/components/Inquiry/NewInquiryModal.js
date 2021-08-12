@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_INQUIRIES_REQUEST } from 'reducers/inquiry';
 import styled from 'styled-components';
@@ -70,13 +69,12 @@ const options = [
   { key: 4, text: '사진', value: '4' },
   { key: 4, text: '그 외 기타', value: '5' },
 ];
+
 const NewInquiryModal = (props) => {
   const [category, setCategory] = useState('');
-  const [contents, onChangeContents, setContents] = useInput('');
+  const [contents, setContents] = useState('');
   const dispatch = useDispatch();
   const { addInquiriesDone, addInquiriesError } = useSelector((state) => state.inquiry);
-  const [categoryError, setCategoryError] = useState('');
-  const [contentsError, setContentsError] = useState('');
 
   useEffect(() => {
     if (addInquiriesError) {
@@ -104,13 +102,20 @@ const NewInquiryModal = (props) => {
     setCategory(value);
   };
 
+  const handleContents = (e) => {
+    setContents(e.target.value);
+    if (e.target.value.length >= 100) {
+      setContents(e.target.value.slice(0, 100));
+    }
+  };
+
   const handleSubmit = useCallback(() => {
     dispatch({
       type: ADD_INQUIRIES_REQUEST,
       data: {
         place_id: props.id,
         content: contents,
-        category: category,
+        category: options[category - 1].text,
       },
     });
   }, [dispatch, props.id, contents, category]);
@@ -141,11 +146,20 @@ const NewInquiryModal = (props) => {
             control={Form.Dropdown}
           />
           <Field fluid>
-            <label>신고 내용</label>
+            <Section
+              style={{
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+                marginBottom: '0.2rem',
+              }}
+            >
+              <label>신고 내용</label>
+              <Text>{contents.length} / 100</Text>
+            </Section>
             <Form.TextArea
               placeholder="장소에 대한 설명을 적어주세요."
               value={contents}
-              onChange={onChangeContents}
+              onChange={handleContents}
               style={{ fontFamily: 'NS-R' }}
             />
           </Field>

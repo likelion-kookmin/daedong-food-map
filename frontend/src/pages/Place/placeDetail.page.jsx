@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Icon, Form, TextArea, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
 import { media } from 'utils/style.util';
+import useWindowDimensions from 'utils/window.util';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -28,9 +29,9 @@ const Name = styled.div`
   font-family: 'NS-EB';
   font-size: 2rem;
   color: #3e3e3e;
-
+  line-height: 2rem;
   ${media.phone`
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   `};
 `;
 
@@ -146,6 +147,7 @@ const LinkedText = styled(Text)`
 `;
 
 const PlaceDetailPage = () => {
+  const { width } = useWindowDimensions();
   const { id } = useParams();
   const { singlePlace, loadPlaceLoading } = useSelector((state) => state.place);
   const { addReviewDone, addReviewError } = useSelector((state) => state.review);
@@ -262,12 +264,16 @@ const PlaceDetailPage = () => {
       >
         <Section>
           <Name>{singlePlace?.name}</Name>
-          <Icon
-            name="star"
-            size="large"
-            style={{ color: '#F25C69', margin: '0 0.4rem 0 0.8rem' }}
-          />
-          <Text style={{ fontSize: '1.5rem' }}>
+          {width > 376 ? (
+            <Icon
+              name="star"
+              size="large"
+              style={{ color: '#F25C69', margin: '0 0.4rem 0 0.8rem' }}
+            />
+          ) : (
+            <Icon name="star" style={{ color: '#F25C69', margin: '0 0.2rem 0 0.3rem' }} />
+          )}
+          <Text style={width > 376 ? { fontSize: '1.5rem' } : { fontSize: '1.3rem' }}>
             {parseFloat(singlePlace?.averageScore.toFixed(2))}
           </Text>
         </Section>
@@ -281,7 +287,7 @@ const PlaceDetailPage = () => {
             <Icon
               name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
               color="yellow"
-              size="big"
+              size={width > 376 ? 'big' : 'large'}
               style={{ marginRight: '1rem' }}
             />
           </Section>
@@ -300,6 +306,7 @@ const PlaceDetailPage = () => {
           <Icon name="star" style={{ color: '#707070', marginRight: '0.2rem' }} />
           <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
+        <Text>{singlePlace?.user.email.split('@')[0]}님 제보</Text>
       </Section>
       <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
         <div>

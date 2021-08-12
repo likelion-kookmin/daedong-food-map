@@ -104,7 +104,8 @@ const PrimaryBtn = styled(Btn)`
 // `;
 
 const ReportCard = (props) => {
-  const { content, place } = props?.report;
+  const { content, created_at, place } = props?.report;
+  console.log(props.report);
   const { destroyReportDone } = useSelector((state) => state.report);
   const dispatch = useDispatch();
 
@@ -154,7 +155,7 @@ const ReportCard = (props) => {
         </Section>
         <Section style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
           {/* 수정 만들면 버튼 열기... */}
-          <Text>{moment(place.created_at).format('YYYY.MM.DD')}</Text>
+          <Text>{moment(created_at).format('YYYY.MM.DD')}</Text>
           {place.status === 'p' ? (
             <div style={{ visibility: 'hidden' }}>
               {/* <SecondaryBtn>수정</SecondaryBtn>/ */}
