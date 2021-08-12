@@ -1,20 +1,62 @@
 import React from 'react';
-import { Icon, Label, Segment, Grid, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
-const ImgContainer = styled(Grid.Column)`
-  padding-right: 0 !important;
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { DESTROY_BOOKMARK_REQUEST, ADD_BOOKMARK_REQUEST } from 'reducers/bookmark';
 
-  &: last-child {
+import { Icon, Label, Grid } from 'semantic-ui-react';
+
+const Container = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0.8rem 1.5rem;
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #a1a1a1;
+  border-radius: 10px;
+`;
+
+const Section = styled.div`
+  display: flex;
+  align-items: end;
+  margin-bottom: 1rem;
+`;
+
+const Name = styled.div`
+  font-family: 'NS-EB';
+  font-size: 1.5rem;
+  color: #0c43b6;
+`;
+
+const Text = styled.div`
+  font-family: 'NS-R';
+  font-size: 1rem;
+  color: #707070;
+`;
+
+const Reviews = styled(Text)`
+  margin-left: 1rem;
+`;
+
+const Tag = styled(Label)`
+  font-family: 'NS-R';
+`;
+
+const ImgContainer = styled.div`
+  position: relative;
+  flex-grow: 1;
+  padding-bottom: 30%;
+  &:last-child {
     img {
       border-radius: 0 10px 10px 0;
     }
   }
-  &: first-child {
+  &:first-child {
     img {
       border-radius: 10px 0 0 10px;
     }
   }
-  &: only-child {
+  &:only-child {
     img {
       border-radius: 10px;
     }
@@ -22,56 +64,86 @@ const ImgContainer = styled(Grid.Column)`
 `;
 
 const Img = styled.img`
+  position: absolute;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  padding-right: 0.3rem;
+  border-radius: 0;
 `;
 
-const BookmarkCard = (props) => {
-  const { content, place } = props?.bookmark;
+function BookmarkCard(props) {
+  const { place } = props?.bookmark;
 
-  const imglist = place.images.map((img, index) => (
-    <ImgContainer mobile={3} tablet={2} width={1}>
-      <Img src={img.image} />
-    </ImgContainer>
-  ));
+  const dispatch = useDispatch();
+  const handleBookmark = (is_bookmarked, id) => {
+    if (is_bookmarked) {
+      dispatch({
+        type: DESTROY_BOOKMARK_REQUEST,
+        id: place.id,
+      });
+    } else {
+      dispatch({
+        type: ADD_BOOKMARK_REQUEST,
+        id: place.id,
+      });
+    }
+    window.location.reload();
+  };
+
+  const imglist =
+    place.images && place.images.length
+      ? place.images.slice(0, 3).map((img) => (
+          <ImgContainer>
+            <Img src={img.image} />
+          </ImgContainer>
+        ))
+      : [
+          <ImgContainer>
+            <Img src="/images/LogoTitle.png" />
+          </ImgContainer>,
+        ];
+
   return (
-    <Segment padded>
-      <Grid>
-        <Grid.Row columns={16}>
-          <Grid.Column width={10}>
-            <h3>
-              {place.name}
-              <br />
-              <span style={{ fontSize: 'small', color: 'gray' }}> ({place.address}) </span>
-            </h3>
-          </Grid.Column>
-          <Grid.Column width={6} textAlign="right">
-            <Button.Group basic size="small">
-              <Button icon>
-                <Icon name="delete" />
-              </Button>
-            </Button.Group>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <p> {content} </p>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>{imglist}</Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <section style={{ margin: '0' }}>
-              {place.tags.map((tag) => {
-                return <Label>{tag}</Label>;
-              })}
-            </section>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
+    <Grid.Column>
+      <Container>
+        <Section style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <Section style={{ margin: 0 }}>
+            <Link to={`/places/${[place.id]}`}>
+              <Name>{place.name}</Name>
+            </Link>
+            <Icon name="star" style={{ color: '#F25C69', margin: '0 0.2rem 0 0.8rem' }} />
+            <Text>{parseFloat(place.average_score.toFixed(2))}</Text>
+            <Reviews>리뷰 {place.review_count}개</Reviews>
+          </Section>
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => {
+              handleBookmark(place.is_bookmarked, place.id);
+            }}
+          >
+            <Section style={{ margin: 0 }}>
+              <Icon
+                name={place.is_bookmarked ? 'star' : 'star outline'}
+                color="yellow"
+                size="large"
+                style={{ cursor: 'pointer' }}
+              />
+            </Section>
+          </button>
+        </Section>
+        <Section style={{ justifyContent: 'space-between' }}>
+          <Section style={{ margin: '0' }}>
+            {place.tags.map((tag) => {
+              return <Tag>{tag}</Tag>;
+            })}
+            <Tag style={{ visibility: 'hidden' }}>빈칸용</Tag>
+          </Section>
+        </Section>
+        <Section style={{ justifyContent: 'space-between' }}>{imglist}</Section>
+      </Container>
+    </Grid.Column>
   );
-};
+}
 
 export default BookmarkCard;

@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import NewReport from 'components/Report/NewReportModal';
 
 const Logo = styled.img`
-  height: 30px;
+  height: 27px;
   vertical-align: middle;
 `;
 
@@ -57,13 +57,13 @@ const MobileLayout = (props) => {
                   </Menu.Item>
                 </div>
                 <div>
-                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
-                    제보목록
+                  <Menu.Item href="/reports" style={{ fontSize: '1rem' }}>
+                    제보 내역
                   </Menu.Item>
                 </div>
                 <div>
-                  <Menu.Item href="/Report" style={{ fontSize: '1rem' }}>
-                    신고목록
+                  <Menu.Item href="/inquiries" style={{ fontSize: '1rem' }}>
+                    신고 내역
                   </Menu.Item>
                 </div>
               </Menu.Item>
@@ -97,8 +97,8 @@ const MobileLayout = (props) => {
         )}
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
-          <Segment textAlign="center" vertical padded>
-            <Menu secondary size="large" fixed="top">
+          <Segment size="large" textAlign="center" vertical padded>
+            <Menu secondary fixed="top">
               <Menu.Item>
                 <Link to="/">
                   <Logo src={process.env.PUBLIC_URL + '/images/LogoTitle.png'} />

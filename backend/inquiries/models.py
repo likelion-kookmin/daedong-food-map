@@ -1,8 +1,8 @@
+from config.models import BaseModel
 from django.db import models
 from django.db.models.deletion import SET_NULL
-from config.models import BaseModel
-from users.models import User
 from places.models import Place
+from users.models import User
 
 
 class InquiryCategory(BaseModel):
@@ -22,11 +22,9 @@ class Inquiry(BaseModel):
         null=True,
         verbose_name='장소'
     )
-    category = models.ForeignKey(
-        InquiryCategory,
-        on_delete=models.SET_NULL,
-        null=True,
-        verbose_name="문의 종류"
+    category = models.TextField(
+        verbose_name="문의 종류",
+        default=""
     )
     content = models.TextField(
         verbose_name="문의 내용"

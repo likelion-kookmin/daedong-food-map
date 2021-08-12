@@ -1,10 +1,28 @@
 import React, { useEffect } from 'react';
 import { LOAD_INQUIRIES_REQUEST } from 'reducers/inquiry';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { Divider, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+import styled from 'styled-components';
+import { media } from 'utils/style.util';
 
 import InquiryCard from 'components/Inquiry/inquiryCard';
+
+const Section = styled.div`
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  gap: 0.2rem;
+`;
+
+const Name = styled.div`
+  font-family: 'NS-EB';
+  font-size: 2rem;
+  color: #3e3e3e;
+
+  ${media.phone`
+    font-size: 1.7rem;
+  `};
+`;
 
 const InquiryListPage = () => {
   const dispatch = useDispatch();
@@ -18,20 +36,19 @@ const InquiryListPage = () => {
 
   return (
     <div>
-      <h1>신고 목록</h1>
-      <Divider />
+      <Section style={{ margin: '1.5rem 0 3rem  0' }}>
+        <Name>내 신고내역</Name>
+      </Section>
       {loadInquiriesLoading ? (
-        <Segment>
-          <Dimmer active inverted>
-            <Loader size="huge">Loading</Loader>
-          </Dimmer>
-        </Segment>
+        <Dimmer active inverted>
+          <Loader size="huge">Loading</Loader>
+        </Dimmer>
       ) : (
-        <Segment.Group>
+        <Grid stackable columns={2}>
           {inquiries.map((inquiry) => (
-            <InquiryCard report={inquiry} />
+            <InquiryCard inquiry={inquiry} />
           ))}
-        </Segment.Group>
+        </Grid>
       )}
     </div>
   );

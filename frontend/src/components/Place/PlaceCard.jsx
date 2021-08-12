@@ -82,7 +82,7 @@ function PlaceCard(props) {
   // const distance = Math.round(props.data.distance || 10);
   const imglist =
     props.data.images && props.data.images.length
-      ? props.data.images.slice(0, 3).map((img, index) => (
+      ? props.data.images.slice(0, 3).map((img) => (
           <ImgContainer>
             <Img src={img.image} />
           </ImgContainer>
@@ -111,6 +111,7 @@ function PlaceCard(props) {
           {props.data.tags.map((tag) => {
             return <Tag>{tag}</Tag>;
           })}
+          <Tag style={{ visibility: 'hidden' }}>빈칸용</Tag>
         </Section>
         {/* <Text style={{ paddingTop: '0.5rem' }}>
           {distance > 1000 ? (distance * 0.001).toFixed(2) + 'km' : distance + 'm'}

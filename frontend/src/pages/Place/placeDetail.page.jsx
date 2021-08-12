@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import useInput from 'hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PLACE_REQUEST } from 'reducers/place';
 import { ADD_REVIEW_REQUEST } from 'reducers/review';
 import { DESTROY_BOOKMARK_REQUEST, ADD_BOOKMARK_REQUEST } from 'reducers/bookmark';
 import styled from 'styled-components';
-import { Icon, Form, TextArea, Button, Label, Rating, Grid } from 'semantic-ui-react';
+import { Icon, Form, TextArea, Label, Rating, Grid } from 'semantic-ui-react';
 import { lighten } from 'polished';
+import { media } from 'utils/style.util';
+import useWindowDimensions from 'utils/window.util';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -15,6 +16,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import NextArrow from 'components/common/NextArrow';
 import PrevArrow from 'components/common/PrevArrow';
 import Review from 'components/Review/Review';
+import NewInquiryModal from 'components/Inquiry/NewInquiryModal';
 
 const Section = styled.div`
   display: flex;
@@ -27,6 +29,14 @@ const Name = styled.div`
   font-family: 'NS-EB';
   font-size: 2rem;
   color: #3e3e3e;
+  line-height: 2rem;
+  ${media.phone`
+    font-size: 1.6rem;
+  `};
+`;
+
+const Tag = styled(Label)`
+  font-family: 'NS-R';
 `;
 
 const Text = styled.div`
@@ -36,7 +46,6 @@ const Text = styled.div`
 `;
 
 const Carousel = styled(Slider)`
-  margin-top: 5rem;
   width: 90%;
 `;
 
@@ -85,9 +94,20 @@ const InputImg = styled.img`
 
 const PlaceImgContainer = styled.div`
   display: inline-block;
-  width: 15%;
   position: relative;
+  flex-grow: 1;
+  width: 20%;
   padding-bottom: 15%;
+
+  ${media.tablet`
+    width: 30%;
+    padding-bottom: 25%;
+  `};
+
+  ${media.phone`
+    width: 40%;
+    padding-bottom: 35%;
+  `};
 `;
 
 const PlaceImg = styled.img`
@@ -95,6 +115,8 @@ const PlaceImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  padding-right: 0.3rem;
+  border-radius: 0;
 `;
 
 const Btn = styled.button`
@@ -115,15 +137,26 @@ const PrimaryBtn = styled(Btn)`
   }
 `;
 
+const LinkedText = styled(Text)`
+  cursor: pointer;
+
+  &:hover {
+    color: #0475f4;
+    text-decoration: underline;
+  }
+`;
+
 const PlaceDetailPage = () => {
+  const { width } = useWindowDimensions();
   const { id } = useParams();
   const { singlePlace, loadPlaceLoading } = useSelector((state) => state.place);
   const { addReviewDone, addReviewError } = useSelector((state) => state.review);
   const [imgs, setImgs] = useState([]);
   const inputFile = useRef(null);
-  const [contents, onChangeContents] = useInput('');
+  const [contents, setContents] = useState('');
   const [contentsError, setContentsError] = useState('');
   const [rating, setRating] = useState(1);
+  const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -171,10 +204,11 @@ const PlaceDetailPage = () => {
     setImgs(imgs.filter((img) => img !== imgs[value]));
   };
 
-  const handleInputFile = (e) => {
-    e.preventDefault();
-    inputFile.current.click();
-  };
+  // 리뷰 사진 기능
+  // const handleInputFile = (e) => {
+  //   e.preventDefault();
+  //   inputFile.current.click();
+  // };
 
   const upload = (e) => {
     const reader = new FileReader();
@@ -192,6 +226,13 @@ const PlaceDetailPage = () => {
 
   const handleRating = (e, { rating }) => {
     setRating(rating);
+  };
+
+  const handleContents = (e) => {
+    setContents(e.target.value);
+    if (e.target.value.length >= 100) {
+      setContents(e.target.value.slice(0, 100));
+    }
   };
 
   const handleBookmark = (isBookmarked, id) => {
@@ -212,19 +253,27 @@ const PlaceDetailPage = () => {
     });
   };
 
+  const openInquiryModal = () => {
+    setInquiryModalOpen(true);
+  };
+
   return (
     <div className={loadPlaceLoading ? 'loading' : ''}>
       <Section
-        style={{ marginTop: '1.5rem', justifyContent: 'space-between', alignItems: 'center' }}
+        style={{ margin: '1.5rem 0 0 0', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <Section>
           <Name>{singlePlace?.name}</Name>
-          <Icon
-            name="star"
-            size="large"
-            style={{ color: '#F25C69', margin: '0 0.4rem 0 0.8rem' }}
-          />
-          <Text style={{ fontSize: '1.5rem' }}>
+          {width > 376 ? (
+            <Icon
+              name="star"
+              size="large"
+              style={{ color: '#F25C69', margin: '0 0.4rem 0 0.8rem' }}
+            />
+          ) : (
+            <Icon name="star" style={{ color: '#F25C69', margin: '0 0.2rem 0 0.3rem' }} />
+          )}
+          <Text style={width > 376 ? { fontSize: '1.5rem' } : { fontSize: '1.3rem' }}>
             {parseFloat(singlePlace?.averageScore.toFixed(2))}
           </Text>
         </Section>
@@ -234,12 +283,14 @@ const PlaceDetailPage = () => {
             handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
           }}
         >
-          <Icon
-            name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
-            color="yellow"
-            size="big"
-            style={{ marginRight: '2rem' }}
-          />
+          <Section>
+            <Icon
+              name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
+              color="yellow"
+              size={width > 376 ? 'big' : 'large'}
+              style={{ marginRight: '1rem', cursor: 'pointer' }}
+            />
+          </Section>
         </button>
       </Section>
       <Section style={{ opacity: '0.8', gap: '2rem', borderBottom: '1px solid #d6d6d6' }}>
@@ -255,19 +306,35 @@ const PlaceDetailPage = () => {
           <Icon name="star" style={{ color: '#707070', marginRight: '0.2rem' }} />
           <Text>{singlePlace?.bookmarkCount}</Text>
         </Section>
+        <Text>{singlePlace?.user.email.split('@')[0]}님 제보</Text>
       </Section>
-      <Text style={{ fontSize: '1.2rem' }}>
-        {singlePlace?.address + ' ' + singlePlace?.detailAddress}
-      </Text>
-      <br />
-      <Text style={{ fontSize: '1.2rem' }}>{singlePlace?.content}</Text>
-      <Section
-        style={{
-          justifyContent: 'center',
-          paddingBottom: '2rem',
-        }}
-      >
-        {singlePlace?.images.length > 4 ? (
+      <Section style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <div>
+          {singlePlace?.tags.map((tag) => {
+            return <Tag>{tag}</Tag>;
+          })}
+        </div>
+        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
+      </Section>
+      <Section>
+        <Text
+          style={
+            width > 376
+              ? { fontSize: '1.2rem', marginBottom: '5rem' }
+              : { fontSize: '1rem', marginBottom: '5rem' }
+          }
+        >
+          {singlePlace?.address + ' ' + singlePlace?.detailAddress}
+        </Text>
+        <NewInquiryModal id={id} setOpen={setInquiryModalOpen} open={inquiryModalOpen} />
+      </Section>
+      {singlePlace?.images.length > 3 ? (
+        <Section
+          style={{
+            justifyContent: 'center',
+            paddingBottom: '2rem',
+          }}
+        >
           <Carousel {...settings}>
             {singlePlace?.images.map((img) => (
               <CarouselContainer>
@@ -275,18 +342,14 @@ const PlaceDetailPage = () => {
               </CarouselContainer>
             ))}
           </Carousel>
-        ) : (
-          // <Grid>
-          //   <Grid.Row>
-          singlePlace?.images.map((img) => (
-            <PlaceImgContainer>
-              <PlaceImg src={img.image} />
-            </PlaceImgContainer>
-          ))
-          //   </Grid.Row>
-          // </Grid>
-        )}
-      </Section>
+        </Section>
+      ) : (
+        singlePlace?.images.map((img) => (
+          <PlaceImgContainer>
+            <PlaceImg src={img.image} />
+          </PlaceImgContainer>
+        ))
+      )}
 
       <Form onSubmit={handleSubmit}>
         <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
@@ -312,23 +375,26 @@ const PlaceDetailPage = () => {
             style={{ display: 'none' }}
           />
         </Section>
-        <Section style={{ alignItems: 'flex-end' }}>
-          <Rating
-            icon="star"
-            size="large"
-            defaultRating={1}
-            maxRating={5}
-            onRate={handleRating}
-            style={{ marginRight: '1rem' }}
-          />
-          <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
+        <Section style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <Section style={{ margin: 0 }}>
+            <Rating
+              icon="star"
+              size="large"
+              defaultRating={1}
+              maxRating={5}
+              onRate={handleRating}
+              style={{ marginRight: '1rem' }}
+            />
+            <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
+          </Section>
+          <Text>{contents.length} / 100</Text>
         </Section>
         <Form.Field
           fluid
           placeholder="리뷰를 작성해주세요."
           control={TextArea}
           value={contents}
-          onChange={onChangeContents}
+          onChange={handleContents}
           style={{ fontFamily: 'NS-R' }}
           error={contentsError.length > 0}
         />

@@ -105,12 +105,12 @@ const DesktopLayout = (props) => {
                 </Link>
                 <Link to="/reports">
                   <Dropdown.Item as="a">
-                    <DropText>제보 목록</DropText>
+                    <DropText>제보 내역</DropText>
                   </Dropdown.Item>
                 </Link>
                 <Link to="/inquiries">
                   <Dropdown.Item as="a">
-                    <DropText>신고 목록</DropText>
+                    <DropText>신고 내역</DropText>
                   </Dropdown.Item>
                 </Link>
                 <Dropdown.Item as="a" onClick={logout}>
