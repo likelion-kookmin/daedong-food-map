@@ -43,8 +43,11 @@ const useSetMarker = () => {
         ` <div class="ui blue circular large label">${idx + 1}</div>` +
         ' <div>' +
         `   <a href="/places/${value.id}"><div class='title'>${value.name}</div></a>` +
+        '   <div class="body">' +
         '   <i aria-hidden="true" class="star icon"></i>' +
-        `   <div class='body'>${avg_score}&nbsp&nbsp&nbsp<span>&#183;</span>${value.tags[0]}</div>` +
+        `   ${avg_score}&nbsp&nbsp&nbsp<span>${
+          value.tags[0] ? '&#183;</span>' + value.tags[0] + '</div>' : ''
+        }` +
         ' </div>' +
         '</div>';
 
