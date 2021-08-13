@@ -15,9 +15,11 @@ from .serializers import ReviewSerializer
 class ReviewListView(BaseView, ListAPIView):
     """# ReviewListView
     - query params:
-      - place_id
-        - place_id가 있는 경우, 해당 장소의 리뷰 목록이 반환된다.
-        - 없는 경우, 전체 리뷰 목록이 반환된다.
+        - place_id
+            - place_id가 있는 경우, 해당 장소의 리뷰 목록이 반환된다.
+            - 없는 경우, 전체 리뷰 목록이 반환된다.
+        - token이 있는 경우
+            - user_id가 있는 경우, 해당 유저의 리뷰 목록이 반환된다.
     """
 
     queryset = Review.objects.all()
@@ -25,10 +27,16 @@ class ReviewListView(BaseView, ListAPIView):
 
     def get_queryset(self):
         place_id = self.request.query_params.get('place_id')
+        user = self.current_user
+
+        reviews = Review.objects.all()
         if place_id:
-            return Review.objects.filter(place__id=place_id)
-        else:
-            return Review.objects.all()
+            reviews = reviews.filter(place__id=place_id)
+
+        if user:
+            reviews = reviews.filter(user=user)
+
+        return reviews
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

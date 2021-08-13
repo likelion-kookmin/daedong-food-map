@@ -149,6 +149,7 @@ const LinkedText = styled(Text)`
 const PlaceDetailPage = () => {
   const { width } = useWindowDimensions();
   const { id } = useParams();
+  const { user } = useSelector((state) => state.authentication);
   const { singlePlace, loadPlaceLoading } = useSelector((state) => state.place);
   const { addReviewDone, addReviewError } = useSelector((state) => state.review);
   const [imgs, setImgs] = useState([]);
@@ -174,7 +175,7 @@ const PlaceDetailPage = () => {
         setContentsError(content);
       }
       if (nonFieldErrors) {
-        console.log('에러');
+        console.log('nonFieldErrors');
       }
     }
 
@@ -277,21 +278,23 @@ const PlaceDetailPage = () => {
             {parseFloat(singlePlace?.averageScore.toFixed(2))}
           </Text>
         </Section>
-        <button
-          style={{ background: 'none', border: 'none' }}
-          onClick={() => {
-            handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
-          }}
-        >
-          <Section>
-            <Icon
-              name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
-              color="yellow"
-              size={width > 376 ? 'big' : 'large'}
-              style={{ marginRight: '1rem', cursor: 'pointer' }}
-            />
-          </Section>
-        </button>
+        {user ? (
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => {
+              handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
+            }}
+          >
+            <Section>
+              <Icon
+                name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
+                color="yellow"
+                size={width > 376 ? 'big' : 'large'}
+                style={{ marginRight: '1rem', cursor: 'pointer' }}
+              />
+            </Section>
+          </button>
+        ) : null}
       </Section>
       <Section style={{ opacity: '0.8', gap: '2rem', borderBottom: '1px solid #d6d6d6' }}>
         <Section>
@@ -314,7 +317,9 @@ const PlaceDetailPage = () => {
             return <Tag>{tag}</Tag>;
           })}
         </div>
-        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
+        <LinkedText onClick={openInquiryModal} style={user ? null : { visibility: 'hidden' }}>
+          정보에 문제가 있어요
+        </LinkedText>
       </Section>
       <Section>
         <Text
@@ -350,11 +355,11 @@ const PlaceDetailPage = () => {
           </PlaceImgContainer>
         ))
       )}
-
-      <Form onSubmit={handleSubmit}>
-        <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
-          <Name style={{ fontSize: '1.8rem' }}>리뷰 작성하기</Name>
-          {/* <label htmlFor="file">
+      {user ? (
+        <Form onSubmit={handleSubmit}>
+          <Section style={{ marginTop: '5rem', alignItems: 'center' }}>
+            <Name style={{ fontSize: '1.8rem' }}>리뷰 작성하기</Name>
+            {/* <label htmlFor="file">
             <Button
               basic
               type="button"
@@ -365,74 +370,76 @@ const PlaceDetailPage = () => {
               style={{ marginLeft: '1rem', fontFamily: 'NS-R' }}
             />
           </label> */}
-          <input
-            type="file"
-            id="file"
-            accept="image/*"
-            content_type="multipart/form-data"
-            ref={inputFile}
-            onChange={upload}
-            style={{ display: 'none' }}
-          />
-        </Section>
-        <Section style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
-          <Section style={{ margin: 0 }}>
-            <Rating
-              icon="star"
-              size="large"
-              defaultRating={1}
-              maxRating={5}
-              onRate={handleRating}
-              style={{ marginRight: '1rem' }}
+            <input
+              type="file"
+              id="file"
+              accept="image/*"
+              content_type="multipart/form-data"
+              ref={inputFile}
+              onChange={upload}
+              style={{ display: 'none' }}
             />
-            <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
           </Section>
-          <Text>{contents.length} / 100</Text>
-        </Section>
-        <Form.Field
-          fluid
-          placeholder="리뷰를 작성해주세요."
-          control={TextArea}
-          value={contents}
-          onChange={handleContents}
-          style={{ fontFamily: 'NS-R' }}
-          error={contentsError.length > 0}
-        />
-        <Section
-          style={{
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '5rem',
-          }}
-        >
-          <div style={{ flexGrow: 1, whiteSpace: 'nowrap', overflow: 'auto', marginTop: '1rem' }}>
-            {imgs.map((src, index) => (
-              <ImgContainer>
-                <Label floating circular id={index} onClick={deleteImg}>
-                  <Icon name="delete" style={{ margin: '0', fontSize: '1rem' }} />
-                </Label>
-                <InputImg src={src} />
-              </ImgContainer>
-            ))}
-          </div>
-          <Section>
-            <PrimaryBtn type="submit" style={{ marginTop: '1rem', fontFamily: 'NS-R' }}>
-              <Icon name="write square" />
-              등록
-            </PrimaryBtn>
+          <Section style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
+            <Section style={{ margin: 0 }}>
+              <Rating
+                icon="star"
+                size="large"
+                defaultRating={1}
+                maxRating={5}
+                onRate={handleRating}
+                style={{ marginRight: '1rem' }}
+              />
+              <Text style={{ fontSize: '1.5rem' }}>{rating}</Text>
+            </Section>
+            <Text>{contents.length} / 100</Text>
           </Section>
-        </Section>
-        <Section style={{ marginBottom: '5rem' }}>
-          <Text style={{ fontSize: '1.5rem' }}>
-            {singlePlace?.reviewCount}개의 리뷰가 있습니다.
-          </Text>
-        </Section>
-        <Grid centered divided="vertically">
-          {singlePlace?.reviews.map((review, index) => {
-            return <Review data={review} key={index} />;
-          })}
-        </Grid>
-      </Form>
+          <Form.Field
+            fluid
+            placeholder="리뷰를 작성해주세요."
+            control={TextArea}
+            value={contents}
+            onChange={handleContents}
+            style={{ fontFamily: 'NS-R' }}
+            error={contentsError.length > 0}
+          />
+          <Section
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              marginBottom: '5rem',
+            }}
+          >
+            <div style={{ flexGrow: 1, whiteSpace: 'nowrap', overflow: 'auto', marginTop: '1rem' }}>
+              {imgs.map((src, index) => (
+                <ImgContainer>
+                  <Label floating circular id={index} onClick={deleteImg}>
+                    <Icon name="delete" style={{ margin: '0', fontSize: '1rem' }} />
+                  </Label>
+                  <InputImg src={src} />
+                </ImgContainer>
+              ))}
+            </div>
+            <Section>
+              <PrimaryBtn type="submit" style={{ marginTop: '1rem', fontFamily: 'NS-R' }}>
+                <Icon name="write square" />
+                등록
+              </PrimaryBtn>
+            </Section>
+          </Section>
+        </Form>
+      ) : (
+        <div style={{ height: '2rem' }} />
+      )}
+
+      <Section style={{ marginBottom: '5rem' }}>
+        <Text style={{ fontSize: '1.5rem' }}>{singlePlace?.reviewCount}개의 리뷰가 있습니다.</Text>
+      </Section>
+      <Grid centered divided="vertically" style={{ marginBottom: '2rem' }}>
+        {singlePlace?.reviews.map((review, index) => {
+          return <Review data={review} key={index} />;
+        })}
+      </Grid>
     </div>
   );
 };

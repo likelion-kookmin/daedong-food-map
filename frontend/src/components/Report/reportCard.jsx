@@ -106,7 +106,6 @@ const PrimaryBtn = styled(Btn)`
 
 const ReportCard = (props) => {
   const { content, created_at, place } = props?.report;
-  console.log(props.report);
   const { destroyReportDone } = useSelector((state) => state.report);
   const dispatch = useDispatch();
 
@@ -119,7 +118,10 @@ const ReportCard = (props) => {
         ))
       : [
           <ImgContainer>
-            <Img src="/images/LogoTitle.png" />
+            <Img
+              src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+              style={{ opacity: '0.5' }}
+            />
           </ImgContainer>,
         ];
 

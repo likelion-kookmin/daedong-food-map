@@ -79,7 +79,6 @@ const NewInquiryModal = (props) => {
   useEffect(() => {
     if (addInquiriesError) {
       const { inquiries, nonFieldErrors } = addInquiriesError;
-      console.log(inquiries);
       if (nonFieldErrors) {
         // 에러
       }
