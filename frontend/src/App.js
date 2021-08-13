@@ -4,10 +4,11 @@ import 'styles/styles.css';
 
 import {
   Home,
-  ReportListPage,
   Signin,
   Signup,
   PlaceDetailPage,
+  ReviewListPage,
+  ReportListPage,
   InquiryListPage,
   BookmarkListPage,
   PolicyPage,
@@ -23,6 +24,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Signin} />
         <Route exact path="/register" component={Signup} />
+        <PrivateRoute exact path="/reviews" component={ReviewListPage} />
         <PrivateRoute exact path="/reports" component={ReportListPage} />
         <PrivateRoute exact path="/inquiries" component={InquiryListPage} />
         <PrivateRoute exact path="/bookmarks" component={BookmarkListPage} />

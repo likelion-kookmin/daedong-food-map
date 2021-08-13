@@ -3,6 +3,9 @@ import authHeader from './auth-header';
 import axios from 'axios';
 
 import {
+  LOAD_REVIEW_REQUEST,
+  LOAD_REVIEW_SUCCESS,
+  LOAD_REVIEW_FAILURE,
   ADD_REVIEW_REQUEST,
   ADD_REVIEW_SUCCESS,
   ADD_REVIEW_FAILURE,
@@ -14,10 +17,27 @@ import {
   DESTROY_REVIEW_FAILURE,
 } from 'reducers/review';
 
+const reviewListAPI = (data) => axios.get('/reviews', { headers: authHeader() }, data);
 const reviewNewAPI = (data) => axios.post('/reviews/new/', data, { headers: authHeader() });
 const reviewEditAPI = (data, id) =>
   axios.patch(`/reviews/${id}/edit/`, data, { headers: authHeader() });
 const reviewDestroyAPI = (id) => axios.delete(`/reviews/${id}/destroy/`, { headers: authHeader() });
+
+function* reviewList(action) {
+  try {
+    const result = yield call(reviewListAPI, action.data);
+    yield put({
+      type: LOAD_REVIEW_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_REVIEW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function* reviewNew(action) {
   try {
@@ -64,6 +84,10 @@ function* reviewDestroy(action) {
   }
 }
 
+function* watchReviewList() {
+  yield takeLatest(LOAD_REVIEW_REQUEST, reviewList);
+}
+
 function* watchReviewNew() {
   yield takeLatest(ADD_REVIEW_REQUEST, reviewNew);
 }
@@ -77,5 +101,10 @@ function* watchReviewDestroy() {
 }
 
 export default function* reviewSaga() {
-  yield all([fork(watchReviewNew), fork(watchReviewEdit), fork(watchReviewDestroy)]);
+  yield all([
+    fork(watchReviewList),
+    fork(watchReviewNew),
+    fork(watchReviewEdit),
+    fork(watchReviewDestroy),
+  ]);
 }

@@ -103,6 +103,11 @@ const DesktopLayout = (props) => {
                     <DropText>북마크 목록</DropText>
                   </Dropdown.Item>
                 </Link>
+                <Link to="/reviews">
+                  <Dropdown.Item as="a">
+                    <DropText>리뷰 목록</DropText>
+                  </Dropdown.Item>
+                </Link>
                 <Link to="/reports">
                   <Dropdown.Item as="a">
                     <DropText>제보 내역</DropText>

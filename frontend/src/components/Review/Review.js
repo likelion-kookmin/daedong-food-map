@@ -46,7 +46,7 @@ const Review = (props) => {
       <Grid.Column textAlign="center" width={5}>
         <Image
           circular
-          size="small"
+          size={props.size ? props.size : 'small'}
           src={
             props.data.user.avatar
               ? apiUrl + props.data.user.avatar
@@ -54,7 +54,9 @@ const Review = (props) => {
           }
           style={{ display: 'inline-block', marginBottom: '1rem' }}
         />
-        <Text>{props.data.user.email.split('@')[0]}</Text>
+        <Text style={props.size ? { fontSize: '1.2rem' } : null}>
+          {props.data.user.email.split('@')[0]}
+        </Text>
       </Grid.Column>
       <Grid.Column width={11}>
         <InfoSection>
@@ -63,7 +65,7 @@ const Review = (props) => {
               return width > 376 ? (
                 <Icon
                   name="star"
-                  size="large"
+                  size={props.size ? null : 'large'}
                   style={{ color: '#F25C69', margin: '0 0.3rem 0.2rem 0' }}
                 />
               ) : (
@@ -74,7 +76,7 @@ const Review = (props) => {
               return width > 376 ? (
                 <Icon
                   name="star outline"
-                  size="large"
+                  size={props.size ? null : 'large'}
                   style={{ color: '#F25C69', margin: '0 0.3rem 0.2rem 0' }}
                 />
               ) : (
@@ -84,15 +86,23 @@ const Review = (props) => {
                 />
               );
             })}
-            <ScoreText>{props.data.score}점</ScoreText>
+            <ScoreText style={props.size ? { fontSize: '1.2rem' } : null}>
+              {props.data.score}점
+            </ScoreText>
           </Section>
 
           <Section style={{ alignItems: 'center' }}>
-            <Text>{date}</Text>
+            <Text style={props.size ? { fontSize: '1.2rem' } : null}>{date}</Text>
           </Section>
           <div style={{ flexGrow: 2 }} />
         </InfoSection>
-        <Text style={{ wordWrap: 'break-word' }}>{props.data.content}</Text>
+        <Text
+          style={
+            props.size ? { wordWrap: 'break-word', fontSize: '1.2rem' } : { wordWrap: 'break-word' }
+          }
+        >
+          {props.data.content}
+        </Text>
       </Grid.Column>
     </Grid.Row>
   );
