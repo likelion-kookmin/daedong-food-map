@@ -52,7 +52,11 @@ const Review = (props) => {
               ? apiUrl + props.data.user.avatar
               : 'https://react.semantic-ui.com/images/wireframe/square-image.png'
           }
-          style={{ display: 'inline-block', marginBottom: '1rem' }}
+          style={
+            props.data.user.avatar
+              ? { display: 'inline-block', marginBottom: '1rem' }
+              : { display: 'inline-block', marginBottom: '1rem', opacity: '0.6' }
+          }
         />
         <Text style={props.size ? { fontSize: '1.2rem' } : null}>
           {props.data.user.email.split('@')[0]}
