@@ -17,7 +17,7 @@ import {
   DESTROY_REVIEW_FAILURE,
 } from 'reducers/review';
 
-const reviewListAPI = (data) => axios.get('/reviews', { headers: authHeader() }, data);
+const reviewListAPI = (data) => axios.get('/reviews/', { headers: authHeader() }, data);
 const reviewNewAPI = (data) => axios.post('/reviews/new/', data, { headers: authHeader() });
 const reviewEditAPI = (data, id) =>
   axios.patch(`/reviews/${id}/edit/`, data, { headers: authHeader() });
