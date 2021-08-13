@@ -435,7 +435,7 @@ const PlaceDetailPage = () => {
       <Section style={{ marginBottom: '5rem' }}>
         <Text style={{ fontSize: '1.5rem' }}>{singlePlace?.reviewCount}개의 리뷰가 있습니다.</Text>
       </Section>
-      <Grid centered divided="vertically">
+      <Grid centered divided="vertically" style={{ marginBottom: '2rem' }}>
         {singlePlace?.reviews.map((review, index) => {
           return <Review data={review} key={index} />;
         })}
