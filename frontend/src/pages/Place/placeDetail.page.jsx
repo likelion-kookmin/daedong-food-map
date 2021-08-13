@@ -278,21 +278,23 @@ const PlaceDetailPage = () => {
             {parseFloat(singlePlace?.averageScore.toFixed(2))}
           </Text>
         </Section>
-        <button
-          style={{ background: 'none', border: 'none' }}
-          onClick={() => {
-            handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
-          }}
-        >
-          <Section>
-            <Icon
-              name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
-              color="yellow"
-              size={width > 376 ? 'big' : 'large'}
-              style={{ marginRight: '1rem', cursor: 'pointer' }}
-            />
-          </Section>
-        </button>
+        {user ? (
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => {
+              handleBookmark(singlePlace?.isBookmarked, singlePlace.id);
+            }}
+          >
+            <Section>
+              <Icon
+                name={singlePlace?.isBookmarked ? 'star' : 'star outline'}
+                color="yellow"
+                size={width > 376 ? 'big' : 'large'}
+                style={{ marginRight: '1rem', cursor: 'pointer' }}
+              />
+            </Section>
+          </button>
+        ) : null}
       </Section>
       <Section style={{ opacity: '0.8', gap: '2rem', borderBottom: '1px solid #d6d6d6' }}>
         <Section>
@@ -315,7 +317,9 @@ const PlaceDetailPage = () => {
             return <Tag>{tag}</Tag>;
           })}
         </div>
-        <LinkedText onClick={openInquiryModal}>정보에 문제가 있어요</LinkedText>
+        <LinkedText onClick={openInquiryModal} style={user ? null : { visibility: 'hidden' }}>
+          정보에 문제가 있어요
+        </LinkedText>
       </Section>
       <Section>
         <Text
