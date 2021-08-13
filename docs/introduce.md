@@ -124,8 +124,6 @@ Django 로 웹 서비스를 개발한 적은 있었지만, 존재 여부만 알�
 |store| react-redux 스토어를 정의하는 파일을 분리해두는 디렉토리입니다.|
 |styles| stylesheet를 모아두는 디렉토리입니다. |
 
-### Redux & Redux-Saga
-
 ### 카카오맵
 [kakao developer](https://developers.kakao.com/)에 로컬url과 도메인url을 등록해서 api key를 발급받아 이용했습니다.(1일 최대 30만번 까지는 무료이용이 가능했습니다.)
 
