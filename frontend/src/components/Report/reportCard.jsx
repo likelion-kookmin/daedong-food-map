@@ -106,7 +106,6 @@ const PrimaryBtn = styled(Btn)`
 
 const ReportCard = (props) => {
   const { content, created_at, place } = props?.report;
-  console.log(props.report);
   const { destroyReportDone } = useSelector((state) => state.report);
   const dispatch = useDispatch();
 

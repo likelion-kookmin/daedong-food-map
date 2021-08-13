@@ -175,7 +175,7 @@ const PlaceDetailPage = () => {
         setContentsError(content);
       }
       if (nonFieldErrors) {
-        console.log('에러');
+        console.log('nonFieldErrors');
       }
     }
 

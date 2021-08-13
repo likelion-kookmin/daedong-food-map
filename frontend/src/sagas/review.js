@@ -31,10 +31,9 @@ function* reviewList(action) {
       data: result.data,
     });
   } catch (err) {
-    console.log(err);
     yield put({
       type: LOAD_REVIEW_FAILURE,
-      error: err.response.data,
+      error: err.response?.data,
     });
   }
 }
@@ -49,7 +48,7 @@ function* reviewNew(action) {
   } catch (err) {
     yield put({
       type: ADD_REVIEW_FAILURE,
-      error: err.response.data,
+      error: err.response?.data,
     });
   }
 }

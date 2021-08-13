@@ -31,7 +31,6 @@ const useSetMarker = () => {
 
     // Marker 설정
     places.map((value, idx) => {
-      console.log(value);
       const avg_score = parseFloat(value.averageScore.toFixed(2));
 
       const position = new kakao.maps.LatLng(value.latitude, value.longitude);

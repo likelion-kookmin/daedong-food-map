@@ -46,7 +46,7 @@ const BookmarkListPage = () => {
       ) : (
         <Grid stackable columns={2}>
           {bookmarks.map((bookmark) => (
-            <BookmarkCard bookmark={bookmark}> {console.log(bookmark)} </BookmarkCard>
+            <BookmarkCard bookmark={bookmark} />
           ))}
         </Grid>
       )}
