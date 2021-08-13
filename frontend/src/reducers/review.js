@@ -1,6 +1,7 @@
 import produce from 'utils/produce.util';
 
 export const initialState = {
+  reviews: [],
   review: null,
   loadReviewsLoading: false,
   loadReviewsDone: false,
@@ -15,6 +16,10 @@ export const initialState = {
   destroyReviewDone: false,
   destroyReviewError: null,
 };
+
+export const LOAD_REVIEW_REQUEST = 'LOAD_REVIEW_REQUEST';
+export const LOAD_REVIEW_SUCCESS = 'LOAD_REVIEW_SUCCESS';
+export const LOAD_REVIEW_FAILURE = 'LOAD_REVIEW_FAILURE';
 
 export const ADD_REVIEW_REQUEST = 'ADD_REVIEW_REQUEST';
 export const ADD_REVIEW_SUCCESS = 'ADD_REVIEW_SUCCESS';
@@ -31,6 +36,20 @@ export const DESTROY_REVIEW_FAILURE = 'DESTROY_REVIEW_FAILURE';
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_REVIEW_REQUEST:
+        draft.loadReviewsLoading = true;
+        draft.loadReviewsDone = false;
+        draft.loadReviewsError = null;
+        break;
+      case LOAD_REVIEW_SUCCESS:
+        draft.loadReviewsLoading = false;
+        draft.loadReviewsDone = true;
+        draft.reviews = action.data;
+        break;
+      case LOAD_REVIEW_FAILURE:
+        draft.loadReviewsLoading = false;
+        draft.loadReviewsError = action.error;
+        break;
       case ADD_REVIEW_REQUEST:
         draft.addReviewLoading = true;
         draft.addReviewDone = false;

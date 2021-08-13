@@ -119,7 +119,10 @@ const ReportCard = (props) => {
         ))
       : [
           <ImgContainer>
-            <Img src="/images/LogoTitle.png" />
+            <Img
+              src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+              style={{ opacity: '0.5' }}
+            />
           </ImgContainer>,
         ];
 
